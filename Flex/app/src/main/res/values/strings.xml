@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Flex</string>
+    <string name="hint_task_message">Enter a Task</string>
+    <string name="button_send_text">Send</string>
+</resources>
