@@ -27,6 +27,5 @@ public class FlexActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.flex_layout);
-        textView = (TextView)findViewById(R.id.greetings_text_view);
     }
 }
