@@ -1,9 +1,9 @@
 # Flex
-> A collaboration board towards team progress for projects. 
+> Based and built on the idea of *Flex Friday* by students at [Baxter Academy](http://baxter-academy.org) 
 
-Based and built on the idea of *Flex Friday* by students at [Baxter Academy](http://baxter-academy.org)
+A collaboration board towards team progress for projects. 
 
-## Tasks   
+## Tasks 
 - To Do
 - [In Progress](https://github.com/baxter-oop/Baxter-App)
 - Completed
