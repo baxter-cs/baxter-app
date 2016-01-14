@@ -1,1 +1,12 @@
-# Baxter-App
+# Flex
+> A collaboration board towards team progress for projects. 
+
+Based and built on the idea of *Flex Friday* by students at [Baxter Academy](http://baxter-academy.org)
+
+## Tasks   
+- To Do
+- [In Progress](https://github.com/baxter-oop/Baxter-App)
+- Completed
+
+## License 
+[![CC4](https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
