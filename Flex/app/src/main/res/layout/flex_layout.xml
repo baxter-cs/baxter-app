@@ -16,7 +16,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:text="@string/button_send_text"
-        android:onClick="sendMessage"
+        android:onClick="action"
         android:id="@+id/send_button"
         />
 
@@ -32,7 +32,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Open Minor Activity"
+        android:text="@string/button_open_minorActivity"
         android:onClick="helloWorld"
         android:id="@+id/button2"
         android:layout_below="@+id/enter_task_bar"

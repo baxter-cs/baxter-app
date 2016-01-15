@@ -5,10 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 public class FlexActivity extends AppCompatActivity {
-    TextView textView;
 
     public void helloWorld(View view){
         String button_text;
@@ -19,8 +17,8 @@ public class FlexActivity extends AppCompatActivity {
         }
     }
 
-    public void sendMessage(){
-        //
+    public void action(){
+
     }
 
     @Override
