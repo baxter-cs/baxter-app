@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">Flex</string>
+
+    <string name="hello_world">Hello World!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_search">Search</string>
+    <string name="title_share">Share</string>
+
     <string name="hint_task_message">Enter a Task</string>
     <string name="button_send_text">Send</string>
     <string name="button_open_minorActivity">Open Minor Activity</string>
