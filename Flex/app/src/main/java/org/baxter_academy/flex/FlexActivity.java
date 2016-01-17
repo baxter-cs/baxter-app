@@ -39,6 +39,11 @@ public class FlexActivity extends AppCompatActivity {
             return true;
         }
 
+        if(id == R.id.id_add){
+            Intent addTask = new Intent(FlexActivity.this, AddTaskActivity.class);
+            startActivity(addTask);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -46,8 +51,8 @@ public class FlexActivity extends AppCompatActivity {
         String button_text;
         button_text = ((Button) view).getText().toString();
         if(button_text.equals("Add a Task")){
-            Intent intent = new Intent(this, AddTaskActivity.class);
-            startActivity(intent);
+            Intent addTask = new Intent(this, AddTaskActivity.class);
+            startActivity(addTask);
         }
     }
 
