@@ -22,6 +22,7 @@ public class FlexActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Flex");
     }
 
     @Override
