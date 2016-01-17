@@ -5,17 +5,10 @@
     tools:context=".FlexActivity">
 
     <item
-        android:id="@+id/id_search"
-        android:title="@string/title_search"
-        android:icon="@drawable/ic_search_white_36dp"
-        app:showAsAction="ifRoom|withText"
-        />
-
-    <item
         android:id="@+id/id_add"
         android:title="@string/title_add"
         android:icon="@drawable/ic_add_white_36dp"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         />
 
     <item
