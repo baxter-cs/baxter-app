@@ -9,5 +9,5 @@
 
     <string name="hint_task_message">Enter a Task</string>
     <string name="button_send_text">Send</string>
-    <string name="button_open_minorActivity">Open Minor Activity</string>
+    <string name="button_open_addTaskActivity">Add a Task</string>
 </resources>

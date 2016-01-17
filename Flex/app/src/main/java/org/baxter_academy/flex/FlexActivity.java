@@ -56,8 +56,8 @@ public class FlexActivity extends AppCompatActivity {
     public void helloWorld(View view){
         String button_text;
         button_text = ((Button) view).getText().toString();
-        if(button_text.equals("Open Minor Activity")){
-            Intent intent = new Intent(this, MinorActivity.class);
+        if(button_text.equals("Add a Task")){
+            Intent intent = new Intent(this, AddTaskActivity.class);
             startActivity(intent);
         }
     }
