@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 /**
  * Created by wil on 1/12/16.
@@ -43,5 +44,9 @@ public class AddTaskActivity extends AppCompatActivity{
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void createTask(View view){
+
     }
 }
