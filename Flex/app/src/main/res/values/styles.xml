@@ -5,6 +5,8 @@
     </style>
 
     <style name="AppTheme.base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -13,6 +15,7 @@
     <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
         <item name="android:textColorSecondary">@color/textColorPrimary</item>
+        <item name="toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
     </style>
 
 </resources>

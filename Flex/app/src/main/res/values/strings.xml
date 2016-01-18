@@ -11,4 +11,7 @@
     <string name="hint_task_message">Enter a Task</string>
     <string name="button_submit_task">Submit</string>
     <string name="add_task">Add a Task</string>
+    <string name="title_todo">To Do</string>
+    <string name="title_doing">In Process</string>
+    <string name="title_done">Complete</string>
 </resources>
