@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class DoneFragment extends Fragment {
+public class FragmentTodo extends Fragment {
 
-    public DoneFragment() {
+    public FragmentTodo() {
         // Required empty public constructor
     }
 
