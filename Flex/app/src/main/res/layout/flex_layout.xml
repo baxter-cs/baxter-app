@@ -20,32 +20,11 @@
         android:paddingTop="@dimen/activity_vertical_margin">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/button_send_text"
-            android:onClick="action"
-            android:id="@+id/send_button"
-            />
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/send_button"
-            android:layout_toStartOf="@id/send_button"
-            android:hint="@string/hint_task_message"
-            android:id="@+id/enter_task_bar"
-            />
-
-        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/button_open_addTaskActivity"
+            android:text="@string/add_task"
             android:onClick="helloWorld"
             android:id="@+id/button2"
-            android:layout_below="@+id/enter_task_bar"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="21dp" />

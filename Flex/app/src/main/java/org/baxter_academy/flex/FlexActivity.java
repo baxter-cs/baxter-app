@@ -61,8 +61,4 @@ public class FlexActivity extends AppCompatActivity {
         }
     }
 
-    public void action(){
-
-    }
-
 }
