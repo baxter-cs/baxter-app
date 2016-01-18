@@ -25,7 +25,7 @@ public class FlexActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("To Do"));
-        tabLayout.addTab(tabLayout.newTab().setText("Doing"));
+        tabLayout.addTab(tabLayout.newTab().setText("In Process"));
         tabLayout.addTab(tabLayout.newTab().setText("Done"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 

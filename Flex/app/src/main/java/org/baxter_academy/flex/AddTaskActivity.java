@@ -45,8 +45,10 @@ public class AddTaskActivity extends AppCompatActivity{
     }
 
     public void createTask(View view){
+        /*
         task_text = (EditText) findViewById(R.id.enter_task_bar);
         String task_name = task_text.getText().toString();
+         */
 
         Intent intent = new Intent(this, FlexActivity.class);
         startActivity(intent);
