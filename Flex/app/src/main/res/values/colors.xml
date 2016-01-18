@@ -7,4 +7,5 @@
     <color name="textColorSecondary">#727272</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
+    <color name="tabsScrollColor">#FF4081</color>
 </resources>
