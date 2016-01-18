@@ -14,7 +14,7 @@
 
     <item
         android:id="@+id/id_add"
-        android:title="@string/title_add"
+        android:title="@string/add_task"
         android:icon="@drawable/ic_add_white_36dp"
         android:orderInCategory="1"
         app:showAsAction="ifRoom"
