@@ -75,10 +75,10 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
             android:layout_below="@+id/title_assignee"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="6dp" />
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:id="@+id/title_assignee"
@@ -87,10 +87,10 @@
             android:textColor="@color/colorBlack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="27dp"
             android:layout_below="@+id/bar_description"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="24dp" />
+            android:layout_alignParentStart="true" />
 
         <EditText
             android:id="@+id/bar_due"

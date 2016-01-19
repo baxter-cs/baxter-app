@@ -13,7 +13,7 @@
     <string name="title_done">Complete</string>
 
     <string name="title_title">Title</string>
-    <string name="hint_add_title">Add a Task</string>
+    <string name="hint_add_title">Add a Task to Do</string>
     <string name="title_description">Description</string>
     <string name="hint_add_description">Add a Description</string>
     <string name="title_Assignee">Assignee</string>
