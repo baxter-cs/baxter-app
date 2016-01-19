@@ -4,11 +4,22 @@
     android:layout_height="match_parent"
     tools:context="org.baxter_academy.flex.FragmentDoing">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/title_doing"
-        android:textSize="24dp"
-        android:layout_centerInParent="true"/>
+    <LinearLayout
+        android:id="@+id/todo_layout"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_doing"
+            android:textSize="18sp" />
+
+    </LinearLayout>
 
 </RelativeLayout>

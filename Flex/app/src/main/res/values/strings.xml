@@ -10,7 +10,7 @@
 
     <string name="title_todo">To Do</string>
     <string name="title_doing">In Process</string>
-    <string name="title_done">Complete</string>
+    <string name="title_done">Done</string>
 
     <string name="title_title">Title</string>
     <string name="hint_add_title">Add a Task to Do</string>
