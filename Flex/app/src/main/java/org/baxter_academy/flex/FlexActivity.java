@@ -62,24 +62,15 @@ public class FlexActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        if(id == R.id.id_add){
-            Intent addTask = new Intent(FlexActivity.this, AddTaskActivity.class);
-            startActivity(addTask);
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void helloWorld(View view){
-        String button_text;
-        button_text = ((Button) view).getText().toString();
-        if(button_text.equals("Add a Task")){
-            Intent addTask = new Intent(this, AddTaskActivity.class);
-            startActivity(addTask);
+        switch(id){
+            case R.id.action_settings:
+                return true;
+            case R.id.id_add:
+                Intent addTask = new Intent(FlexActivity.this, AddTaskActivity.class);
+                startActivity(addTask);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
