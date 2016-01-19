@@ -13,7 +13,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -101,6 +103,9 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
 
         Task task = new Task();
         task.AddTask(title, description, assignee, dueDate);
+
+        List<Task> taskList = new ArrayList<>();
+        taskList.add(task);
 
         /*
         intent.putExtra("Title", title_text);

@@ -1,6 +1,8 @@
 package org.baxter_academy.flex;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -8,13 +10,15 @@ import java.util.Map;
  */
 public class Task {
 
-    Map<String, String> tasklist = new HashMap<String, String>();
+    String mTask, mDescription, mAssignee, mDueDate;
 
-    public void AddTask(String task, String description, String assignee, String dueDate){
-        tasklist.put("Title", task);
-        tasklist.put("Description", description);
-        tasklist.put("Assignee", assignee);
-        tasklist.put("Due On", dueDate);
+    Map<String, String> task = new HashMap<>();
+
+    public void AddTask(String mTask, String mDescription, String mAssignee, String mDueDate){
+        task.put("Title", mTask);
+        task.put("Description", mDescription);
+        task.put("Assignee", mAssignee);
+        task.put("Due On", mDueDate);
     }
 
 }
