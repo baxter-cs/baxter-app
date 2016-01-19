@@ -90,7 +90,7 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void createTask(View view){
-        Intent intent = new Intent(this, FlexActivity.class);
+        Intent intent = new Intent(AddTaskActivity.this, FlexActivity.class);
 
         mTitle = (EditText) findViewById(R.id.bar_title);
         mDescription = (EditText) findViewById(R.id.bar_description);
