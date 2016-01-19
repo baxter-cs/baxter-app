@@ -25,6 +25,9 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
     private DatePickerDialog toDatePickerDialog;
     private SimpleDateFormat dateFormatter;
 
+    private EditText mTitle, mDescription, mAssignee, mDueDate;
+    private String title, description, assignee, dueDate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,12 +87,26 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void createTask(View view){
+        Intent intent = new Intent(this, FlexActivity.class);
+
+        mTitle = (EditText) findViewById(R.id.bar_title);
+        mDescription = (EditText) findViewById(R.id.bar_description);
+        mAssignee = (EditText) findViewById(R.id.bar_assignee);
+        mDueDate = (EditText) findViewById(R.id.bar_due);
+
+        title = mTitle.getText().toString();
+        description = mDescription.getText().toString();
+        assignee = mAssignee.getText().toString();
+        dueDate = mDueDate.getText().toString();
+
+        Task task = new Task();
+        task.AddTask(title, description, assignee, dueDate);
+
         /*
-        task_text = (EditText) findViewById(R.id.enter_task_bar);
-        String task_name = task_text.getText().toString();
+        intent.putExtra("Title", title_text);
+        Bundle bundle = new Bundle();
          */
 
-        Intent intent = new Intent(this, FlexActivity.class);
         startActivity(intent);
     }
 }
