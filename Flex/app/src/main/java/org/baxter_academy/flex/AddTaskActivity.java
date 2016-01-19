@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -107,11 +108,7 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         List<Task> taskList = new ArrayList<>();
         taskList.add(task);
 
-        /*
-        intent.putExtra("Title", title_text);
-        Bundle bundle = new Bundle();
-         */
-
+        intent.putExtra("Task", task);
         startActivity(intent);
     }
 }
