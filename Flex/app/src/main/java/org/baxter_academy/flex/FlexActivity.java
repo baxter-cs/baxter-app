@@ -10,9 +10,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.io.Serializable;
+
 public class FlexActivity extends AppCompatActivity {
 
-    private String taskTitle;
+    private Serializable task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +54,12 @@ public class FlexActivity extends AppCompatActivity {
 
         Bundle bundle = this.getIntent().getExtras();
         if(bundle != null){
-            taskTitle = bundle.getString("Title");
+            task = bundle.getSerializable("Task");
         }
     }
 
-    public String getTaskTitle(){
-        return taskTitle;
+    public Serializable getTask(){
+        return task;
     }
 
     @Override

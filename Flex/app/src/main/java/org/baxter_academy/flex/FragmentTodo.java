@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.io.Serializable;
+
 public class FragmentTodo extends Fragment {
 
     public FragmentTodo() {
@@ -24,11 +26,12 @@ public class FragmentTodo extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_todo, container, false);
         FlexActivity flexActivity = (FlexActivity) getActivity();
-        String task_title = flexActivity.getTaskTitle();
+        Serializable mTask = flexActivity.getTask();
+        Task task = (Task) mTask;
 
-        if(task_title != null) {
+        if(task != null){
             TextView tv = (TextView) view.findViewById(R.id.testing);
-            tv.setText(task_title);
+            tv.setText(task.toString());
         }
 
         return view;

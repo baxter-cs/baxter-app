@@ -108,7 +108,7 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         taskList.add(task);
 
         Bundle bundle = new Bundle();
-        bundle.putString("Title", task.toString());
+        bundle.putSerializable("Task", task);
         intent.putExtras(bundle);
         startActivity(intent);
     }
