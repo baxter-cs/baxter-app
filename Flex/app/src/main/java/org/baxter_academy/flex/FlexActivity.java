@@ -12,6 +12,8 @@ import android.view.MenuItem;
 
 public class FlexActivity extends AppCompatActivity {
 
+    private String taskTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,15 @@ public class FlexActivity extends AppCompatActivity {
 
             }
         });
+
+        Bundle bundle = this.getIntent().getExtras();
+        if(bundle != null){
+            taskTitle = bundle.getString("Title");
+        }
+    }
+
+    public String getTaskTitle(){
+        return taskTitle;
     }
 
     @Override

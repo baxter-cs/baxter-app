@@ -1,10 +1,6 @@
 package org.baxter_academy.flex;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by wil on 1/19/16.
@@ -20,24 +16,24 @@ public class Task implements Serializable{
         this.mDueDate = mDueDate;
     }
 
-    public String getTitle(){
+    public String getTaskTitle(){
         return mTask;
     }
 
-    public String getDescription(){
+    public String getTaskDescription(){
         return mDescription;
     }
 
-    public String getAssignee(){
+    public String getTaskAssignee(){
         return mAssignee;
     }
 
-    public String getDueDate(){
+    public String getTaskDueDate(){
         return mDueDate;
     }
 
     @Override
     public String toString() {
-        return "Title: " + mTask + " [Description: " + mDescription + ". Assignee: " + mAssignee + ". Due On: " + mDueDate + "]";
+        return "Title: " + mTask + "\n Description: " + mDescription + "\n Assignee: " + mAssignee + "\n Due On: " + mDueDate;
     }
 }
