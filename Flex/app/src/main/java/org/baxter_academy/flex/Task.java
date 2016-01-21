@@ -17,23 +17,27 @@ public class Task implements Serializable{
     }
 
     public String getTaskTitle(){
-        return mTask;
+        return " " + mTask;
+    }
+
+    public String getTaskInfo() {
+        return "\n Description: " + mDescription + "\n Assignee: " + mAssignee + "\n Due On: " + mDueDate;
     }
 
     public String getTaskDescription(){
-        return mDescription;
+        return " " + mDescription;
     }
 
     public String getTaskAssignee(){
-        return mAssignee;
+        return " " + mAssignee;
     }
 
     public String getTaskDueDate(){
-        return mDueDate;
+        return " " + mDueDate;
     }
 
     @Override
     public String toString() {
-        return "Title: " + mTask + "\n Description: " + mDescription + "\n Assignee: " + mAssignee + "\n Due On: " + mDueDate;
+        return " " + mTask + "\n Description: " + mDescription + "\n Assignee: " + mAssignee + "\n Due On: " + mDueDate;
     }
 }

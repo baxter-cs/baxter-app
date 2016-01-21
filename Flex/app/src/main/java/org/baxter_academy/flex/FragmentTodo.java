@@ -1,5 +1,6 @@
 package org.baxter_academy.flex;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -32,25 +33,33 @@ public class FragmentTodo extends Fragment {
         Serializable mTask = flexActivity.getTask();
         Task task = (Task) mTask;
         if(task != null){
-
             TextView tv = (TextView) view.findViewById(R.id.title_todo);
-            tv.setText(task.toString());
+            tv.setTextSize(18);
+            tv.setText(task.getTaskTitle());
+            tv.append(task.getTaskInfo());
+            tv.setBackgroundColor(Color.parseColor("#F8BBD0"));
+            tv.setPadding(12, 12, 12, 12);
+            tv.setTextColor(Color.parseColor("#212121"));
 
-            //TODO: Begins
             LinearLayout layout = (LinearLayout) view.findViewById(R.id.todo_layout);
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             linearLayout = new LinearLayout(getActivity());
             linearLayout.setOrientation(LinearLayout.VERTICAL);
             linearLayout.setLayoutParams(layoutParams);
 
-            TextView taskTitle = new TextView(getActivity());
-            taskTitle.setLayoutParams(layoutParams);
-            taskTitle.setText(task.getTaskTitle());
-            linearLayout.addView(taskTitle);
+            /*
+            TextView textView = new TextView(getActivity());
+            textView.setLayoutParams(layoutParams);
+            textView.setTextSize(20);
+            textView.setText(task.getTaskTitle());
+            textView.append(task.getTaskInfo());
+            textView.setBackgroundColor(Color.parseColor("#F8BBD0"));
+            textView.setPadding(12, 12, 12, 12);
+            textView.setTextColor(Color.parseColor("#212121"));
+            linearLayout.addView(textView);
+            */
+
             layout.addView(linearLayout);
-
-            //TODO: Ends
-
         }
         return view;
     }
