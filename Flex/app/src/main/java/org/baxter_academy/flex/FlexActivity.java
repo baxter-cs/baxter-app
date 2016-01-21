@@ -9,10 +9,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+
+import java.io.Serializable;
 
 public class FlexActivity extends AppCompatActivity {
+
+    private Serializable task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,15 @@ public class FlexActivity extends AppCompatActivity {
 
             }
         });
+
+        Bundle bundle = this.getIntent().getExtras();
+        if(bundle != null){
+            task = bundle.getSerializable("Task");
+        }
+    }
+
+    public Serializable getTask(){
+        return task;
     }
 
     @Override

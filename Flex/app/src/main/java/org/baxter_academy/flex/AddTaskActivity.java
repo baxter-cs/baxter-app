@@ -13,7 +13,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -24,6 +26,9 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
     private EditText toDate;
     private DatePickerDialog toDatePickerDialog;
     private SimpleDateFormat dateFormatter;
+
+    private EditText mTitle, mDescription, mAssignee, mDueDate;
+    private String title, description, assignee, dueDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,12 +89,27 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void createTask(View view){
-        /*
-        task_text = (EditText) findViewById(R.id.enter_task_bar);
-        String task_name = task_text.getText().toString();
-         */
+        Intent intent = new Intent(AddTaskActivity.this, FlexActivity.class);
 
-        Intent intent = new Intent(this, FlexActivity.class);
+        mTitle = (EditText) findViewById(R.id.bar_title);
+        mDescription = (EditText) findViewById(R.id.bar_description);
+        mAssignee = (EditText) findViewById(R.id.bar_assignee);
+        mDueDate = (EditText) findViewById(R.id.bar_due);
+
+        title = mTitle.getText().toString();
+        description = mDescription.getText().toString();
+        assignee = mAssignee.getText().toString();
+        dueDate = mDueDate.getText().toString();
+
+        Task task = new Task();
+        task.AddTask(title, description, assignee, dueDate);
+
+        List<Task> taskList = new ArrayList<>();
+        taskList.add(task);
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Task", task);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 }
