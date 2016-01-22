@@ -1,6 +1,8 @@
 package org.baxter_academy.flex;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.google.gson.Gson;
+
 import java.io.Serializable;
 
 public class FlexActivity extends AppCompatActivity {
@@ -18,13 +22,38 @@ public class FlexActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Usual Setup stuff
         super.onCreate(savedInstanceState);
         setContentView(R.layout.flex_layout);
-
+        // Checks if being run right after installation
+        //getting preferences
+        SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
+        int firstRun = prefs.getInt("firstRun", 0); //0 is the default value
+        if (firstRun == 0) {
+            // This means this is the first time the app is run or somehow the shared pre. were wiped
+            firstRun = 1;
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("firstRun", firstRun);
+            editor.commit();
+            // Setting up default json files
+            TaskStorage task_storage = new TaskStorage();
+            // Creating our Starter Task
+            Task starter_task = new Task();
+            starter_task.AddTask("Welcome to Flex", "We don't have a tutorial yet, but when we do make sure to check it out", "John", "1-21-2016");
+            // Init. our TaskStorage class
+            task_storage.tasks.add(starter_task);
+            // Creating our Gson (Google's JSON Library)
+            Gson gson = new Gson();
+            // This saves our encoded json string into the shared pref. meta with the key "tasks"
+            // This will be where we store our tasks
+            editor.putString("tasks", gson.toJson(task_storage));
+            editor.commit();
+        }
+        // Names the bar thing that says Flex, yeah idk...
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Flex");
-
+        // Creates the toolbar that Wil made
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("To Do"));
         tabLayout.addTab(tabLayout.newTab().setText("In Process"));
@@ -83,6 +112,11 @@ public class FlexActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public String getTaskJSON() {
+        SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
+        return prefs.getString("tasks", "error");
     }
 
 }
