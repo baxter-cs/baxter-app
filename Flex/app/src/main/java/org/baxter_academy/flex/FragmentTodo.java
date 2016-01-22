@@ -39,7 +39,7 @@ public class FragmentTodo extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_todo, container, false);
-        // Gets the json string
+        // Gets the json string - We're using getActivity instead of this because this doesn't work in this
         SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
         String json = prefs.getString("tasks", "error");
         // Error will only happen if the Preference does not exist
@@ -54,7 +54,24 @@ public class FragmentTodo extends Fragment {
             String foobar = "";
             // Here we iterate through all the Task objects in our list
             for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
-                foobar += i.next().getTaskTitle();
+                // My modification to Wil's Code
+                Task task = i.next();
+                // Wil's Code
+                LinearLayout layout = (LinearLayout) view.findViewById(R.id.todo_layout);
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                linearLayout = new LinearLayout(getActivity());
+                linearLayout.setOrientation(LinearLayout.VERTICAL);
+                linearLayout.setLayoutParams(layoutParams);
+                TextView textView = new TextView(getActivity());
+                textView.setLayoutParams(layoutParams);
+                textView.setTextSize(20);
+                textView.setText(task.getTaskTitle());
+                textView.append(task.getTaskInfo());
+                textView.setBackgroundColor(Color.parseColor("#F8BBD0"));
+                textView.setPadding(12, 12, 12, 12);
+                textView.setTextColor(Color.parseColor("#212121"));
+                linearLayout.addView(textView);
+                layout.addView(linearLayout);
             }
             tv.setText(foobar);
         } else {

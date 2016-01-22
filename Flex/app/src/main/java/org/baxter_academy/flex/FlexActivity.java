@@ -29,10 +29,10 @@ public class FlexActivity extends AppCompatActivity {
         //getting preferences
         SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
         int firstRun = prefs.getInt("firstRun", 0); //0 is the default value
+        SharedPreferences.Editor editor = prefs.edit();
         if (firstRun == 0) {
             // This means this is the first time the app is run or somehow the shared pre. were wiped
             firstRun = 1;
-            SharedPreferences.Editor editor = prefs.edit();
             editor.putInt("firstRun", firstRun);
             editor.commit();
             // Setting up default json files
@@ -44,6 +44,24 @@ public class FlexActivity extends AppCompatActivity {
             task_storage.tasks.add(starter_task);
             // Creating our Gson (Google's JSON Library)
             Gson gson = new Gson();
+            // This saves our encoded json string into the shared pref. meta with the key "tasks"
+            // This will be where we store our tasks
+            editor.putString("tasks", gson.toJson(task_storage));
+            editor.commit();
+        } else {
+            firstRun += 1;
+            editor.putInt("firstRun", firstRun);
+            editor.commit();
+            String json = prefs.getString("tasks", "error");
+            // Here we create our Gson object
+            Gson gson = new Gson();
+            // Here we use our Gson object to decode our json string back into our TaskStorage class
+            TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
+            // Creating our New Task
+            Task starter_task = new Task();
+            starter_task.AddTask("This is your " + Integer.toString(firstRun) + " Time Running This App", "OMG IT WORKED", "John", "1-21-2016");
+            // Init. our TaskStorage class
+            task_storage.tasks.add(starter_task);
             // This saves our encoded json string into the shared pref. meta with the key "tasks"
             // This will be where we store our tasks
             editor.putString("tasks", gson.toJson(task_storage));
