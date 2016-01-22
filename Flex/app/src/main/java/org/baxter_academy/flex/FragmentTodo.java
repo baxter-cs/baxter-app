@@ -54,7 +54,7 @@ public class FragmentTodo extends Fragment {
             String foobar = "";
             // Here we iterate through all the Task objects in our list
             for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
-                // My modification to Wil's Code
+                // My addition to Wil's Code
                 Task task = i.next();
                 // Wil's Code
                 LinearLayout layout = (LinearLayout) view.findViewById(R.id.todo_layout);

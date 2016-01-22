@@ -19,6 +19,7 @@ import java.io.Serializable;
 public class FlexActivity extends AppCompatActivity {
 
     private Serializable task;
+    public boolean debugFirstRun = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class FlexActivity extends AppCompatActivity {
             // This will be where we store our tasks
             editor.putString("tasks", gson.toJson(task_storage));
             editor.commit();
-        } else {
+        } else if (debugFirstRun) {
             firstRun += 1;
             editor.putInt("firstRun", firstRun);
             editor.commit();
@@ -98,11 +99,12 @@ public class FlexActivity extends AppCompatActivity {
 
             }
         });
-
+        /* No Longer Used
         Bundle bundle = this.getIntent().getExtras();
         if(bundle != null){
             task = bundle.getSerializable("Task");
         }
+        */
     }
 
     public Serializable getTask(){

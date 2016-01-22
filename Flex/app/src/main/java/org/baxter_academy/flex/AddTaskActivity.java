@@ -1,7 +1,9 @@
 package org.baxter_academy.flex;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -105,12 +109,21 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         Task task = new Task();
         task.AddTask(title, description, assignee, dueDate);
 
-        List<Task> taskList = new ArrayList<>();
-        taskList.add(task);
+        SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
 
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("Task", task);
-        intent.putExtras(bundle);
+        String json = prefs.getString("tasks", "error");
+        // Here we create our Gson object
+        Gson gson = new Gson();
+        // Here we use our Gson object to decode our json string back into our TaskStorage class
+        TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
+        // Init. our TaskStorage classs
+        task_storage.tasks.add(task);
+        // This saves our encoded json string into the shared pref. meta with the key "tasks"
+        // This will be where we store our tasks
+        editor.putString("tasks", gson.toJson(task_storage));
+        editor.commit();
+
         startActivity(intent);
     }
 }
