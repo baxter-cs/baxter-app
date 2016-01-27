@@ -69,7 +69,7 @@ public class FragmentTodo extends Fragment {
                 textView.append(task.getTaskInfo());
                 textView.setBackgroundColor(Color.parseColor("#F8BBD0"));
                 textView.setPadding(12, 12, 12, 12);
-                textView.setTextColor(Color.parseColor("#212121"));
+                textView.setTextColor(Color.parseColor("#515151"));
                 linearLayout.addView(textView);
                 layout.addView(linearLayout);
             }
