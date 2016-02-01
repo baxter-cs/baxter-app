@@ -9,7 +9,7 @@ public class Task implements Serializable{
 
     private String mTask, mDescription, mAssignee, mDueDate;
 
-    public void AddTask(String mTask, String mDescription, String mAssignee, String mDueDate){
+    public void addTask(String mTask, String mDescription, String mAssignee, String mDueDate){
         this.mTask = mTask;
         this.mDescription = mDescription;
         this.mAssignee = mAssignee;

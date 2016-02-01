@@ -11,16 +11,13 @@ import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -107,7 +104,7 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         dueDate = mDueDate.getText().toString();
 
         Task task = new Task();
-        task.AddTask(title, description, assignee, dueDate);
+        task.addTask(title, description, assignee, dueDate);
 
         SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
