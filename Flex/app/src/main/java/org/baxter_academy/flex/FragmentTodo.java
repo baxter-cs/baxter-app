@@ -80,7 +80,7 @@ public class FragmentTodo extends Fragment {
 
                 Button deleteButton = new Button(getActivity());
                 deleteButton.setText("Delete");
-                deleteButton.setTag(task.getTaskTitle());
+                deleteButton.setTag(task.getTaskID());
                 deleteButton.setOnClickListener(new View.OnClickListener() {
                     // This is run when the Button is pressed
                     @Override
@@ -93,8 +93,7 @@ public class FragmentTodo extends Fragment {
                         List<Task> filteredTasks = new ArrayList<Task>();
                         for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
                             Task filteredTask = i.next();
-                            // TODO: Have IDs for each task because this will get rid of everything w/ the same title
-                            if (!filteredTask.getTaskTitle().equals(v.getTag())) {
+                            if (!filteredTask.getTaskID().equals(v.getTag())) {
                                 filteredTasks.add(filteredTask);
                             }
                         }

@@ -8,12 +8,14 @@ import java.io.Serializable;
 public class Task implements Serializable{
 
     private String mTask, mDescription, mAssignee, mDueDate;
+    private int mID;
 
-    public void addTask(String mTask, String mDescription, String mAssignee, String mDueDate){
+    public void addTask(String mTask, String mDescription, String mAssignee, String mDueDate, Integer mID){
         this.mTask = mTask;
         this.mDescription = mDescription;
         this.mAssignee = mAssignee;
         this.mDueDate = mDueDate;
+        this.mID = mID;
     }
 
     public String getTaskTitle(){
@@ -34,6 +36,10 @@ public class Task implements Serializable{
 
     public String getTaskDueDate(){
         return " " + mDueDate;
+    }
+
+    public Integer getTaskID() {
+        return mID;
     }
 
     @Override

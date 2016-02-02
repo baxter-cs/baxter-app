@@ -40,7 +40,7 @@ public class FlexActivity extends AppCompatActivity {
             TaskStorage task_storage = new TaskStorage();
             // Creating our Starter Task
             Task starter_task = new Task();
-            starter_task.addTask("Welcome to Flex", "Description", "Jon", "2-01-2016");
+            starter_task.addTask("Welcome to Flex", "Description", "Jon", "2-01-2016", task_storage.getNewTaskID());
             // Init. our TaskStorage class
             task_storage.tasks.add(starter_task);
             // Creating our Gson (Google's JSON Library)
@@ -60,7 +60,7 @@ public class FlexActivity extends AppCompatActivity {
             TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
             // Creating our New Task
             Task starter_task = new Task();
-            starter_task.addTask("First Task ", "Description", "Jon", "2-01-2016");
+            starter_task.addTask("First Task ", "Description", "Jon", "2-01-2016", task_storage.getNewTaskID());
             // Init. our TaskStorage class
             task_storage.tasks.add(starter_task);
             // This saves our encoded json string into the shared pref. meta with the key "tasks"
