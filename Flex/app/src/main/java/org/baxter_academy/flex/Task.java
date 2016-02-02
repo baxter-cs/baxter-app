@@ -8,13 +8,15 @@ import java.io.Serializable;
 public class Task implements Serializable{
 
     private String mTask, mDescription, mAssignee, mDueDate, mTaskStatus;
+    private int mID;
 
-    public void addTask(String mTask, String mDescription, String mAssignee, String mDueDate){
+    public void addTask(String mTask, String mDescription, String mAssignee, String mDueDate, Integer mID){
         this.mTask = mTask;
         this.mDescription = mDescription;
         this.mAssignee = mAssignee;
         this.mDueDate = mDueDate;
         this.mTaskStatus = "To Do";
+        this.mID = mID;
     }
 
     public String getTaskTitle(){
@@ -49,6 +51,10 @@ public class Task implements Serializable{
         } else if (mTaskStatus.equals("Done")) {
             // Delete the Task or something
         }
+    }
+
+    public Integer getTaskID() {
+        return mID;
     }
 
     @Override

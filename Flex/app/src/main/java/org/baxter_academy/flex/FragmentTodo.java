@@ -71,7 +71,6 @@ public class FragmentTodo extends Fragment {
                     textView.setTextSize(20);
                     textView.setText(task.getTaskTitle());
                     textView.append(task.getTaskInfo());
-                    textView.append(task.getTaskStatus());
                     textView.setBackgroundColor(Color.parseColor("#F8BBD0"));
                     textView.setPadding(15, 15, 20, 20);
                     textView.setTextColor(Color.parseColor("#515151"));
@@ -79,8 +78,8 @@ public class FragmentTodo extends Fragment {
                     linearLayout.addView(textView);
 
                     Button deleteButton = new Button(getActivity());
-                    deleteButton.setText("Delete");
-                    deleteButton.setTag(task.getTaskTitle());
+                    deleteButton.setTag(task.getTaskID());
+                    deleteButton.setText("Delete " + deleteButton.getTag());
                     deleteButton.setOnClickListener(new View.OnClickListener() {
                         // This is run when the Button is pressed
                         @Override
@@ -93,8 +92,7 @@ public class FragmentTodo extends Fragment {
                             List<Task> filteredTasks = new ArrayList<Task>();
                             for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
                                 Task filteredTask = i.next();
-                                // TODO: Have IDs for each task because this will get rid of everything w/ the same title
-                                if (!filteredTask.getTaskTitle().equals(v.getTag())) {
+                                if (!filteredTask.getTaskID().equals(v.getTag())) {
                                     filteredTasks.add(filteredTask);
                                 }
                             }
@@ -134,27 +132,6 @@ public class FragmentTodo extends Fragment {
             tv.setTextSize(18);
             tv.setText(json);
         }
-
-        // Gets the task
-        /* Serializable mTask = flexActivity.getTask();
-        Task task = (Task) mTask;
-        if(task != null){
-            // This is the thing that says Todo
-            TextView tv = (TextView) view.findViewById(R.id.title_todo);
-            if(tv.getText().equals("To Do")) {
-                // Here it's text size is being changed
-                tv.setTextSize(18);
-                // here the title is being added on to it
-                tv.setText(task.getTaskTitle());
-                // Here is the task info being added on to it
-                tv.append(task.getTaskInfo());
-                // Here is it's background color being changed, rememebr this is just 1 textview lol
-                tv.setBackgroundColor(Color.parseColor("#F8BBD0"));
-                // Here it's being made to look fancy
-                tv.setPadding(12, 12, 12, 12);
-                tv.setTextColor(Color.parseColor("#212121"));
-            }
-        }*/
 
         return view;
     }

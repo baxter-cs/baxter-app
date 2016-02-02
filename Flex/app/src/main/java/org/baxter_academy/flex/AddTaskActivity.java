@@ -93,6 +93,16 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
     public void createTask(View view){
         Intent intent = new Intent(AddTaskActivity.this, FlexActivity.class);
 
+
+        SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        String json = prefs.getString("tasks", "error");
+        // Here we create our Gson object
+        Gson gson = new Gson();
+        // Here we use our Gson object to decode our json string back into our TaskStorage class
+        TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
+
         mTitle = (EditText) findViewById(R.id.bar_title);
         mDescription = (EditText) findViewById(R.id.bar_description);
         mAssignee = (EditText) findViewById(R.id.bar_assignee);
@@ -104,16 +114,7 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         dueDate = mDueDate.getText().toString();
 
         Task task = new Task();
-        task.addTask(title, description, assignee, dueDate);
-
-        SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-
-        String json = prefs.getString("tasks", "error");
-        // Here we create our Gson object
-        Gson gson = new Gson();
-        // Here we use our Gson object to decode our json string back into our TaskStorage class
-        TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
+        task.addTask(title, description, assignee, dueDate, task_storage.getNewTaskID());
         // Init. our TaskStorage classs
         task_storage.tasks.add(task);
         // This saves our encoded json string into the shared pref. meta with the key "tasks"
