@@ -40,7 +40,7 @@ public class FlexActivity extends AppCompatActivity {
             TaskStorage task_storage = new TaskStorage();
             // Creating our Starter Task
             Task starter_task = new Task();
-            starter_task.addTask("Welcome to Flex", "Description", "Jon", "2-01-2016");
+            starter_task.addTask("Welcome to Flex", "First Task", "The Flex Team", "2-01-2016");
             // Init. our TaskStorage class
             task_storage.tasks.add(starter_task);
             // Creating our Gson (Google's JSON Library)
@@ -68,17 +68,20 @@ public class FlexActivity extends AppCompatActivity {
             editor.putString("tasks", gson.toJson(task_storage));
             editor.commit();
         }
-        // Names the bar thing that says Flex, yeah idk...
+
+        // Create the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Flex");
-        // Creates the toolbar that Wil made
+
+        // Expand the tablayout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("To Do"));
         tabLayout.addTab(tabLayout.newTab().setText("In Process"));
         tabLayout.addTab(tabLayout.newTab().setText("Done"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
+        // Make the viewpager
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final org.baxter_academy.flex.PagerAdapter adapter = new org.baxter_academy.flex.PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
@@ -122,7 +125,7 @@ public class FlexActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        switch(id){
+        switch (id) {
             case R.id.action_settings:
                 return true;
             case R.id.id_add:

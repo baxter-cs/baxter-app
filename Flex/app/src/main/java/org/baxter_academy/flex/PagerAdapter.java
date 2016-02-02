@@ -18,7 +18,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter{
 
     @Override
     public Fragment getItem(int position) {
-        switch(position){
+        switch (position) {
             case 0:
                 FragmentTodo tabTodo = new FragmentTodo();
                 return tabTodo;
