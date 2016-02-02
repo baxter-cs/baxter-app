@@ -48,7 +48,7 @@ public class FragmentTodo extends Fragment {
             // Here we create our Gson object
             Gson gson = new Gson();
             // Here we use our Gson object to decode our json string back into our TaskStorage class
-            TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
+            final TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
             // Here we set tv as our text view
             TextView tv = (TextView) view.findViewById(R.id.title_todo);
             tv.setTextSize(18);
@@ -57,57 +57,77 @@ public class FragmentTodo extends Fragment {
             }
             // Here we iterate through all the Task objects in our list
             for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
-                // My addition to Wil's Code
-                Task task = i.next();
-                // Wil's Code
-                LinearLayout layout = (LinearLayout) view.findViewById(R.id.todo_layout);
-                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                linearLayout = new LinearLayout(getActivity());
-                linearLayout.setOrientation(LinearLayout.VERTICAL);
-                linearLayout.setLayoutParams(layoutParams);
+                final Task task = i.next();
+                if (task.getTaskStatus().equals("To Do")) {
+                    // Wil's Code
+                    LinearLayout layout = (LinearLayout) view.findViewById(R.id.todo_layout);
+                    ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    linearLayout = new LinearLayout(getActivity());
+                    linearLayout.setOrientation(LinearLayout.VERTICAL);
+                    linearLayout.setLayoutParams(layoutParams);
 
-                TextView textView = new TextView(getActivity());
-                textView.setLayoutParams(layoutParams);
-                textView.setTextSize(20);
-                textView.setText(task.getTaskTitle());
-                textView.append(task.getTaskInfo());
-                textView.setBackgroundColor(Color.parseColor("#F8BBD0"));
-                textView.setPadding(15, 15, 20, 20);
-                textView.setTextColor(Color.parseColor("#515151"));
-                textView.setMovementMethod(new ScrollingMovementMethod());
-                linearLayout.addView(textView);
+                    TextView textView = new TextView(getActivity());
+                    textView.setLayoutParams(layoutParams);
+                    textView.setTextSize(20);
+                    textView.setText(task.getTaskTitle());
+                    textView.append(task.getTaskInfo());
+                    textView.append(task.getTaskStatus());
+                    textView.setBackgroundColor(Color.parseColor("#F8BBD0"));
+                    textView.setPadding(15, 15, 20, 20);
+                    textView.setTextColor(Color.parseColor("#515151"));
+                    textView.setMovementMethod(new ScrollingMovementMethod());
+                    linearLayout.addView(textView);
 
-                Button deleteButton = new Button(getActivity());
-                deleteButton.setText("Delete");
-                deleteButton.setTag(task.getTaskTitle());
-                deleteButton.setOnClickListener(new View.OnClickListener() {
-                    // This is run when the Button is pressed
-                    @Override
-                    public void onClick(View v) {
-                        SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = prefs.edit();
-                        String json = prefs.getString("tasks", "error");
-                        Gson gson = new Gson();
-                        TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
-                        List<Task> filteredTasks = new ArrayList<Task>();
-                        for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
-                            Task filteredTask = i.next();
-                            // TODO: Have IDs for each task because this will get rid of everything w/ the same title
-                            if (!filteredTask.getTaskTitle().equals(v.getTag())) {
-                                filteredTasks.add(filteredTask);
+                    Button deleteButton = new Button(getActivity());
+                    deleteButton.setText("Delete");
+                    deleteButton.setTag(task.getTaskTitle());
+                    deleteButton.setOnClickListener(new View.OnClickListener() {
+                        // This is run when the Button is pressed
+                        @Override
+                        public void onClick(View v) {
+                            SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = prefs.edit();
+                            String json = prefs.getString("tasks", "error");
+                            Gson gson = new Gson();
+                            TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
+                            List<Task> filteredTasks = new ArrayList<Task>();
+                            for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
+                                Task filteredTask = i.next();
+                                // TODO: Have IDs for each task because this will get rid of everything w/ the same title
+                                if (!filteredTask.getTaskTitle().equals(v.getTag())) {
+                                    filteredTasks.add(filteredTask);
+                                }
                             }
+                            task_storage.tasks = filteredTasks;
+                            // Saves the updated Task Storage
+                            editor.putString("tasks", gson.toJson(task_storage));
+                            editor.commit();
+                            Intent intent = new Intent(getContext(), FlexActivity.class);
+                            startActivity(intent);
                         }
-                        task_storage.tasks = filteredTasks;
-                        // Saves the updated Task Storage
-                        editor.putString("tasks", gson.toJson(task_storage));
-                        editor.commit();
-                        Intent intent = new Intent(getContext(), FlexActivity.class);
-                        startActivity(intent);
-                    }
-                });
-                linearLayout.addView(deleteButton);
+                    });
+                    linearLayout.addView(deleteButton);
 
-                layout.addView(linearLayout);
+
+                    Button upgradeStatusButton = new Button(getActivity());
+                    upgradeStatusButton.setText("Upgrade Status");
+                    upgradeStatusButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            task.upgradeStatus();
+                            Gson gson = new Gson();
+                            SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putString("tasks", gson.toJson(task_storage));
+                            editor.commit();
+                            Intent intent = new Intent(getContext(), FlexActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                    linearLayout.addView(upgradeStatusButton);
+
+                    layout.addView(linearLayout);
+                }
             }
         } else {
             TextView tv = (TextView) view.findViewById(R.id.title_todo);

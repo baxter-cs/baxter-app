@@ -7,13 +7,14 @@ import java.io.Serializable;
  */
 public class Task implements Serializable{
 
-    private String mTask, mDescription, mAssignee, mDueDate;
+    private String mTask, mDescription, mAssignee, mDueDate, mTaskStatus;
 
     public void addTask(String mTask, String mDescription, String mAssignee, String mDueDate){
         this.mTask = mTask;
         this.mDescription = mDescription;
         this.mAssignee = mAssignee;
         this.mDueDate = mDueDate;
+        this.mTaskStatus = "To Do";
     }
 
     public String getTaskTitle(){
@@ -34,6 +35,20 @@ public class Task implements Serializable{
 
     public String getTaskDueDate(){
         return " " + mDueDate;
+    }
+
+    public String getTaskStatus() {
+        return mTaskStatus;
+    }
+
+    public void upgradeStatus() {
+        if (mTaskStatus.equals("To Do")) {
+            mTaskStatus = "In Progress";
+        } else if (mTaskStatus.equals("In Progress")) {
+            mTaskStatus = "Done";
+        } else if (mTaskStatus.equals("Done")) {
+            // Delete the Task or something
+        }
     }
 
     @Override
