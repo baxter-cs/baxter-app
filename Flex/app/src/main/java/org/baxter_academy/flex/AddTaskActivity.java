@@ -20,17 +20,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-/**
- * Created by wil on 1/12/16.
- */
 public class AddTaskActivity extends AppCompatActivity implements View.OnClickListener{
 
     private EditText toDate;
     private DatePickerDialog toDatePickerDialog;
     private SimpleDateFormat dateFormatter;
-
-    private EditText mTitle, mDescription, mAssignee, mDueDate;
-    private String title, description, assignee, dueDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,15 +47,14 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        if(id == android.R.id.home) {
-            NavUtils.navigateUpFromSameTask(this);
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     private void findViewsById(){
@@ -91,8 +84,10 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void createTask(View view){
-        Intent intent = new Intent(AddTaskActivity.this, FlexActivity.class);
+        EditText mTitle, mDescription, mAssignee, mDueDate;
+        String title, description, assignee, dueDate;
 
+        Intent intent = new Intent(AddTaskActivity.this, FlexActivity.class);
 
         SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -115,7 +110,7 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
 
         Task task = new Task();
         task.addTask(title, description, assignee, dueDate, task_storage.getNewTaskID());
-        // Init. our TaskStorage classs
+        // Init. our TaskStorage class
         task_storage.tasks.add(task);
         // This saves our encoded json string into the shared pref. meta with the key "tasks"
         // This will be where we store our tasks
