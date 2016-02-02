@@ -26,12 +26,6 @@ public class FragmentTodo extends Fragment {
     LinearLayout linearLayout;
     private Activity activity;
 
-    @Override
-    public void onAttach(Activity activity) {
-        this.activity = activity;
-        super.onAttach(activity);
-    }
-
     public FragmentTodo() {
         // Required empty public constructor
     }
@@ -44,11 +38,13 @@ public class FragmentTodo extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_todo, container, false);
+
         // Gets the json string - We're using getActivity instead of this because this doesn't work in this
         SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
         String json = prefs.getString("tasks", "error");
+
         // Error will only happen if the Preference does not exist
-        if (json != "error") {
+        if (!json.equals("error")) {
             // Here we create our Gson object
             Gson gson = new Gson();
             // Here we use our Gson object to decode our json string back into our TaskStorage class
@@ -56,7 +52,9 @@ public class FragmentTodo extends Fragment {
             // Here we set tv as our text view
             TextView tv = (TextView) view.findViewById(R.id.title_todo);
             tv.setTextSize(18);
-            String foobar = "";
+            if (tv.getText().equals("To Do")) {
+                tv.setText("");
+            }
             // Here we iterate through all the Task objects in our list
             for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
                 // My addition to Wil's Code
@@ -67,13 +65,14 @@ public class FragmentTodo extends Fragment {
                 linearLayout = new LinearLayout(getActivity());
                 linearLayout.setOrientation(LinearLayout.VERTICAL);
                 linearLayout.setLayoutParams(layoutParams);
+
                 TextView textView = new TextView(getActivity());
                 textView.setLayoutParams(layoutParams);
                 textView.setTextSize(20);
                 textView.setText(task.getTaskTitle());
                 textView.append(task.getTaskInfo());
                 textView.setBackgroundColor(Color.parseColor("#F8BBD0"));
-                textView.setPadding(12, 12, 12, 12);
+                textView.setPadding(15, 15, 20, 20);
                 textView.setTextColor(Color.parseColor("#515151"));
                 textView.setMovementMethod(new ScrollingMovementMethod());
                 linearLayout.addView(textView);
@@ -109,7 +108,6 @@ public class FragmentTodo extends Fragment {
 
                 layout.addView(linearLayout);
             }
-            tv.setText(foobar);
         } else {
             TextView tv = (TextView) view.findViewById(R.id.title_todo);
             tv.setTextSize(18);
@@ -136,6 +134,7 @@ public class FragmentTodo extends Fragment {
                 tv.setTextColor(Color.parseColor("#212121"));
             }
         }*/
+
         return view;
     }
 
