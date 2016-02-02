@@ -5,4 +5,10 @@ import java.util.List;
 
 public class TaskStorage {
     List<Task> tasks = new ArrayList<Task>();
+    private int newTaskID = 0;
+
+    public int getNewTaskID() {
+        newTaskID++;
+        return newTaskID;
+    }
 }
