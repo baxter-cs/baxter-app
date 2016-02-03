@@ -30,7 +30,8 @@
             android:layout_toRightOf="@+id/title_title"
             android:layout_toEndOf="@+id/title_title"
             android:layout_marginLeft="14dp"
-            android:layout_marginStart="14dp" />
+            android:layout_marginStart="14dp"
+            android:nextFocusForward="@+id/bar_description"/>
 
         <TextView
             android:id="@+id/title_title"
@@ -44,7 +45,7 @@
         <EditText
             android:id="@+id/bar_description"
             android:hint="@string/hint_add_description"
-            android:inputType="textMultiLine"
+            android:inputType="textImeMultiLine"
             android:lines="3"
             android:minLines="1"
             android:maxLines="3"
@@ -54,7 +55,8 @@
             android:layout_below="@+id/title_description"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="9dp" />
+            android:layout_marginTop="9dp"
+            android:nextFocusForward="@+id/bar_assignee" />
 
         <TextView
             android:id="@+id/title_description"
@@ -78,7 +80,8 @@
             android:layout_marginTop="11dp"
             android:layout_below="@+id/title_assignee"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:imeOptions="actionDone" />
 
         <TextView
             android:id="@+id/title_assignee"
@@ -112,7 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/bar_due" />
-
+        android:inputType="text"
         <Button
             android:id="@+id/send_button"
             android:text="@string/button_submit_task"
