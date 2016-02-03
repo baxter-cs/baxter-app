@@ -48,7 +48,7 @@ public class FragmentDone extends Fragment {
             final TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
             // Here we set tv as our text view
             TextView tv = (TextView) view.findViewById(R.id.title_done);
-            if (Task.isInitDone() && tv.getText().equals(Constants.title_done)) {
+            if (prefs.getBoolean("isInitDone", false) && tv.getText().equals(Constants.title_done)) {
                 tv.setVisibility(View.GONE);
             }
             // Here we iterate through all the Task objects in our list
@@ -83,7 +83,7 @@ public class FragmentDone extends Fragment {
 
                     Button deleteButton = new Button(getActivity());
                     deleteButton.setTag(task.getTaskID());
-                    deleteButton.setText("Delete " + deleteButton.getTag());
+                    deleteButton.setText("Delete Task");
                     deleteButton.setOnClickListener(new View.OnClickListener() {
                         // This is run when the Button is pressed
                         @Override
