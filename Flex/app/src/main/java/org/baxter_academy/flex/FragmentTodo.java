@@ -10,8 +10,10 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -39,6 +41,17 @@ public class FragmentTodo extends Fragment {
         // Gets the json string - We're using getActivity instead of this because this doesn't work in this
         SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
         String json = prefs.getString("tasks", "error");
+
+        // Make the list
+        final List<String> list = new ArrayList<>();
+        list.add("Default");
+        list.add("Delete");
+        list.add("To In Process");
+        // Create the spinner
+        Spinner spinner = (Spinner) view.findViewById(R.id.spinner_todo);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
 
         // Error will only happen if the Preference does not exist
         if (!json.equals("error")) {
