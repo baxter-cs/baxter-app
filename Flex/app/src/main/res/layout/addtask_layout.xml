@@ -115,7 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/bar_due" />
-        android:inputType="text"
+
         <Button
             android:id="@+id/send_button"
             android:text="@string/button_submit_task"
