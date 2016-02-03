@@ -48,9 +48,8 @@ public class FragmentTodo extends Fragment {
             final TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
             // Here we set tv as our text view
             TextView tv = (TextView) view.findViewById(R.id.title_todo);
-            tv.setTextSize(18);
             if (tv.getText().equals(Constants.title_todo)) {
-                tv.setText("");
+                tv.setVisibility(View.GONE);
             }
             // Here we iterate through all the Task objects in our list
             for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
@@ -125,7 +124,6 @@ public class FragmentTodo extends Fragment {
             }
         } else {
             TextView tv = (TextView) view.findViewById(R.id.title_todo);
-            tv.setTextSize(18);
             tv.setText(json);
         }
 

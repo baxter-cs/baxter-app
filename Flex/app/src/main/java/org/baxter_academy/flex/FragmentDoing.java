@@ -34,7 +34,7 @@ public class FragmentDoing extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_todo, container, false);
+        View view = inflater.inflate(R.layout.fragment_doing, container, false);
 
         // Gets the json string - We're using getActivity instead of this because this doesn't work in this
         SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
@@ -47,10 +47,9 @@ public class FragmentDoing extends Fragment {
             // Here we use our Gson object to decode our json string back into our TaskStorage class
             final TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
             // Here we set tv as our text view
-            TextView tv = (TextView) view.findViewById(R.id.title_todo);
-            tv.setTextSize(18);
+            TextView tv = (TextView) view.findViewById(R.id.title_doing);
             if (tv.getText().equals(Constants.title_doing)) {
-                tv.setText("");
+                tv.setVisibility(View.GONE);
             }
             // Here we iterate through all the Task objects in our list
             for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
@@ -125,8 +124,7 @@ public class FragmentDoing extends Fragment {
                 }
             }
         } else {
-            TextView tv = (TextView) view.findViewById(R.id.title_todo);
-            tv.setTextSize(18);
+            TextView tv = (TextView) view.findViewById(R.id.title_doing);
             tv.setText(json);
         }
 
