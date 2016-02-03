@@ -22,7 +22,7 @@ public class Task implements Serializable{
     }
 
     public String getTaskInfo() {
-        return "\n Description: " + mDescription + "\n Assignee: " + mAssignee + "\n Due On: " + mDueDate;
+        return " Description: " + mDescription + "\n Assignee: " + mAssignee + "\n Due On: " + mDueDate;
     }
 
     public String getTaskDescription(){
