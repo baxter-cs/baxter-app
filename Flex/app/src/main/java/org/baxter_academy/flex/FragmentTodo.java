@@ -7,11 +7,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.method.ScrollingMovementMethod;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -61,16 +64,25 @@ public class FragmentTodo extends Fragment {
                     linearLayout.setOrientation(LinearLayout.VERTICAL);
                     linearLayout.setLayoutParams(layoutParams);
 
-                    TextView textView = new TextView(getActivity());
-                    textView.setLayoutParams(layoutParams);
-                    textView.setTextSize(20);
-                    textView.setText(task.getTaskTitle());
-                    textView.append(task.getTaskInfo());
-                    textView.setBackgroundColor(Color.parseColor(Constants.task_bg));
-                    textView.setPadding(15, 15, 20, 20);
-                    textView.setTextColor(Color.parseColor(Constants.task_textCol));
-                    textView.setMovementMethod(new ScrollingMovementMethod());
-                    linearLayout.addView(textView);
+                    TextView textViewTitle = new TextView(getActivity());
+                    textViewTitle.setLayoutParams(layoutParams);
+                    textViewTitle.setTextSize(22);
+                    textViewTitle.setText(" " + task.getTaskTitle());
+                    textViewTitle.setTextColor(Color.parseColor(Constants.task_titleCol));
+                    textViewTitle.setBackgroundColor(Color.parseColor(Constants.task_bg));
+                    textViewTitle.setPadding(15, 15, 15, 0);
+                    textViewTitle.setMovementMethod(new ScrollingMovementMethod());
+                    linearLayout.addView(textViewTitle);
+
+                    TextView textViewInfo = new TextView(getActivity());
+                    textViewInfo.setLayoutParams(layoutParams);
+                    textViewInfo.setTextSize(20);
+                    textViewInfo.setText(task.getTaskInfo());
+                    textViewInfo.setTextColor(Color.parseColor(Constants.task_textCol));
+                    textViewInfo.setBackgroundColor(Color.parseColor(Constants.task_bg));
+                    textViewInfo.setPadding(15, 0, 15, 15);
+                    textViewInfo.setMovementMethod(new ScrollingMovementMethod());
+                    linearLayout.addView(textViewInfo);
 
                     Button deleteButton = new Button(getActivity());
                     deleteButton.setTag(task.getTaskID());
@@ -121,6 +133,19 @@ public class FragmentTodo extends Fragment {
                     layout.addView(linearLayout);
                 }
             }
+
+            // Make the list
+            final List<String> list = new ArrayList<>();
+            list.add("Default");
+            list.add("Delete");
+            list.add("To In Process");
+            // Create the spinner
+            Spinner spinner = (Spinner) view.findViewById(R.id.spinner_todo);
+            //Spinner spinner = new Spinner(getActivity());
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, list);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(dataAdapter);
+
         } else {
             TextView tv = (TextView) view.findViewById(R.id.title_todo);
             tv.setText(json);
