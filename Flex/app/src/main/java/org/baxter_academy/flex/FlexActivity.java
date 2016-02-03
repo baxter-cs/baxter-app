@@ -14,55 +14,56 @@ import android.view.MenuItem;
 
 import com.google.gson.Gson;
 
-import java.io.Serializable;
-
 public class FlexActivity extends AppCompatActivity {
 
-    private Serializable task;
     private boolean debugFirstRun = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Usual Setup stuff
         super.onCreate(savedInstanceState);
         setContentView(R.layout.flex_layout);
-        // Checks if being run right after installation
-        //getting preferences
+
+        // Checks if run is good after installation
         SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
         int firstRun = prefs.getInt("firstRun", 0); //0 is the default value
         SharedPreferences.Editor editor = prefs.edit();
         if (firstRun == 0) {
-            // This means this is the first time the app is run or somehow the shared pre. were wiped
+            // This runs when the app starts the first time
             firstRun = 1;
             editor.putInt("firstRun", firstRun);
             editor.commit();
+
             // Setting up default json files
             TaskStorage task_storage = new TaskStorage();
-            // Creating our Starter Task
-            Task starter_task = new Task();
-            starter_task.addTask("Welcome to Flex", "First Task", "The Flex Team", "2-01-2016", task_storage.getNewTaskID());
-            // Init. our TaskStorage class
-            task_storage.tasks.add(starter_task);
-            // Creating our Gson (Google's JSON Library)
+            // Creating Starter Task
+            Task starterTask = new Task();
+            starterTask.addTask("Welcome to Flex", "First Task", "The Flex Team", "2-01-2016", task_storage.getNewTaskID());
+            // Adding Starter Task to TaskStorage class
+            task_storage.tasks.add(starterTask);
+
+            // Creating a Gson object (Google's JSON Library)
             Gson gson = new Gson();
             // This saves our encoded json string into the shared pref. meta with the key "tasks"
             // This will be where we store our tasks
             editor.putString("tasks", gson.toJson(task_storage));
             editor.commit();
         } else if (debugFirstRun) {
-            firstRun += 1;
+            // This is for debugging purposes
+            firstRun++;
             editor.putInt("firstRun", firstRun);
             editor.commit();
             String json = prefs.getString("tasks", "error");
-            // Here we create our Gson object
+
+            // Create a Gson object
             Gson gson = new Gson();
-            // Here we use our Gson object to decode our json string back into our TaskStorage class
+            // Use our Gson object to decode our json string back into our TaskStorage class
             TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
-            // Creating our New Task
+            // Creating a new task
             Task starter_task = new Task();
-            starter_task.addTask("First Task ", "Description", "Jon", "2-01-2016", task_storage.getNewTaskID());
+            starter_task.addTask("First Task", "This is the first task", "The Flex Team", "2-01-2016", task_storage.getNewTaskID());
             // Init. our TaskStorage class
             task_storage.tasks.add(starter_task);
+
             // This saves our encoded json string into the shared pref. meta with the key "tasks"
             // This will be where we store our tasks
             editor.putString("tasks", gson.toJson(task_storage));
@@ -72,13 +73,13 @@ public class FlexActivity extends AppCompatActivity {
         // Create the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Flex");
+        getSupportActionBar().setTitle(Constants.app_name);
 
         // Expand the tablayout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("To Do"));
-        tabLayout.addTab(tabLayout.newTab().setText("In Process"));
-        tabLayout.addTab(tabLayout.newTab().setText("Done"));
+        tabLayout.addTab(tabLayout.newTab().setText(Constants.title_todo));
+        tabLayout.addTab(tabLayout.newTab().setText(Constants.title_doing));
+        tabLayout.addTab(tabLayout.newTab().setText(Constants.title_done));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         // Make the viewpager
@@ -102,16 +103,6 @@ public class FlexActivity extends AppCompatActivity {
 
             }
         });
-        /* No Longer Used
-        Bundle bundle = this.getIntent().getExtras();
-        if(bundle != null){
-            task = bundle.getSerializable("Task");
-        }
-        */
-    }
-
-    public Serializable getTask(){
-        return task;
     }
 
     @Override

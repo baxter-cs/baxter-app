@@ -1,6 +1,5 @@
 package org.baxter_academy.flex;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,10 +23,8 @@ import java.util.List;
 public class FragmentTodo extends Fragment {
 
     LinearLayout linearLayout;
-    private Activity activity;
 
     public FragmentTodo() {
-        // Required empty public constructor
     }
 
     @Override
@@ -51,15 +48,13 @@ public class FragmentTodo extends Fragment {
             final TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
             // Here we set tv as our text view
             TextView tv = (TextView) view.findViewById(R.id.title_todo);
-            tv.setTextSize(18);
-            if (tv.getText().equals("To Do")) {
-                tv.setText("");
+            if (tv.getText().equals(Constants.title_todo)) {
+                tv.setVisibility(View.GONE);
             }
             // Here we iterate through all the Task objects in our list
             for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
                 final Task task = i.next();
-                if (task.getTaskStatus().equals("To Do")) {
-                    // Wil's Code
+                if (task.getTaskStatus().equals(Constants.title_todo)) {
                     LinearLayout layout = (LinearLayout) view.findViewById(R.id.todo_layout);
                     ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     linearLayout = new LinearLayout(getActivity());
@@ -71,9 +66,9 @@ public class FragmentTodo extends Fragment {
                     textView.setTextSize(20);
                     textView.setText(task.getTaskTitle());
                     textView.append(task.getTaskInfo());
-                    textView.setBackgroundColor(Color.parseColor("#F8BBD0"));
+                    textView.setBackgroundColor(Color.parseColor(Constants.task_bg));
                     textView.setPadding(15, 15, 20, 20);
-                    textView.setTextColor(Color.parseColor("#515151"));
+                    textView.setTextColor(Color.parseColor(Constants.task_textCol));
                     textView.setMovementMethod(new ScrollingMovementMethod());
                     linearLayout.addView(textView);
 
@@ -106,7 +101,6 @@ public class FragmentTodo extends Fragment {
                     });
                     linearLayout.addView(deleteButton);
 
-
                     Button upgradeStatusButton = new Button(getActivity());
                     upgradeStatusButton.setText("Upgrade Status");
                     upgradeStatusButton.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +123,6 @@ public class FragmentTodo extends Fragment {
             }
         } else {
             TextView tv = (TextView) view.findViewById(R.id.title_todo);
-            tv.setTextSize(18);
             tv.setText(json);
         }
 
