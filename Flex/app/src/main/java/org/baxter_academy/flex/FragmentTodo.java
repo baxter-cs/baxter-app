@@ -66,7 +66,7 @@ public class FragmentTodo extends Fragment {
 
                     TextView textViewTitle = new TextView(getActivity());
                     textViewTitle.setLayoutParams(layoutParams);
-                    textViewTitle.setTextSize(22);
+                    textViewTitle.setTextSize(20);
                     textViewTitle.setText(" " + task.getTaskTitle());
                     textViewTitle.setTextColor(Color.parseColor(Constants.task_titleCol));
                     textViewTitle.setBackgroundColor(Color.parseColor(Constants.task_bg));
@@ -76,13 +76,20 @@ public class FragmentTodo extends Fragment {
 
                     TextView textViewInfo = new TextView(getActivity());
                     textViewInfo.setLayoutParams(layoutParams);
-                    textViewInfo.setTextSize(20);
+                    textViewInfo.setTextSize(18);
                     textViewInfo.setText(task.getTaskInfo());
                     textViewInfo.setTextColor(Color.parseColor(Constants.task_textCol));
                     textViewInfo.setBackgroundColor(Color.parseColor(Constants.task_bg));
                     textViewInfo.setPadding(15, 0, 15, 15);
                     textViewInfo.setMovementMethod(new ScrollingMovementMethod());
                     linearLayout.addView(textViewInfo);
+
+                    /*
+                    Button optionButton = new Button(getActivity());
+                    optionButton.setBackground(getResources().getDrawable(R.drawable.ic_more_vert_white_36dp));
+                    optionButton.setGravity(Gravity.END);
+                    linearLayout.addView(optionButton);
+                    */
 
                     Button deleteButton = new Button(getActivity());
                     deleteButton.setTag(task.getTaskID());

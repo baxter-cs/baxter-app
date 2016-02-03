@@ -61,16 +61,25 @@ public class FragmentDoing extends Fragment {
                     linearLayout.setOrientation(LinearLayout.VERTICAL);
                     linearLayout.setLayoutParams(layoutParams);
 
-                    TextView textView = new TextView(getActivity());
-                    textView.setLayoutParams(layoutParams);
-                    textView.setTextSize(20);
-                    textView.setText(task.getTaskTitle());
-                    textView.append(task.getTaskInfo());
-                    textView.setBackgroundColor(Color.parseColor(Constants.task_bg));
-                    textView.setPadding(15, 15, 20, 20);
-                    textView.setTextColor(Color.parseColor(Constants.task_textCol));
-                    textView.setMovementMethod(new ScrollingMovementMethod());
-                    linearLayout.addView(textView);
+                    TextView textViewTitle = new TextView(getActivity());
+                    textViewTitle.setLayoutParams(layoutParams);
+                    textViewTitle.setTextSize(20);
+                    textViewTitle.setText(" " + task.getTaskTitle());
+                    textViewTitle.setTextColor(Color.parseColor(Constants.task_titleCol));
+                    textViewTitle.setBackgroundColor(Color.parseColor(Constants.task_bg));
+                    textViewTitle.setPadding(15, 15, 15, 0);
+                    textViewTitle.setMovementMethod(new ScrollingMovementMethod());
+                    linearLayout.addView(textViewTitle);
+
+                    TextView textViewInfo = new TextView(getActivity());
+                    textViewInfo.setLayoutParams(layoutParams);
+                    textViewInfo.setTextSize(18);
+                    textViewInfo.setText(task.getTaskInfo());
+                    textViewInfo.setTextColor(Color.parseColor(Constants.task_textCol));
+                    textViewInfo.setBackgroundColor(Color.parseColor(Constants.task_bg));
+                    textViewInfo.setPadding(15, 0, 15, 15);
+                    textViewInfo.setMovementMethod(new ScrollingMovementMethod());
+                    linearLayout.addView(textViewInfo);
 
                     Button deleteButton = new Button(getActivity());
                     deleteButton.setTag(task.getTaskID());
