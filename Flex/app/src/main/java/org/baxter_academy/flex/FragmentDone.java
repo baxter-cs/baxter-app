@@ -48,14 +48,13 @@ public class FragmentDone extends Fragment {
             final TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
             // Here we set tv as our text view
             TextView tv = (TextView) view.findViewById(R.id.title_done);
-            if (tv.getText().equals(Constants.title_done)) {
+            if (Task.isInitDone() && tv.getText().equals(Constants.title_done)) {
                 tv.setVisibility(View.GONE);
             }
             // Here we iterate through all the Task objects in our list
             for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
                 final Task task = i.next();
                 if (task.getTaskStatus().equals(Constants.title_done)) {
-                    // Wil's Code
                     LinearLayout layout = (LinearLayout) view.findViewById(R.id.todo_layout);
                     ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     linearLayout = new LinearLayout(getActivity());
@@ -101,7 +100,6 @@ public class FragmentDone extends Fragment {
                         }
                     });
                     linearLayout.addView(deleteButton);
-
 
                     Button upgradeStatusButton = new Button(getActivity());
                     upgradeStatusButton.setText("Upgrade Status");

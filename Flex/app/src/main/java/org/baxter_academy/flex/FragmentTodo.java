@@ -55,7 +55,6 @@ public class FragmentTodo extends Fragment {
             for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
                 final Task task = i.next();
                 if (task.getTaskStatus().equals(Constants.title_todo)) {
-                    // Wil's Code
                     LinearLayout layout = (LinearLayout) view.findViewById(R.id.todo_layout);
                     ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     linearLayout = new LinearLayout(getActivity());
