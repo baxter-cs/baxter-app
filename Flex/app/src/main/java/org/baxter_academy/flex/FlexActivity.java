@@ -31,6 +31,8 @@ public class FlexActivity extends AppCompatActivity {
             // This runs when the app starts the first time
             firstRun = 1;
             editor.putInt("firstRun", firstRun);
+            editor.putBoolean("isInitDoing", false);
+            editor.putBoolean("isInitDone", false);
             editor.commit();
 
             // Setting up default json files
