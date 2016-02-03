@@ -74,7 +74,7 @@ public class FragmentTodo extends Fragment {
 
                     Button deleteButton = new Button(getActivity());
                     deleteButton.setTag(task.getTaskID());
-                    deleteButton.setText("Delete " + deleteButton.getTag());
+                    deleteButton.setText("Delete Task");
                     deleteButton.setOnClickListener(new View.OnClickListener() {
                         // This is run when the Button is pressed
                         @Override
