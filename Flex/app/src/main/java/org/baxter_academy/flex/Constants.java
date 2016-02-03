@@ -14,5 +14,4 @@ public class Constants {
     public static String task_bg = "#F8BBD0";
     public static String task_titleCol = "#4E4E4E";
     public static String task_textCol = "#515151";
-
 }
