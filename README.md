@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/baxter-oop/baxter-app.png?label=ready&title=Ready)](https://waffle.io/baxter-oop/baxter-app)
 # Flex
 > Based and built on the idea of *Flex Friday* by students at [Baxter Academy](http://baxter-academy.org) 
 
