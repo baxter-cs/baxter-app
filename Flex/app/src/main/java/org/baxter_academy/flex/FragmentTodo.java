@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -64,6 +65,14 @@ public class FragmentTodo extends Fragment {
                     linearLayout.setOrientation(LinearLayout.VERTICAL);
                     linearLayout.setLayoutParams(layoutParams);
 
+                    linearLayout.setClickable(true);
+                    linearLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(getActivity(), "Linearlayout Clicked", Toast.LENGTH_LONG).show();
+                        }
+                    });
+
                     TextView textViewTitle = new TextView(getActivity());
                     textViewTitle.setLayoutParams(layoutParams);
                     textViewTitle.setTextSize(20);
@@ -72,6 +81,8 @@ public class FragmentTodo extends Fragment {
                     textViewTitle.setBackgroundColor(Color.parseColor(Constants.task_bg));
                     textViewTitle.setPadding(15, 15, 15, 0);
                     textViewTitle.setMovementMethod(new ScrollingMovementMethod());
+                    textViewTitle.setClickable(false);
+                    textViewTitle.setDuplicateParentStateEnabled(true);
                     linearLayout.addView(textViewTitle);
 
                     TextView textViewInfo = new TextView(getActivity());
@@ -82,6 +93,8 @@ public class FragmentTodo extends Fragment {
                     textViewInfo.setBackgroundColor(Color.parseColor(Constants.task_bg));
                     textViewInfo.setPadding(15, 0, 15, 15);
                     textViewInfo.setMovementMethod(new ScrollingMovementMethod());
+                    textViewInfo.setClickable(false);
+                    textViewInfo.setDuplicateParentStateEnabled(true);
                     linearLayout.addView(textViewInfo);
 
                     /*
@@ -104,7 +117,7 @@ public class FragmentTodo extends Fragment {
                             Gson gson = new Gson();
                             TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
                             List<Task> filteredTasks = new ArrayList<Task>();
-                            for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
+                            for (Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext(); ) {
                                 Task filteredTask = i.next();
                                 if (!filteredTask.getTaskID().equals(v.getTag())) {
                                     filteredTasks.add(filteredTask);
@@ -118,6 +131,7 @@ public class FragmentTodo extends Fragment {
                             startActivity(intent);
                         }
                     });
+                    deleteButton.setClickable(false);
                     linearLayout.addView(deleteButton);
 
                     Button upgradeStatusButton = new Button(getActivity());
@@ -135,12 +149,14 @@ public class FragmentTodo extends Fragment {
                             startActivity(intent);
                         }
                     });
+                    upgradeStatusButton.setClickable(false);
                     linearLayout.addView(upgradeStatusButton);
 
                     layout.addView(linearLayout);
                 }
             }
 
+            /*
             // Make the list
             final List<String> list = new ArrayList<>();
             list.add("Default");
@@ -152,6 +168,7 @@ public class FragmentTodo extends Fragment {
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, list);
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(dataAdapter);
+            */
 
         } else {
             TextView tv = (TextView) view.findViewById(R.id.title_todo);

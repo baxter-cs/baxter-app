@@ -22,11 +22,11 @@
             android:text="@string/title_todo"
             android:textSize="18sp" />
 
-        <Spinner
+        <!-- <Spinner
             android:id="@+id/spinner_todo"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:prompt="@string/spinner_title"/>
+            android:prompt="@string/spinner_title"/> -->
 
     </LinearLayout>
 
