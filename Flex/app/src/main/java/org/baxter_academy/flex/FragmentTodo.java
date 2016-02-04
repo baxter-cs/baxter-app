@@ -124,14 +124,17 @@ public class FragmentTodo extends Fragment {
                             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                                 @Override
                                 public boolean onMenuItemClick(MenuItem item) {
+                                    Intent intent = new Intent(getContext(), FlexActivity.class);
                                     switch (item.getItemId()) {
                                         case R.id.move_to_doing:
                                             POSTHelper.postUpgradeTask(getContext(), task.getTaskID().toString());
                                             Toast.makeText(getActivity(), "Moved to In Process", Toast.LENGTH_SHORT).show();
+                                            startActivity(intent);
                                             break;
                                         case R.id.delete:
                                             POSTHelper.postDeleteTask(getContext(), task.getTaskID().toString());
                                             Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
+                                            startActivity(intent);
                                             break;
                                         default:
                                             Toast.makeText(getActivity(), item.getTitle() + " Clicked", Toast.LENGTH_SHORT).show();

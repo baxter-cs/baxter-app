@@ -107,12 +107,6 @@ public class FragmentDone extends Fragment {
                     upgradeStatusButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            task.upgradeStatus();
-                            Gson gson = new Gson();
-                            SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = prefs.edit();
-                            editor.putString("tasks", gson.toJson(task_storage));
-                            editor.commit();
                             POSTHelper.postUpgradeTask(getContext(), task.getTaskID().toString());
                             Intent intent = new Intent(getContext(), FlexActivity.class);
                             startActivity(intent);

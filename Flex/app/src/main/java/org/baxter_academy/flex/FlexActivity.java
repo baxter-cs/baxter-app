@@ -14,14 +14,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.Iterator;
 import java.util.List;
 
 public class FlexActivity extends AppCompatActivity {
@@ -42,7 +39,7 @@ public class FlexActivity extends AppCompatActivity {
         if (firstRun == 0) {
             // Run the tutorial or something
         }
-        
+
         refreshTaskList(getApplicationContext());
 
         // Create the toolbar
