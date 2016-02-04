@@ -98,7 +98,7 @@ public class FragmentDoing extends Fragment {
 
                             PopupMenu popupMenu = new PopupMenu(getActivity(), v);
                             // Inflate the popup menu with xml file
-                            popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+                            popupMenu.getMenuInflater().inflate(R.menu.todo_menu, popupMenu.getMenu());
 
                             // Add popupMenu with onMenuItemClickListener
                             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
