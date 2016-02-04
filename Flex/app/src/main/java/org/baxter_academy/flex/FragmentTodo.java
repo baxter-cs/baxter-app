@@ -62,6 +62,8 @@ public class FragmentTodo extends Fragment {
                 if (task.getTaskStatus().equals(Constants.title_todo)) {
                     LinearLayout layout = (LinearLayout) view.findViewById(R.id.todo_layout);
                     ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    ViewGroup.LayoutParams titleParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    ViewGroup.LayoutParams buttonParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
                     titleLayout = new LinearLayout(getActivity());
                     titleLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -82,7 +84,7 @@ public class FragmentTodo extends Fragment {
                     */
 
                     TextView textViewTitle = new TextView(getActivity());
-                    textViewTitle.setLayoutParams(layoutParams);
+                    //textViewTitle.setLayoutParams(titleParams);
                     textViewTitle.setTextSize(20);
                     textViewTitle.setText(" " + task.getTaskTitle());
                     textViewTitle.setTextColor(Color.parseColor(Constants.task_titleCol));
@@ -92,6 +94,20 @@ public class FragmentTodo extends Fragment {
                     //textViewTitle.setClickable(false);
                     //textViewTitle.setDuplicateParentStateEnabled(true);
                     titleLayout.addView(textViewTitle);
+
+                    Button optionButton = new Button(getActivity());
+                    optionButton.setLayoutParams(buttonParams);
+                    optionButton.setBackground(getResources().getDrawable(R.drawable.ic_more_vert_white_36dp));
+                    //optionButton.setBackgroundColor(Color.parseColor(Constants.task_title_bg));
+                    optionButton.setGravity(Gravity.END);
+                    optionButton.setClickable(true);
+                    optionButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    titleLayout.addView(optionButton);
 
                     TextView textViewInfo = new TextView(getActivity());
                     textViewInfo.setLayoutParams(layoutParams);
@@ -104,13 +120,6 @@ public class FragmentTodo extends Fragment {
                     //textViewInfo.setClickable(false);
                     //textViewInfo.setDuplicateParentStateEnabled(true);
                     linearLayout.addView(textViewInfo);
-
-                    /*
-                    Button optionButton = new Button(getActivity());
-                    optionButton.setBackground(getResources().getDrawable(R.drawable.ic_more_vert_white_36dp));
-                    optionButton.setGravity(Gravity.END);
-                    linearLayout.addView(optionButton);
-                    */
 
                     Button deleteButton = new Button(getActivity());
                     deleteButton.setTag(task.getTaskID());
