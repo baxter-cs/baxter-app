@@ -120,8 +120,17 @@ public class FragmentTodo extends Fragment {
                             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                                 @Override
                                 public boolean onMenuItemClick(MenuItem item) {
-                                    Toast.makeText(getActivity(), item.getTitle() + " Clicked", Toast.LENGTH_SHORT).show();
-                                    return false;
+                                    switch (item.getItemId()) {
+                                        case R.id.move_to_doing:
+                                            Toast.makeText(getActivity(), "Moved to In Process", Toast.LENGTH_SHORT).show();
+                                            break;
+                                        case R.id.delete:
+                                            Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
+                                            break;
+                                        default:
+                                            Toast.makeText(getActivity(), item.getTitle() + " Clicked", Toast.LENGTH_SHORT).show();
+                                    }
+                                    return true;
                                 }
                             });
 
