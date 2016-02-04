@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -41,6 +42,7 @@ public class FragmentTodo extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_todo, container, false);
+
 
         // Gets the json string - We're using getActivity instead of this because this doesn't work in this
         SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
@@ -124,9 +126,11 @@ public class FragmentTodo extends Fragment {
                                 public boolean onMenuItemClick(MenuItem item) {
                                     switch (item.getItemId()) {
                                         case R.id.move_to_doing:
+                                            POSTHelper.postUpgradeTask(getContext(), task.getTaskID().toString());
                                             Toast.makeText(getActivity(), "Moved to In Process", Toast.LENGTH_SHORT).show();
                                             break;
                                         case R.id.delete:
+                                            POSTHelper.postDeleteTask(getContext(), task.getTaskID().toString());
                                             Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
                                             break;
                                         default:
@@ -159,18 +163,13 @@ public class FragmentTodo extends Fragment {
                     upgradeStatusButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            task.upgradeStatus();
-                            Gson gson = new Gson();
-                            SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = prefs.edit();
-                            editor.putString("tasks", gson.toJson(task_storage));
-                            editor.commit();
                             POSTHelper.postUpgradeTask(getContext(), task.getTaskID().toString());
                             Intent intent = new Intent(getContext(), FlexActivity.class);
                             startActivity(intent);
                         }
                     });
                     linearLayout.addView(upgradeStatusButton);
+
 
                     layout.addView(titleLayout);
                     layout.addView(linearLayout);

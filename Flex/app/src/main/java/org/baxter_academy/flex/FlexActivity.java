@@ -40,52 +40,9 @@ public class FlexActivity extends AppCompatActivity {
         int firstRun = prefs.getInt("firstRun", 0); //0 is the default value
         SharedPreferences.Editor editor = prefs.edit();
         if (firstRun == 0) {
-            /*
-            // This runs when the app starts the first time
-            firstRun = 1;
-            editor.putInt("firstRun", firstRun);
-            editor.putBoolean("isInitTodo", false);
-            editor.putBoolean("isInitDoing", false);
-            editor.putBoolean("isInitDone", false);
-            editor.commit();
-
-            // Setting up default json files
-            TaskStorage task_storage = new TaskStorage();
-            // Creating Starter Task
-            Task starterTask = new Task();
-            starterTask.addTask("Welcome to Flex", "First Task", "The Flex Team", "2-01-2016", task_storage.getNewTaskID());
-            // Adding Starter Task to TaskStorage class
-            task_storage.tasks.add(starterTask);
-
-            // Creating a Gson object (Google's JSON Library)
-            Gson gson = new Gson();
-            // This saves our encoded json string into the shared pref. meta with the key "tasks"
-            // This will be where we store our tasks
-            editor.putString("tasks", gson.toJson(task_storage));
-            editor.commit();
-            */
+            // Run the tutorial or something
         }
-
-        // Looks through all the tasks and updates the init booleans
-        /*
-        String json = prefs.getString("tasks", "error");
-        Gson gson = new Gson();
-        TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
-        editor.putBoolean("isInitTodo", false);
-        editor.putBoolean("isInitDoing", false);
-        editor.putBoolean("isInitDone", false);
-        for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
-            final Task task = i.next();
-            if (task.getTaskStatus().equals(Constants.title_doing)) {
-                editor.putBoolean("isInitDoing", true);
-            } else if (task.getTaskStatus().equals(Constants.title_done)) {
-                editor.putBoolean("isInitDone", true);
-            } else if (task.getTaskStatus().equals(Constants.title_todo)) {
-                editor.putBoolean("isInitTodo", true);
-            }
-        }
-        editor.commit();
-        */
+        
         refreshTaskList(getApplicationContext());
 
         // Create the toolbar
