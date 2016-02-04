@@ -26,6 +26,7 @@ import java.util.List;
 
 public class FragmentTodo extends Fragment {
 
+    LinearLayout titleLayout;
     LinearLayout linearLayout;
 
     public FragmentTodo() {
@@ -61,10 +62,16 @@ public class FragmentTodo extends Fragment {
                 if (task.getTaskStatus().equals(Constants.title_todo)) {
                     LinearLayout layout = (LinearLayout) view.findViewById(R.id.todo_layout);
                     ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                    titleLayout = new LinearLayout(getActivity());
+                    titleLayout.setOrientation(LinearLayout.HORIZONTAL);
+                    titleLayout.setLayoutParams(layoutParams);
+
                     linearLayout = new LinearLayout(getActivity());
                     linearLayout.setOrientation(LinearLayout.VERTICAL);
                     linearLayout.setLayoutParams(layoutParams);
 
+                    /*
                     linearLayout.setClickable(true);
                     linearLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -72,18 +79,19 @@ public class FragmentTodo extends Fragment {
                             Toast.makeText(getActivity(), "Linearlayout Clicked", Toast.LENGTH_LONG).show();
                         }
                     });
+                    */
 
                     TextView textViewTitle = new TextView(getActivity());
                     textViewTitle.setLayoutParams(layoutParams);
                     textViewTitle.setTextSize(20);
                     textViewTitle.setText(" " + task.getTaskTitle());
                     textViewTitle.setTextColor(Color.parseColor(Constants.task_titleCol));
-                    textViewTitle.setBackgroundColor(Color.parseColor(Constants.task_bg));
+                    textViewTitle.setBackgroundColor(Color.parseColor(Constants.task_title_bg));
                     textViewTitle.setPadding(15, 15, 15, 0);
                     textViewTitle.setMovementMethod(new ScrollingMovementMethod());
-                    textViewTitle.setClickable(false);
-                    textViewTitle.setDuplicateParentStateEnabled(true);
-                    linearLayout.addView(textViewTitle);
+                    //textViewTitle.setClickable(false);
+                    //textViewTitle.setDuplicateParentStateEnabled(true);
+                    titleLayout.addView(textViewTitle);
 
                     TextView textViewInfo = new TextView(getActivity());
                     textViewInfo.setLayoutParams(layoutParams);
@@ -93,8 +101,8 @@ public class FragmentTodo extends Fragment {
                     textViewInfo.setBackgroundColor(Color.parseColor(Constants.task_bg));
                     textViewInfo.setPadding(15, 0, 15, 15);
                     textViewInfo.setMovementMethod(new ScrollingMovementMethod());
-                    textViewInfo.setClickable(false);
-                    textViewInfo.setDuplicateParentStateEnabled(true);
+                    //textViewInfo.setClickable(false);
+                    //textViewInfo.setDuplicateParentStateEnabled(true);
                     linearLayout.addView(textViewInfo);
 
                     /*
@@ -131,7 +139,7 @@ public class FragmentTodo extends Fragment {
                             startActivity(intent);
                         }
                     });
-                    deleteButton.setClickable(false);
+                    //deleteButton.setClickable(false);
                     linearLayout.addView(deleteButton);
 
                     Button upgradeStatusButton = new Button(getActivity());
@@ -149,9 +157,10 @@ public class FragmentTodo extends Fragment {
                             startActivity(intent);
                         }
                     });
-                    upgradeStatusButton.setClickable(false);
+                    //upgradeStatusButton.setClickable(false);
                     linearLayout.addView(upgradeStatusButton);
 
+                    layout.addView(titleLayout);
                     layout.addView(linearLayout);
                 }
             }
