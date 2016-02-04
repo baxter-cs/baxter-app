@@ -8,11 +8,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -58,7 +61,6 @@ public class FragmentDoing extends Fragment {
                     LinearLayout layout = (LinearLayout) view.findViewById(R.id.todo_layout);
                     ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     ViewGroup.LayoutParams titleParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    ViewGroup.LayoutParams buttonParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
                     titleLayout = new LinearLayout(getActivity());
                     titleLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -88,6 +90,48 @@ public class FragmentDoing extends Fragment {
                     textViewInfo.setMovementMethod(new ScrollingMovementMethod());
                     linearLayout.addView(textViewInfo);
 
+                    textViewInfo.setClickable(true);
+                    textViewInfo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_LONG).show();
+
+                            PopupMenu popupMenu = new PopupMenu(getActivity(), v);
+                            // Inflate the popup menu with xml file
+                            popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+
+                            // Add popupMenu with onMenuItemClickListener
+                            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    switch (item.getItemId()) {
+                                        case R.id.move_to_doing:
+                                            Toast.makeText(getActivity(), "Task Moved to Done", Toast.LENGTH_SHORT).show();
+
+                                            task.upgradeStatus();
+                                            Gson gson = new Gson();
+                                            SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = prefs.edit();
+                                            editor.putString("tasks", gson.toJson(task_storage));
+                                            editor.commit();
+                                            Intent intent = new Intent(getContext(), FlexActivity.class);
+                                            startActivity(intent);
+
+                                            break;
+                                        case R.id.delete:
+                                            Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
+                                            break;
+                                        default:
+                                            Toast.makeText(getActivity(), item.getTitle() + " Clicked", Toast.LENGTH_SHORT).show();
+                                    }
+                                    return true;
+                                }
+                            });
+
+                            popupMenu.show();
+                        }
+                    });
+
                     Button deleteButton = new Button(getActivity());
                     deleteButton.setTag(task.getTaskID());
                     deleteButton.setText("Delete Task");
@@ -116,23 +160,6 @@ public class FragmentDoing extends Fragment {
                         }
                     });
                     linearLayout.addView(deleteButton);
-
-                    Button upgradeStatusButton = new Button(getActivity());
-                    upgradeStatusButton.setText("Upgrade Status");
-                    upgradeStatusButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            task.upgradeStatus();
-                            Gson gson = new Gson();
-                            SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = prefs.edit();
-                            editor.putString("tasks", gson.toJson(task_storage));
-                            editor.commit();
-                            Intent intent = new Intent(getContext(), FlexActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-                    linearLayout.addView(upgradeStatusButton);
 
                     layout.addView(titleLayout);
                     layout.addView(linearLayout);
