@@ -18,7 +18,8 @@ import java.util.Map;
  * Created by ralph on 2/4/2016.
  */
 public class POSTHelper {
-    public static void postNewComment(Context context, final String mTask){
+    public static void postNewComment(Context context, final String mTask, final String mDescription,
+                                      final String mAssignee, final String mDueDate){
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest sr = new StringRequest(Request.Method.POST,"http://192.168.0.13:8000/newTask", new Response.Listener<String>() {
             @Override
@@ -35,6 +36,9 @@ public class POSTHelper {
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("mTask", mTask);
+                params.put("mDescription", mDescription);
+                params.put("mAssignee", mAssignee);
+                params.put("mDueDate", mDueDate);
 
                 return params;
             }

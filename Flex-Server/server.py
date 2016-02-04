@@ -28,8 +28,13 @@ class Task(db.Model):
 @app.route('/newTask', methods=['POST'])
 def app_task():
     mTask = request.form['mTask']
-    print(mTask)
-    return "meow"
+    mDescription = request.form['mDescription']
+    mAssignee = request.form['mAssignee']
+    mDueDate = request.form['mDueDate']
+    print(mTask + " " + mDescription + " " + mAssignee + " " + mDueDate)
+    db.session.add(Task(mTask, mDescription, mAssignee, mDueDate, "To Do"))
+    db.session.commit()
+    return "Added The Task!"
 
 
 app.run(debug=True, host='0.0.0.0', port=8000)
