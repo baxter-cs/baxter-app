@@ -94,32 +94,17 @@ public class FragmentDone extends Fragment {
                     textViewInfo.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_LONG).show();
-
                             PopupMenu popupMenu = new PopupMenu(getActivity(), v);
                             // Inflate the popup menu with xml file
-                            popupMenu.getMenuInflater().inflate(R.menu.todo_menu, popupMenu.getMenu());
+                            popupMenu.getMenuInflater().inflate(R.menu.menu_done, popupMenu.getMenu());
 
                             // Add popupMenu with onMenuItemClickListener
                             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                                 @Override
                                 public boolean onMenuItemClick(MenuItem item) {
                                     switch (item.getItemId()) {
-                                        case R.id.move_to_doing:
-                                            Toast.makeText(getActivity(), "Moved to In Process", Toast.LENGTH_SHORT).show();
-
-                                            task.upgradeStatus();
-                                            Gson gson = new Gson();
-                                            SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
-                                            SharedPreferences.Editor editor = prefs.edit();
-                                            editor.putString("tasks", gson.toJson(task_storage));
-                                            editor.commit();
-                                            Intent intent = new Intent(getContext(), FlexActivity.class);
-                                            startActivity(intent);
-
-                                            break;
                                         case R.id.delete:
-                                            Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getActivity(), "Task Deleted", Toast.LENGTH_SHORT).show();
                                             break;
                                         default:
                                             Toast.makeText(getActivity(), item.getTitle() + " Clicked", Toast.LENGTH_SHORT).show();

@@ -25,5 +25,7 @@
     <string name="button_submit_task">Submit</string>
     <string name="hint_task_message">Enter a Task</string>
 
-    <string name="spinner_title">Options</string>
+    <string name="move_to_doing">Move to In Process</string>
+    <string name="move_to_done">Move to Done</string>
+    <string name="delete">Delete</string>
 </resources>
