@@ -11,10 +11,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,12 +82,12 @@ public class FragmentTodo extends Fragment {
                     */
 
                     TextView textViewTitle = new TextView(getActivity());
-                    //textViewTitle.setLayoutParams(titleParams);
+                    textViewTitle.setLayoutParams(titleParams);
                     textViewTitle.setTextSize(20);
                     textViewTitle.setText(" " + task.getTaskTitle());
                     textViewTitle.setTextColor(Color.parseColor(Constants.task_titleCol));
                     textViewTitle.setBackgroundColor(Color.parseColor(Constants.task_title_bg));
-                    textViewTitle.setPadding(15, 15, 15, 0);
+                    textViewTitle.setPadding(15, 15, 15, 10);
                     textViewTitle.setMovementMethod(new ScrollingMovementMethod());
                     //textViewTitle.setClickable(false);
                     //textViewTitle.setDuplicateParentStateEnabled(true);
@@ -114,8 +112,8 @@ public class FragmentTodo extends Fragment {
                     textViewInfo.setTextSize(18);
                     textViewInfo.setText(task.getTaskInfo());
                     textViewInfo.setTextColor(Color.parseColor(Constants.task_textCol));
-                    textViewInfo.setBackgroundColor(Color.parseColor(Constants.task_bg));
-                    textViewInfo.setPadding(15, 0, 15, 15);
+                    textViewInfo.setBackgroundColor(Color.parseColor(Constants.task_text_bg));
+                    textViewInfo.setPadding(15, 5, 15, 15);
                     textViewInfo.setMovementMethod(new ScrollingMovementMethod());
                     //textViewInfo.setClickable(false);
                     //textViewInfo.setDuplicateParentStateEnabled(true);

@@ -66,7 +66,7 @@ public class FragmentDoing extends Fragment {
                     textViewTitle.setTextSize(20);
                     textViewTitle.setText(" " + task.getTaskTitle());
                     textViewTitle.setTextColor(Color.parseColor(Constants.task_titleCol));
-                    textViewTitle.setBackgroundColor(Color.parseColor(Constants.task_bg));
+                    textViewTitle.setBackgroundColor(Color.parseColor(Constants.task_text_bg));
                     textViewTitle.setPadding(15, 15, 15, 0);
                     textViewTitle.setMovementMethod(new ScrollingMovementMethod());
                     linearLayout.addView(textViewTitle);
@@ -76,7 +76,7 @@ public class FragmentDoing extends Fragment {
                     textViewInfo.setTextSize(18);
                     textViewInfo.setText(task.getTaskInfo());
                     textViewInfo.setTextColor(Color.parseColor(Constants.task_textCol));
-                    textViewInfo.setBackgroundColor(Color.parseColor(Constants.task_bg));
+                    textViewInfo.setBackgroundColor(Color.parseColor(Constants.task_text_bg));
                     textViewInfo.setPadding(15, 0, 15, 15);
                     textViewInfo.setMovementMethod(new ScrollingMovementMethod());
                     linearLayout.addView(textViewInfo);
@@ -94,7 +94,7 @@ public class FragmentDoing extends Fragment {
                             Gson gson = new Gson();
                             TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
                             List<Task> filteredTasks = new ArrayList<Task>();
-                            for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
+                            for (Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext(); ) {
                                 Task filteredTask = i.next();
                                 if (!filteredTask.getTaskID().equals(v.getTag())) {
                                     filteredTasks.add(filteredTask);
