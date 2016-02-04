@@ -34,6 +34,7 @@ public class FlexActivity extends AppCompatActivity {
             // This runs when the app starts the first time
             firstRun = 1;
             editor.putInt("firstRun", firstRun);
+            editor.putBoolean("isInitTodo", false);
             editor.putBoolean("isInitDoing", false);
             editor.putBoolean("isInitDone", false);
             editor.commit();
@@ -79,6 +80,7 @@ public class FlexActivity extends AppCompatActivity {
         String json = prefs.getString("tasks", "error");
         Gson gson = new Gson();
         TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
+        editor.putBoolean("isInitTodo", false);
         editor.putBoolean("isInitDoing", false);
         editor.putBoolean("isInitDone", false);
         for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
@@ -87,6 +89,8 @@ public class FlexActivity extends AppCompatActivity {
                 editor.putBoolean("isInitDoing", true);
             } else if (task.getTaskStatus().equals(Constants.title_done)) {
                 editor.putBoolean("isInitDone", true);
+            } else if (task.getTaskStatus().equals(Constants.title_todo)) {
+                editor.putBoolean("isInitTodo", true);
             }
         }
         editor.commit();
