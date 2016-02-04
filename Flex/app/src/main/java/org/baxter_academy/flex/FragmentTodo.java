@@ -51,7 +51,7 @@ public class FragmentTodo extends Fragment {
             final TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
             // Here we set tv as our text view
             TextView tv = (TextView) view.findViewById(R.id.title_todo);
-            if (tv.getText().equals(Constants.title_todo)) {
+            if (prefs.getBoolean("isInitTodo", false) && tv.getText().equals(Constants.title_todo)) {
                 tv.setVisibility(View.GONE);
             }
             // Here we iterate through all the Task objects in our list
