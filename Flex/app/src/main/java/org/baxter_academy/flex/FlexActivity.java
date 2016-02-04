@@ -14,6 +14,9 @@ import android.view.MenuItem;
 
 import com.google.gson.Gson;
 
+import java.util.Iterator;
+import java.util.List;
+
 public class FlexActivity extends AppCompatActivity {
 
     private boolean debugFirstRun = false;
@@ -31,6 +34,8 @@ public class FlexActivity extends AppCompatActivity {
             // This runs when the app starts the first time
             firstRun = 1;
             editor.putInt("firstRun", firstRun);
+            editor.putBoolean("isInitDoing", false);
+            editor.putBoolean("isInitDone", false);
             editor.commit();
 
             // Setting up default json files
@@ -69,6 +74,22 @@ public class FlexActivity extends AppCompatActivity {
             editor.putString("tasks", gson.toJson(task_storage));
             editor.commit();
         }
+
+        // Looks through all the tasks and updates the init booleans
+        String json = prefs.getString("tasks", "error");
+        Gson gson = new Gson();
+        TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
+        editor.putBoolean("isInitDoing", false);
+        editor.putBoolean("isInitDone", false);
+        for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
+            final Task task = i.next();
+            if (task.getTaskStatus().equals(Constants.title_doing)) {
+                editor.putBoolean("isInitDoing", true);
+            } else if (task.getTaskStatus().equals(Constants.title_done)) {
+                editor.putBoolean("isInitDone", true);
+            }
+        }
+        editor.commit();
 
         // Create the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

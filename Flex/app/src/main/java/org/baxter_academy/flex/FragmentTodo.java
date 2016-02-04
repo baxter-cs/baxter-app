@@ -114,7 +114,7 @@ public class FragmentTodo extends Fragment {
 
                     Button deleteButton = new Button(getActivity());
                     deleteButton.setTag(task.getTaskID());
-                    deleteButton.setText("Delete " + deleteButton.getTag());
+                    deleteButton.setText("Delete Task");
                     deleteButton.setOnClickListener(new View.OnClickListener() {
                         // This is run when the Button is pressed
                         @Override
@@ -151,6 +151,7 @@ public class FragmentTodo extends Fragment {
                             Gson gson = new Gson();
                             SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = prefs.edit();
+                            editor.putBoolean("isInitDoing", true);
                             editor.putString("tasks", gson.toJson(task_storage));
                             editor.commit();
                             Intent intent = new Intent(getContext(), FlexActivity.class);

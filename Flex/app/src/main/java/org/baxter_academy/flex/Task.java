@@ -2,11 +2,10 @@ package org.baxter_academy.flex;
 
 import java.io.Serializable;
 
-public class Task implements Serializable{
+public class Task implements Serializable {
 
     private String mTask, mDescription, mAssignee, mDueDate, mTaskStatus;
     private int mID;
-    private static boolean isInitDoing, isInitDone;
 
     public void addTask(String mTask, String mDescription, String mAssignee, String mDueDate, Integer mID){
         this.mTask = mTask;
@@ -44,21 +43,11 @@ public class Task implements Serializable{
     public void upgradeStatus() {
         if (mTaskStatus.equals(Constants.title_todo)) {
             mTaskStatus = Constants.title_doing;
-            isInitDoing = true;
         } else if (mTaskStatus.equals(Constants.title_doing)) {
             mTaskStatus = Constants.title_done;
-            isInitDone = true;
         } else if (mTaskStatus.equals(Constants.title_done)) {
             // Delete the Task or something
         }
-    }
-
-    public static boolean isInitDoing() {
-        return isInitDoing;
-    }
-
-    public static boolean isInitDone() {
-        return isInitDone;
     }
 
     public Integer getTaskID() {
