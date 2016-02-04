@@ -102,26 +102,42 @@ public class FragmentTodo extends Fragment {
                             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                                 @Override
                                 public boolean onMenuItemClick(MenuItem item) {
+                                    SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = prefs.edit();
+                                    Gson gson = new Gson();
+
                                     switch (item.getItemId()) {
                                         case R.id.move_to_doing:
                                             Toast.makeText(getActivity(), "Task Moved to In Process", Toast.LENGTH_SHORT).show();
 
                                             task.upgradeStatus();
-                                            Gson gson = new Gson();
-                                            SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
-                                            SharedPreferences.Editor editor = prefs.edit();
                                             editor.putString("tasks", gson.toJson(task_storage));
                                             editor.commit();
-                                            Intent intent = new Intent(getContext(), FlexActivity.class);
-                                            startActivity(intent);
 
                                             break;
                                         case R.id.delete:
                                             Toast.makeText(getActivity(), "Task Deleted", Toast.LENGTH_SHORT).show();
+
+                                            String json = prefs.getString("tasks", "error");
+                                            TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
+                                            List<Task> filteredTasks = new ArrayList<Task>();
+                                            for (Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext(); ) {
+                                                Task filteredTask = i.next();
+                                                if (!filteredTask.getTaskID().equals(task.getTaskID())) {
+                                                    filteredTasks.add(filteredTask);
+                                                }
+                                            }
+                                            task_storage.tasks = filteredTasks;
+                                            // Saves the updated Task Storage
+                                            editor.putString("tasks", gson.toJson(task_storage));
+                                            editor.commit();
+
                                             break;
                                         default:
                                             Toast.makeText(getActivity(), item.getTitle() + " Clicked", Toast.LENGTH_SHORT).show();
                                     }
+                                    Intent intent = new Intent(getContext(), FlexActivity.class);
+                                    startActivity(intent);
                                     return true;
                                 }
                             });
@@ -129,35 +145,6 @@ public class FragmentTodo extends Fragment {
                             popupMenu.show();
                         }
                     });
-
-                    Button deleteButton = new Button(getActivity());
-                    deleteButton.setTag(task.getTaskID());
-                    deleteButton.setText("Delete Task");
-                    deleteButton.setOnClickListener(new View.OnClickListener() {
-                        // This is run when the Button is pressed
-                        @Override
-                        public void onClick(View v) {
-                            SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = prefs.edit();
-                            String json = prefs.getString("tasks", "error");
-                            Gson gson = new Gson();
-                            TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
-                            List<Task> filteredTasks = new ArrayList<Task>();
-                            for (Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext(); ) {
-                                Task filteredTask = i.next();
-                                if (!filteredTask.getTaskID().equals(v.getTag())) {
-                                    filteredTasks.add(filteredTask);
-                                }
-                            }
-                            task_storage.tasks = filteredTasks;
-                            // Saves the updated Task Storage
-                            editor.putString("tasks", gson.toJson(task_storage));
-                            editor.commit();
-                            Intent intent = new Intent(getContext(), FlexActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-                    linearLayout.addView(deleteButton);
 
                     layout.addView(titleLayout);
                     layout.addView(linearLayout);
