@@ -142,7 +142,6 @@ public class FragmentTodo extends Fragment {
                             Gson gson = new Gson();
                             SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = prefs.edit();
-                            editor.putBoolean("isInitDoing", true);
                             editor.putString("tasks", gson.toJson(task_storage));
                             editor.commit();
                             Intent intent = new Intent(getContext(), FlexActivity.class);
