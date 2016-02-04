@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +27,8 @@ import java.util.List;
 public class FragmentTodo extends Fragment {
 
     LinearLayout titleLayout;
-    LinearLayout linearLayout;
+    LinearLayout infoLayout;
+    LinearLayout buttonLayout;
 
     public FragmentTodo() {}
 
@@ -66,9 +69,13 @@ public class FragmentTodo extends Fragment {
                     titleLayout.setOrientation(LinearLayout.HORIZONTAL);
                     titleLayout.setLayoutParams(layoutParams);
 
-                    linearLayout = new LinearLayout(getActivity());
-                    linearLayout.setOrientation(LinearLayout.VERTICAL);
-                    linearLayout.setLayoutParams(layoutParams);
+                    infoLayout = new LinearLayout(getActivity());
+                    infoLayout.setOrientation(LinearLayout.VERTICAL);
+                    infoLayout.setLayoutParams(layoutParams);
+
+                    buttonLayout = new LinearLayout(getActivity());
+                    buttonLayout.setOrientation(LinearLayout.VERTICAL);
+                    buttonLayout.setLayoutParams(layoutParams);
 
                     TextView textViewTitle = new TextView(getActivity());
                     textViewTitle.setLayoutParams(titleParams);
@@ -102,7 +109,7 @@ public class FragmentTodo extends Fragment {
                     textViewInfo.setBackgroundColor(Color.parseColor(Constants.task_text_bg));
                     textViewInfo.setPadding(15, 5, 15, 15);
                     textViewInfo.setMovementMethod(new ScrollingMovementMethod());
-                    linearLayout.addView(textViewInfo);
+                    infoLayout.addView(textViewInfo);
 
                     Button deleteButton = new Button(getActivity());
                     deleteButton.setTag(task.getTaskID());
@@ -131,7 +138,7 @@ public class FragmentTodo extends Fragment {
                             startActivity(intent);
                         }
                     });
-                    linearLayout.addView(deleteButton);
+                    deleteButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
 
                     Button upgradeStatusButton = new Button(getActivity());
                     upgradeStatusButton.setText("Upgrade Status");
@@ -149,10 +156,15 @@ public class FragmentTodo extends Fragment {
                             startActivity(intent);
                         }
                     });
-                    linearLayout.addView(upgradeStatusButton);
+                    upgradeStatusButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+
+                    buttonLayout.addView(deleteButton);
+                    buttonLayout.addView(upgradeStatusButton);
+                    buttonLayout.setOrientation(LinearLayout.HORIZONTAL);
 
                     layout.addView(titleLayout);
-                    layout.addView(linearLayout);
+                    layout.addView(infoLayout);
+                    layout.addView(buttonLayout);
                 }
             }
         } else {
