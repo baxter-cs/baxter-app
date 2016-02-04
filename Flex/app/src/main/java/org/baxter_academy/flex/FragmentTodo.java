@@ -9,10 +9,12 @@ import android.support.v4.app.Fragment;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -103,6 +105,38 @@ public class FragmentTodo extends Fragment {
                     textViewInfo.setPadding(15, 5, 15, 15);
                     textViewInfo.setMovementMethod(new ScrollingMovementMethod());
                     linearLayout.addView(textViewInfo);
+
+                    textViewInfo.setClickable(true);
+                    textViewInfo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_LONG).show();
+
+                            PopupMenu popupMenu = new PopupMenu(getActivity(), v);
+                            // Inflate the popup menu with xml file
+                            popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+
+                            // Add popupMenu with onMenuItemClickListener
+                            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    switch (item.getItemId()) {
+                                        case R.id.move_to_doing:
+                                            Toast.makeText(getActivity(), "Moved to In Process", Toast.LENGTH_SHORT).show();
+                                            break;
+                                        case R.id.delete:
+                                            Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
+                                            break;
+                                        default:
+                                            Toast.makeText(getActivity(), item.getTitle() + " Clicked", Toast.LENGTH_SHORT).show();
+                                    }
+                                    return true;
+                                }
+                            });
+
+                            popupMenu.show();
+                        }
+                    });
 
                     Button deleteButton = new Button(getActivity());
                     deleteButton.setTag(task.getTaskID());
