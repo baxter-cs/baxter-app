@@ -11,7 +11,7 @@ class Task(db.Model):
     mTask = db.Column(db.String())
     mDescription = db.Column(db.String())
     mAssignee = db.Column(db.String())
-    mDueDate = db.column(db.String())
+    mDueDate = db.Column(db.String())
     mTaskStatus = db.Column(db.String())
 
     def __init__(self, mTask, mDescription, mAssignee, mDueDate, mTaskStatus):
@@ -54,8 +54,30 @@ def upgrade_task():
 
 @app.route('/getTasks')
 def get_tasks():
-    response = dict()
-    response['content'] = "farm"
+    isInitTodo = False
+    isInitDoing = False
+    isInitDone = False
+    tasks = []
+    for task in Task.query.all():
+        if task.mTaskStatus == "To Do":
+            isInitTodo = True
+        elif task.mTaskStatus == "In Process":
+            isInitDoing = True
+        elif task.mTaskStatus == "Done":
+            isInitDoing = True
+        response = {'mTask': task.mTask,
+                    'mDescription': task.mDescription,
+                    'mAssignee': task.mAssignee,
+                    'mDueDate': task.mDueDate,
+                    'mID': task.mID
+                    }
+        tasks.append(response)
+    response = {}
+    response['tasks'] = tasks
+    response['meta'] = {}
+    response['meta']['isInitTodo'] = isInitTodo
+    response['meta']['isInitDoing'] = isInitDoing
+    response['meta']['isInitDone'] = isInitDone
     return jsonify(**response)
 
 
