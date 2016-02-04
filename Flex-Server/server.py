@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -50,6 +50,13 @@ def upgrade_task():
         task.mTaskStatus = "To Do"
     db.session.commit()
     return "Successfully upgraded task"
+
+
+@app.route('/getTasks')
+def get_tasks():
+    response = dict()
+    response['content'] = "farm"
+    return jsonify(**response)
 
 
 app.run(debug=True, host='0.0.0.0', port=8000)

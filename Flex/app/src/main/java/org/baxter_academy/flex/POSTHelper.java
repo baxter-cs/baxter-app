@@ -21,7 +21,7 @@ public class POSTHelper {
     public static void postNewTask(Context context, final String mTask, final String mDescription,
                                       final String mAssignee, final String mDueDate){
         RequestQueue queue = Volley.newRequestQueue(context);
-        StringRequest sr = new StringRequest(Request.Method.POST,"http://192.168.0.13:8000/newTask", new Response.Listener<String>() {
+        StringRequest sr = new StringRequest(Request.Method.POST,Constants.server_address_newTask, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 //
@@ -61,7 +61,7 @@ public class POSTHelper {
 
     public static void postUpgradeTask(Context context, final String mID){
         RequestQueue queue = Volley.newRequestQueue(context);
-        StringRequest sr = new StringRequest(Request.Method.POST,"http://192.168.0.13:8000/upgradeTask", new Response.Listener<String>() {
+        StringRequest sr = new StringRequest(Request.Method.POST,Constants.server_address_upgradeStatus, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 //
