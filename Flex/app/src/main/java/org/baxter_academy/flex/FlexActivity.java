@@ -15,23 +15,20 @@ import android.view.MenuItem;
 import com.google.gson.Gson;
 
 import java.util.Iterator;
-import java.util.List;
 
 public class FlexActivity extends AppCompatActivity {
-
-    private boolean debugFirstRun = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.flex_layout);
 
-        // Checks if run is good after installation
+        // Checking installation run
         SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
-        int firstRun = prefs.getInt("firstRun", 0); //0 is the default value
+        int firstRun = prefs.getInt("firstRun", 0);
         SharedPreferences.Editor editor = prefs.edit();
         if (firstRun == 0) {
-            // This runs when the app starts the first time
+            // This runs when Flex starts at the first time
             firstRun = 1;
             editor.putInt("firstRun", firstRun);
             editor.putBoolean("isInitTodo", false);
@@ -41,44 +38,51 @@ public class FlexActivity extends AppCompatActivity {
 
             // Setting up default json files
             TaskStorage task_storage = new TaskStorage();
-            // Creating Starter Task
+            // Creating initial Tasks
             Task starterTask = new Task();
-            starterTask.addTask("Welcome to Flex", "First Task", "The Flex Team", "2-01-2016", task_storage.getNewTaskID());
-            // Adding Starter Task to TaskStorage class
+            Task tutorialTask = new Task();
+            starterTask.addTask("Welcome to Flex", "First Task!", "Flex Team", "02-05-2016", task_storage.getNewTaskID());
+            tutorialTask.addTask("Learn to Use Flex", "Tap on this Task", "You", "02-05-2016", task_storage.getNewTaskID());
+
+            // Adding initial Tasks to TaskStorage object
             task_storage.tasks.add(starterTask);
+            task_storage.tasks.add(tutorialTask);
 
             // Creating a Gson object (Google's JSON Library)
             Gson gson = new Gson();
-            // This saves our encoded json string into the shared pref. meta with the key "tasks"
-            // This will be where we store our tasks
+
+            // Saving encoded json string into shared preferences meta with key "tasks"
+            // This will be where Tasks are stored
             editor.putString("tasks", gson.toJson(task_storage));
             editor.commit();
-        } else if (debugFirstRun) {
+        } else if (false) {
             // This is for debugging purposes
             firstRun++;
             editor.putInt("firstRun", firstRun);
             editor.commit();
             String json = prefs.getString("tasks", "error");
 
-            // Create a Gson object
+            // Creating a Gson object
             Gson gson = new Gson();
-            // Use our Gson object to decode our json string back into our TaskStorage class
+            // Using Gson object to decode json string back into TaskStorage class
             TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
             // Creating a new task
-            Task starter_task = new Task();
-            starter_task.addTask("First Task", "This is the first task", "The Flex Team", "2-01-2016", task_storage.getNewTaskID());
-            // Init. our TaskStorage class
-            task_storage.tasks.add(starter_task);
+            Task starterTask = new Task();
+            starterTask.addTask("First Task", "This is the first task", "The Flex Team", "2-01-2016", task_storage.getNewTaskID());
 
-            // This saves our encoded json string into the shared pref. meta with the key "tasks"
-            // This will be where we store our tasks
+            // Adding initial Tasks to TaskStorage object
+            task_storage.tasks.add(starterTask);
+
+            // Saving encoded json string into shared preferences meta with key "tasks"
+            // This will be where tasks are stored
             editor.putString("tasks", gson.toJson(task_storage));
             editor.commit();
         }
 
-        // Looks through all the tasks and updates the init booleans
+        // Checking through all Tasks and updating initial states
         String json = prefs.getString("tasks", "error");
         Gson gson = new Gson();
+
         TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
         editor.putBoolean("isInitTodo", false);
         editor.putBoolean("isInitDoing", false);
@@ -95,19 +99,19 @@ public class FlexActivity extends AppCompatActivity {
         }
         editor.commit();
 
-        // Create the toolbar
+        // Creating the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(Constants.app_name);
 
-        // Expand the tablayout
+        // Expanding the tablayout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText(Constants.title_todo));
         tabLayout.addTab(tabLayout.newTab().setText(Constants.title_doing));
         tabLayout.addTab(tabLayout.newTab().setText(Constants.title_done));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        // Make the viewpager
+        // Making the viewpager
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final org.baxter_academy.flex.PagerAdapter adapter = new org.baxter_academy.flex.PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
