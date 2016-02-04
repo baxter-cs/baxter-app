@@ -123,6 +123,16 @@ public class FragmentTodo extends Fragment {
                                     switch (item.getItemId()) {
                                         case R.id.move_to_doing:
                                             Toast.makeText(getActivity(), "Moved to In Process", Toast.LENGTH_SHORT).show();
+
+                                            task.upgradeStatus();
+                                            Gson gson = new Gson();
+                                            SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = prefs.edit();
+                                            editor.putString("tasks", gson.toJson(task_storage));
+                                            editor.commit();
+                                            Intent intent = new Intent(getContext(), FlexActivity.class);
+                                            startActivity(intent);
+
                                             break;
                                         case R.id.delete:
                                             Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
@@ -166,23 +176,6 @@ public class FragmentTodo extends Fragment {
                         }
                     });
                     linearLayout.addView(deleteButton);
-
-                    Button upgradeStatusButton = new Button(getActivity());
-                    upgradeStatusButton.setText("Upgrade Status");
-                    upgradeStatusButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            task.upgradeStatus();
-                            Gson gson = new Gson();
-                            SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = prefs.edit();
-                            editor.putString("tasks", gson.toJson(task_storage));
-                            editor.commit();
-                            Intent intent = new Intent(getContext(), FlexActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-                    linearLayout.addView(upgradeStatusButton);
 
                     layout.addView(titleLayout);
                     layout.addView(linearLayout);
