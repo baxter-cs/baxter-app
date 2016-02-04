@@ -120,6 +120,24 @@ public class FragmentTodo extends Fragment {
                                             break;
                                         case R.id.delete:
                                             Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
+                                            SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = prefs.edit();
+                                            String json = prefs.getString("tasks", "error");
+                                            Gson gson = new Gson();
+                                            TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
+                                            List<Task> filteredTasks = new ArrayList<Task>();
+                                            for (Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext(); ) {
+                                                Task filteredTask = i.next();
+                                                if (!filteredTask.getTaskID().equals(task.getTaskID())) {
+                                                    filteredTasks.add(filteredTask);
+                                                }
+                                            }
+                                            task_storage.tasks = filteredTasks;
+                                            // Saves the updated Task Storage
+                                            editor.putString("tasks", gson.toJson(task_storage));
+                                            editor.commit();
+                                            Intent intent = new Intent(getContext(), FlexActivity.class);
+                                            startActivity(intent);
                                             break;
                                         default:
                                             Toast.makeText(getActivity(), item.getTitle() + " Clicked", Toast.LENGTH_SHORT).show();
