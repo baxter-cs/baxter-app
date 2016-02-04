@@ -9,10 +9,12 @@ import android.support.v4.app.Fragment;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -109,9 +111,23 @@ public class FragmentTodo extends Fragment {
                         @Override
                         public void onClick(View v) {
                             Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_LONG).show();
+
+                            PopupMenu popupMenu = new PopupMenu(getActivity(), v);
+                            // Inflate the popup menu with xml file
+                            popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+
+                            // Add popupMenu with onMenuItemClickListener
+                            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    Toast.makeText(getActivity(), item.getTitle() + " Clicked", Toast.LENGTH_SHORT).show();
+                                    return false;
+                                }
+                            });
+
+                            popupMenu.show();
                         }
                     });
-
 
                     Button deleteButton = new Button(getActivity());
                     deleteButton.setTag(task.getTaskID());
