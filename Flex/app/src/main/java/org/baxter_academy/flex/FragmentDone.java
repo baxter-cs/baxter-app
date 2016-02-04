@@ -95,22 +95,7 @@ public class FragmentDone extends Fragment {
                         // This is run when the Button is pressed
                         @Override
                         public void onClick(View v) {
-                            SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = prefs.edit();
-                            String json = prefs.getString("tasks", "error");
-                            Gson gson = new Gson();
-                            TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
-                            List<Task> filteredTasks = new ArrayList<Task>();
-                            for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
-                                Task filteredTask = i.next();
-                                if (!filteredTask.getTaskID().equals(v.getTag())) {
-                                    filteredTasks.add(filteredTask);
-                                }
-                            }
-                            task_storage.tasks = filteredTasks;
-                            // Saves the updated Task Storage
-                            editor.putString("tasks", gson.toJson(task_storage));
-                            editor.commit();
+                            POSTHelper.postDeleteTask(getContext(), task.getTaskID().toString());
                             Intent intent = new Intent(getContext(), FlexActivity.class);
                             startActivity(intent);
                         }

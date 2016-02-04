@@ -53,15 +53,40 @@ public class POSTHelper {
         queue.add(sr);
     }
 
-    public interface PostCommentResponseListener {
-        public void requestStarted();
-        public void requestCompleted();
-        public void requestEndedWithError(VolleyError error);
-    }
-
     public static void postUpgradeTask(Context context, final String mID){
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest sr = new StringRequest(Request.Method.POST,Constants.server_address_upgradeStatus, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("mID", mID);
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                //params.put("Content-Type","application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(sr);
+    }
+
+    public static void postDeleteTask(Context context, final String mID) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        StringRequest sr = new StringRequest(Request.Method.POST,Constants.server_address_deleteTask, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 //

@@ -113,14 +113,14 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
 
         Intent intent = new Intent(AddTaskActivity.this, FlexActivity.class);
 
-        SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
+        //SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
+        //SharedPreferences.Editor editor = prefs.edit();
 
-        String json = prefs.getString("tasks", "error");
+        //String json = prefs.getString("tasks", "error");
         // Here we create our Gson object
-        Gson gson = new Gson();
+        //Gson gson = new Gson();
         // Here we use our Gson object to decode our json string back into our TaskStorage class
-        TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
+        //TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
 
         mTitle = (EditText) findViewById(R.id.bar_title);
         mDescription = (EditText) findViewById(R.id.bar_description);
@@ -132,14 +132,14 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         assignee = mAssignee.getText().toString();
         dueDate = mDueDate.getText().toString();
 
-        Task task = new Task();
-        task.addTask(title, description, assignee, dueDate, task_storage.getNewTaskID());
+        //Task task = new Task();
+        //task.addTask(title, description, assignee, dueDate, task_storage.getNewTaskID());
         // Init. our TaskStorage class
-        task_storage.tasks.add(task);
+        //task_storage.tasks.add(task);
         // This saves our encoded json string into the shared pref. meta with the key "tasks"
         // This will be where we store our tasks
-        editor.putString("tasks", gson.toJson(task_storage));
-        editor.commit();
+        //editor.putString("tasks", gson.toJson(task_storage));
+        //editor.commit();
 
         POSTHelper.postNewTask(this, title, description, assignee, dueDate);
 

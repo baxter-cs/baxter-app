@@ -46,8 +46,6 @@ def upgrade_task():
         task.mTaskStatus = "In Process"
     elif task.mTaskStatus == "In Process":
         task.mTaskStatus = "Done"
-    elif task.mTaskStatus == "Done":
-        task.mTaskStatus = "To Do"
     db.session.commit()
     return "Successfully upgraded task"
 
@@ -69,7 +67,8 @@ def get_tasks():
                     'mDescription': task.mDescription,
                     'mAssignee': task.mAssignee,
                     'mDueDate': task.mDueDate,
-                    'mID': task.mID
+                    'mID': task.mID,
+                    'mTaskStatus': task.mTaskStatus
                     }
         tasks.append(response)
     response = {}
@@ -79,6 +78,15 @@ def get_tasks():
     response['meta']['isInitDoing'] = isInitDoing
     response['meta']['isInitDone'] = isInitDone
     return jsonify(**response)
+
+
+@app.route('/deleteTask', methods=['POST'])
+def delete_task():
+    mID = request.form['mID']
+    print(mID)
+    Task.query.filter(Task.mID == mID).delete()
+    db.session.commit()
+    return "Deleted Task"
 
 
 app.run(debug=True, host='0.0.0.0', port=8000)

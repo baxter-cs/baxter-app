@@ -14,7 +14,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.Iterator;
 import java.util.List;
 
@@ -34,6 +40,7 @@ public class FlexActivity extends AppCompatActivity {
         int firstRun = prefs.getInt("firstRun", 0); //0 is the default value
         SharedPreferences.Editor editor = prefs.edit();
         if (firstRun == 0) {
+            /*
             // This runs when the app starts the first time
             firstRun = 1;
             editor.putInt("firstRun", firstRun);
@@ -56,30 +63,11 @@ public class FlexActivity extends AppCompatActivity {
             // This will be where we store our tasks
             editor.putString("tasks", gson.toJson(task_storage));
             editor.commit();
-        } else if (debugFirstRun) {
-            // This is for debugging purposes
-            firstRun++;
-            editor.putInt("firstRun", firstRun);
-            editor.commit();
-            String json = prefs.getString("tasks", "error");
-
-            // Create a Gson object
-            Gson gson = new Gson();
-            // Use our Gson object to decode our json string back into our TaskStorage class
-            TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
-            // Creating a new task
-            Task starter_task = new Task();
-            starter_task.addTask("First Task", "This is the first task", "The Flex Team", "2-01-2016", task_storage.getNewTaskID());
-            // Init. our TaskStorage class
-            task_storage.tasks.add(starter_task);
-
-            // This saves our encoded json string into the shared pref. meta with the key "tasks"
-            // This will be where we store our tasks
-            editor.putString("tasks", gson.toJson(task_storage));
-            editor.commit();
+            */
         }
 
         // Looks through all the tasks and updates the init booleans
+        /*
         String json = prefs.getString("tasks", "error");
         Gson gson = new Gson();
         TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
@@ -97,6 +85,8 @@ public class FlexActivity extends AppCompatActivity {
             }
         }
         editor.commit();
+        */
+        refreshTaskList(getApplicationContext());
 
         // Create the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -159,6 +149,48 @@ public class FlexActivity extends AppCompatActivity {
     public String getTaskJSON() {
         SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
         return prefs.getString("tasks", "error");
+    }
+
+    public void refreshTaskList(Context context) {
+        try {
+            JsonObject jsonObject = GETHelper.getTasks(context);
+            JsonObject meta = (JsonObject) jsonObject.get("meta");
+
+            SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+
+            editor.putBoolean("isInitTodo", meta.get("isInitTodo").getAsBoolean());
+            editor.putBoolean("isInitDoing", meta.get("isInitDoing").getAsBoolean());
+            editor.putBoolean("isInitDone", meta.get("isInitDone").getAsBoolean());
+            editor.commit();
+
+            Type listType = new TypeToken<List<JsonObject>>() {}.getType();
+            List<JsonObject> tasks = new Gson().fromJson(jsonObject.get("tasks"), listType);
+            TaskStorage task_storage = new TaskStorage();
+
+            for (JsonObject task : tasks) {
+                int mID = task.get("mID").getAsInt();
+                String mTask = task.get("mTask").getAsString();
+                String mDescription = task.get("mDescription").getAsString();
+                String mAssignee = task.get("mAssignee").getAsString();
+                String mDueDate = task.get("mDueDate").getAsString();
+                String mTaskStatus = task.get("mTaskStatus").getAsString();
+                Task newTask = new Task();
+                newTask.addTask(mTask, mDescription, mAssignee, mDueDate, mID, mTaskStatus);
+                task_storage.tasks.add(newTask);
+            }
+
+            // Creating a Gson object (Google's JSON Library)
+            Gson gson = new Gson();
+            // This saves our encoded json string into the shared pref. meta with the key "tasks"
+            // This will be where we store our tasks
+            editor.putString("tasks", gson.toJson(task_storage));
+            editor.commit();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            refreshTaskList(context);
+        }
     }
 
 }

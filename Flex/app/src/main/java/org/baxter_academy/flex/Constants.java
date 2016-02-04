@@ -19,4 +19,5 @@ public class Constants {
     public static String server_address_upgradeStatus = "http://192.168.0.13:8000/upgradeTask";
     public static String server_address_newTask = "http://192.168.0.13:8000/newTask";
     public static String server_address_getTasks = "http://192.168.0.13:8000/getTasks";
+    public static String server_address_deleteTask = "http://192.168.0.13:8000/deleteTask";
 }

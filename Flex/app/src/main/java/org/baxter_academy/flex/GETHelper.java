@@ -2,10 +2,8 @@ package org.baxter_academy.flex;
 
 import android.content.Context;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.annotations.JsonAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,11 +13,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import org.json.*;
 
 /**
  * Created by John on 2/4/2016.

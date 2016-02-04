@@ -7,13 +7,14 @@ public class Task implements Serializable {
     private String mTask, mDescription, mAssignee, mDueDate, mTaskStatus;
     private int mID;
 
-    public void addTask(String mTask, String mDescription, String mAssignee, String mDueDate, Integer mID){
+    public void addTask(String mTask, String mDescription, String mAssignee, String mDueDate, Integer mID, String mTaskStatus){
         this.mTask = mTask;
         this.mDescription = mDescription;
         this.mAssignee = mAssignee;
         this.mDueDate = mDueDate;
         this.mTaskStatus = Constants.title_todo;
         this.mID = mID;
+        this.mTaskStatus = mTaskStatus;
     }
 
     public String getTaskTitle(){
