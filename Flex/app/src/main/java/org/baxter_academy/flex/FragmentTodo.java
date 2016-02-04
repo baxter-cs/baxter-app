@@ -178,6 +178,7 @@ public class FragmentTodo extends Fragment {
                             SharedPreferences.Editor editor = prefs.edit();
                             editor.putString("tasks", gson.toJson(task_storage));
                             editor.commit();
+                            POSTHelper.postUpgradeTask(getContext(), task.getTaskID().toString());
                             Intent intent = new Intent(getContext(), FlexActivity.class);
                             startActivity(intent);
                         }

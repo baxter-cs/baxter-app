@@ -15,10 +15,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by ralph on 2/4/2016.
+ * Created by John on 2/4/2016.
  */
 public class POSTHelper {
-    public static void postNewComment(Context context, final String mTask, final String mDescription,
+    public static void postNewTask(Context context, final String mTask, final String mDescription,
                                       final String mAssignee, final String mDueDate){
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest sr = new StringRequest(Request.Method.POST,"http://192.168.0.13:8000/newTask", new Response.Listener<String>() {
@@ -57,5 +57,36 @@ public class POSTHelper {
         public void requestStarted();
         public void requestCompleted();
         public void requestEndedWithError(VolleyError error);
+    }
+
+    public static void postUpgradeTask(Context context, final String mID){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        StringRequest sr = new StringRequest(Request.Method.POST,"http://192.168.0.13:8000/upgradeTask", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("mID", mID);
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                //params.put("Content-Type","application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(sr);
     }
 }

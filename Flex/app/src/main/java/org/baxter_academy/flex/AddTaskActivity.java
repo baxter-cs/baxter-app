@@ -141,7 +141,7 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         editor.putString("tasks", gson.toJson(task_storage));
         editor.commit();
 
-        POSTHelper.postNewComment(this, title, description, assignee, dueDate);
+        POSTHelper.postNewTask(this, title, description, assignee, dueDate);
 
         startActivity(intent);
     }

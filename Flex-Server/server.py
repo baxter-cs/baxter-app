@@ -37,4 +37,19 @@ def app_task():
     return "Added The Task!"
 
 
+@app.route('/upgradeTask', methods=['POST'])
+def upgrade_task():
+    mID = request.form['mID']
+    print(mID)
+    task = Task.query.filter(Task.mID == mID).first()
+    if task.mTaskStatus == "To Do":
+        task.mTaskStatus = "In Process"
+    elif task.mTaskStatus == "In Process":
+        task.mTaskStatus = "Done"
+    elif task.mTaskStatus == "Done":
+        task.mTaskStatus = "To Do"
+    db.session.commit()
+    return "Successfully upgraded task"
+
+
 app.run(debug=True, host='0.0.0.0', port=8000)
