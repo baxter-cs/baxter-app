@@ -94,11 +94,9 @@ public class FragmentTodo extends Fragment {
                     textViewInfo.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_LONG).show();
-
                             PopupMenu popupMenu = new PopupMenu(getActivity(), v);
                             // Inflate the popup menu with xml file
-                            popupMenu.getMenuInflater().inflate(R.menu.todo_menu, popupMenu.getMenu());
+                            popupMenu.getMenuInflater().inflate(R.menu.menu_todo, popupMenu.getMenu());
 
                             // Add popupMenu with onMenuItemClickListener
                             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -119,7 +117,7 @@ public class FragmentTodo extends Fragment {
 
                                             break;
                                         case R.id.delete:
-                                            Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getActivity(), "Task Deleted", Toast.LENGTH_SHORT).show();
                                             break;
                                         default:
                                             Toast.makeText(getActivity(), item.getTitle() + " Clicked", Toast.LENGTH_SHORT).show();
