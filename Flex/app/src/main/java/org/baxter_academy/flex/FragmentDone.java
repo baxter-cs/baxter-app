@@ -16,9 +16,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class FragmentDone extends Fragment {
 

@@ -1,7 +1,6 @@
 package org.baxter_academy.flex;
 
 import android.content.Context;
-import android.net.Uri;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
