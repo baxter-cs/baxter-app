@@ -91,6 +91,8 @@ public class FlexActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_settings:
+                Intent aboutActivity = new Intent(FlexActivity.this, AboutActivity.class);
+                startActivity(aboutActivity);
                 return true;
             case R.id.action_refresh:
                 Toast.makeText(this, "Refreshing..", Toast.LENGTH_SHORT).show();

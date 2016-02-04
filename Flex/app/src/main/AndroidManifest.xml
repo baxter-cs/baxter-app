@@ -23,8 +23,9 @@
             android:parentActivityName=".FlexActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".FlexActivity"/>
+                android:value=".FlexActivity" />
         </activity>
+        <activity android:name=".AboutActivity"></activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
 
