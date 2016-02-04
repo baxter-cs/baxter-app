@@ -19,8 +19,6 @@ import java.util.List;
 
 public class FlexActivity extends AppCompatActivity {
 
-    private boolean debugFirstRun = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,11 +39,14 @@ public class FlexActivity extends AppCompatActivity {
 
             // Setting up default json files
             TaskStorage task_storage = new TaskStorage();
-            // Creating Starter Task
+            // Creating initial Tasks
             Task starterTask = new Task();
-            starterTask.addTask("Welcome to Flex", "First Task", "The Flex Team", "2-01-2016", task_storage.getNewTaskID());
-            // Adding Starter Task to TaskStorage class
+            Task tutorialTask = new Task();
+            starterTask.addTask("Welcome to Flex", "First Task!", "Flex Team", "02-01-2016", task_storage.getNewTaskID());
+            tutorialTask.addTask("Learn to Use Flex", "Tap on this Task", "You", "02-01-2016", task_storage.getNewTaskID());
+            // Adding initial Tasks to TaskStorage object
             task_storage.tasks.add(starterTask);
+            task_storage.tasks.add(tutorialTask);
 
             // Creating a Gson object (Google's JSON Library)
             Gson gson = new Gson();
@@ -53,7 +54,7 @@ public class FlexActivity extends AppCompatActivity {
             // This will be where we store our tasks
             editor.putString("tasks", gson.toJson(task_storage));
             editor.commit();
-        } else if (debugFirstRun) {
+        } else if (false) {
             // This is for debugging purposes
             firstRun++;
             editor.putInt("firstRun", firstRun);
