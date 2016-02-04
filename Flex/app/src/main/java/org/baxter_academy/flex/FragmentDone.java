@@ -22,10 +22,10 @@ import java.util.List;
 
 public class FragmentDone extends Fragment {
 
+    LinearLayout titleLayout;
     LinearLayout linearLayout;
 
-    public FragmentDone() {
-    }
+    public FragmentDone() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,19 +57,26 @@ public class FragmentDone extends Fragment {
                 if (task.getTaskStatus().equals(Constants.title_done)) {
                     LinearLayout layout = (LinearLayout) view.findViewById(R.id.todo_layout);
                     ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    ViewGroup.LayoutParams titleParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    ViewGroup.LayoutParams buttonParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+                    titleLayout = new LinearLayout(getActivity());
+                    titleLayout.setOrientation(LinearLayout.HORIZONTAL);
+                    titleLayout.setLayoutParams(layoutParams);
+
                     linearLayout = new LinearLayout(getActivity());
                     linearLayout.setOrientation(LinearLayout.VERTICAL);
                     linearLayout.setLayoutParams(layoutParams);
 
                     TextView textViewTitle = new TextView(getActivity());
-                    textViewTitle.setLayoutParams(layoutParams);
+                    textViewTitle.setLayoutParams(titleParams);
                     textViewTitle.setTextSize(20);
                     textViewTitle.setText(" " + task.getTaskTitle());
                     textViewTitle.setTextColor(Color.parseColor(Constants.task_titleCol));
-                    textViewTitle.setBackgroundColor(Color.parseColor(Constants.task_text_bg));
-                    textViewTitle.setPadding(15, 15, 15, 0);
+                    textViewTitle.setBackgroundColor(Color.parseColor(Constants.task_title_bg));
+                    textViewTitle.setPadding(15, 15, 15, 10);
                     textViewTitle.setMovementMethod(new ScrollingMovementMethod());
-                    linearLayout.addView(textViewTitle);
+                    titleLayout.addView(textViewTitle);
 
                     TextView textViewInfo = new TextView(getActivity());
                     textViewInfo.setLayoutParams(layoutParams);
@@ -77,7 +84,7 @@ public class FragmentDone extends Fragment {
                     textViewInfo.setText(task.getTaskInfo());
                     textViewInfo.setTextColor(Color.parseColor(Constants.task_textCol));
                     textViewInfo.setBackgroundColor(Color.parseColor(Constants.task_text_bg));
-                    textViewInfo.setPadding(15, 0, 15, 15);
+                    textViewInfo.setPadding(15, 5, 15, 15);
                     textViewInfo.setMovementMethod(new ScrollingMovementMethod());
                     linearLayout.addView(textViewInfo);
 
@@ -127,6 +134,7 @@ public class FragmentDone extends Fragment {
                     });
                     linearLayout.addView(upgradeStatusButton);
 
+                    layout.addView(titleLayout);
                     layout.addView(linearLayout);
                 }
             }

@@ -27,8 +27,7 @@ public class FragmentTodo extends Fragment {
     LinearLayout titleLayout;
     LinearLayout linearLayout;
 
-    public FragmentTodo() {
-    }
+    public FragmentTodo() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,16 +70,6 @@ public class FragmentTodo extends Fragment {
                     linearLayout.setOrientation(LinearLayout.VERTICAL);
                     linearLayout.setLayoutParams(layoutParams);
 
-                    /*
-                    linearLayout.setClickable(true);
-                    linearLayout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Toast.makeText(getActivity(), "Linearlayout Clicked", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    */
-
                     TextView textViewTitle = new TextView(getActivity());
                     textViewTitle.setLayoutParams(titleParams);
                     textViewTitle.setTextSize(20);
@@ -89,8 +78,6 @@ public class FragmentTodo extends Fragment {
                     textViewTitle.setBackgroundColor(Color.parseColor(Constants.task_title_bg));
                     textViewTitle.setPadding(15, 15, 15, 10);
                     textViewTitle.setMovementMethod(new ScrollingMovementMethod());
-                    //textViewTitle.setClickable(false);
-                    //textViewTitle.setDuplicateParentStateEnabled(true);
                     titleLayout.addView(textViewTitle);
 
                     Button optionButton = new Button(getActivity());
@@ -115,8 +102,6 @@ public class FragmentTodo extends Fragment {
                     textViewInfo.setBackgroundColor(Color.parseColor(Constants.task_text_bg));
                     textViewInfo.setPadding(15, 5, 15, 15);
                     textViewInfo.setMovementMethod(new ScrollingMovementMethod());
-                    //textViewInfo.setClickable(false);
-                    //textViewInfo.setDuplicateParentStateEnabled(true);
                     linearLayout.addView(textViewInfo);
 
                     Button deleteButton = new Button(getActivity());
@@ -146,7 +131,6 @@ public class FragmentTodo extends Fragment {
                             startActivity(intent);
                         }
                     });
-                    //deleteButton.setClickable(false);
                     linearLayout.addView(deleteButton);
 
                     Button upgradeStatusButton = new Button(getActivity());
@@ -165,28 +149,12 @@ public class FragmentTodo extends Fragment {
                             startActivity(intent);
                         }
                     });
-                    //upgradeStatusButton.setClickable(false);
                     linearLayout.addView(upgradeStatusButton);
 
                     layout.addView(titleLayout);
                     layout.addView(linearLayout);
                 }
             }
-
-            /*
-            // Make the list
-            final List<String> list = new ArrayList<>();
-            list.add("Default");
-            list.add("Delete");
-            list.add("To In Process");
-            // Create the spinner
-            Spinner spinner = (Spinner) view.findViewById(R.id.spinner_todo);
-            //Spinner spinner = new Spinner(getActivity());
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner.setAdapter(dataAdapter);
-            */
-
         } else {
             TextView tv = (TextView) view.findViewById(R.id.title_todo);
             tv.setText(json);
