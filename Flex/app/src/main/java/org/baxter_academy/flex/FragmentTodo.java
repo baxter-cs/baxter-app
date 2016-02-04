@@ -118,7 +118,6 @@ public class FragmentTodo extends Fragment {
                                         case R.id.delete:
                                             Toast.makeText(getActivity(), "Task Deleted", Toast.LENGTH_SHORT).show();
 
-                                            Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
                                             String json = prefs.getString("tasks", "error");
                                             TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
                                             List<Task> filteredTasks = new ArrayList<Task>();
@@ -146,7 +145,7 @@ public class FragmentTodo extends Fragment {
                             popupMenu.show();
                         }
                     });
-                    
+
                     layout.addView(titleLayout);
                     layout.addView(linearLayout);
                 }
