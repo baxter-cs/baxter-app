@@ -104,6 +104,15 @@ public class FragmentTodo extends Fragment {
                     textViewInfo.setMovementMethod(new ScrollingMovementMethod());
                     linearLayout.addView(textViewInfo);
 
+                    textViewInfo.setClickable(true);
+                    textViewInfo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+
                     Button deleteButton = new Button(getActivity());
                     deleteButton.setTag(task.getTaskID());
                     deleteButton.setText("Delete Task");
