@@ -143,6 +143,8 @@ public class FlexActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_settings:
+                Intent aboutActivity = new Intent(FlexActivity.this, AboutActivity.class);
+                startActivity(aboutActivity);
                 return true;
             case R.id.id_add:
                 Intent addTask = new Intent(FlexActivity.this, AddTaskActivity.class);
