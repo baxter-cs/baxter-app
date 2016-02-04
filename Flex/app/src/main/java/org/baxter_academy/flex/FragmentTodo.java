@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.method.ScrollingMovementMethod;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -62,7 +61,6 @@ public class FragmentTodo extends Fragment {
                     LinearLayout layout = (LinearLayout) view.findViewById(R.id.todo_layout);
                     ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     ViewGroup.LayoutParams titleParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    ViewGroup.LayoutParams buttonParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
                     titleLayout = new LinearLayout(getActivity());
                     titleLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -82,20 +80,6 @@ public class FragmentTodo extends Fragment {
                     textViewTitle.setMovementMethod(new ScrollingMovementMethod());
                     titleLayout.addView(textViewTitle);
 
-                    Button optionButton = new Button(getActivity());
-                    optionButton.setLayoutParams(buttonParams);
-                    optionButton.setBackground(getResources().getDrawable(R.drawable.ic_more_vert_white_36dp));
-                    //optionButton.setBackgroundColor(Color.parseColor(Constants.task_title_bg));
-                    optionButton.setGravity(Gravity.END);
-                    optionButton.setClickable(true);
-                    optionButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    titleLayout.addView(optionButton);
-
                     TextView textViewInfo = new TextView(getActivity());
                     textViewInfo.setLayoutParams(layoutParams);
                     textViewInfo.setTextSize(18);
@@ -114,7 +98,7 @@ public class FragmentTodo extends Fragment {
 
                             PopupMenu popupMenu = new PopupMenu(getActivity(), v);
                             // Inflate the popup menu with xml file
-                            popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+                            popupMenu.getMenuInflater().inflate(R.menu.todo_menu, popupMenu.getMenu());
 
                             // Add popupMenu with onMenuItemClickListener
                             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -122,7 +106,17 @@ public class FragmentTodo extends Fragment {
                                 public boolean onMenuItemClick(MenuItem item) {
                                     switch (item.getItemId()) {
                                         case R.id.move_to_doing:
-                                            Toast.makeText(getActivity(), "Moved to In Process", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getActivity(), "Task Moved to In Process", Toast.LENGTH_SHORT).show();
+
+                                            task.upgradeStatus();
+                                            Gson gson = new Gson();
+                                            SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = prefs.edit();
+                                            editor.putString("tasks", gson.toJson(task_storage));
+                                            editor.commit();
+                                            Intent intent = new Intent(getContext(), FlexActivity.class);
+                                            startActivity(intent);
+
                                             break;
                                         case R.id.delete:
                                             Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
@@ -166,23 +160,6 @@ public class FragmentTodo extends Fragment {
                         }
                     });
                     linearLayout.addView(deleteButton);
-
-                    Button upgradeStatusButton = new Button(getActivity());
-                    upgradeStatusButton.setText("Upgrade Status");
-                    upgradeStatusButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            task.upgradeStatus();
-                            Gson gson = new Gson();
-                            SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = prefs.edit();
-                            editor.putString("tasks", gson.toJson(task_storage));
-                            editor.commit();
-                            Intent intent = new Intent(getContext(), FlexActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-                    linearLayout.addView(upgradeStatusButton);
 
                     layout.addView(titleLayout);
                     layout.addView(linearLayout);
