@@ -11,11 +11,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -25,10 +24,10 @@ import java.util.List;
 
 public class FragmentTodo extends Fragment {
 
+    LinearLayout titleLayout;
     LinearLayout linearLayout;
 
-    public FragmentTodo() {
-    }
+    public FragmentTodo() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,36 +59,50 @@ public class FragmentTodo extends Fragment {
                 if (task.getTaskStatus().equals(Constants.title_todo)) {
                     LinearLayout layout = (LinearLayout) view.findViewById(R.id.todo_layout);
                     ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    ViewGroup.LayoutParams titleParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    ViewGroup.LayoutParams buttonParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+                    titleLayout = new LinearLayout(getActivity());
+                    titleLayout.setOrientation(LinearLayout.HORIZONTAL);
+                    titleLayout.setLayoutParams(layoutParams);
+
                     linearLayout = new LinearLayout(getActivity());
                     linearLayout.setOrientation(LinearLayout.VERTICAL);
                     linearLayout.setLayoutParams(layoutParams);
 
                     TextView textViewTitle = new TextView(getActivity());
-                    textViewTitle.setLayoutParams(layoutParams);
+                    textViewTitle.setLayoutParams(titleParams);
                     textViewTitle.setTextSize(20);
                     textViewTitle.setText(" " + task.getTaskTitle());
                     textViewTitle.setTextColor(Color.parseColor(Constants.task_titleCol));
-                    textViewTitle.setBackgroundColor(Color.parseColor(Constants.task_bg));
-                    textViewTitle.setPadding(15, 15, 15, 0);
+                    textViewTitle.setBackgroundColor(Color.parseColor(Constants.task_title_bg));
+                    textViewTitle.setPadding(15, 15, 15, 10);
                     textViewTitle.setMovementMethod(new ScrollingMovementMethod());
-                    linearLayout.addView(textViewTitle);
+                    titleLayout.addView(textViewTitle);
+
+                    Button optionButton = new Button(getActivity());
+                    optionButton.setLayoutParams(buttonParams);
+                    optionButton.setBackground(getResources().getDrawable(R.drawable.ic_more_vert_white_36dp));
+                    //optionButton.setBackgroundColor(Color.parseColor(Constants.task_title_bg));
+                    optionButton.setGravity(Gravity.END);
+                    optionButton.setClickable(true);
+                    optionButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    titleLayout.addView(optionButton);
 
                     TextView textViewInfo = new TextView(getActivity());
                     textViewInfo.setLayoutParams(layoutParams);
                     textViewInfo.setTextSize(18);
                     textViewInfo.setText(task.getTaskInfo());
                     textViewInfo.setTextColor(Color.parseColor(Constants.task_textCol));
-                    textViewInfo.setBackgroundColor(Color.parseColor(Constants.task_bg));
-                    textViewInfo.setPadding(15, 0, 15, 15);
+                    textViewInfo.setBackgroundColor(Color.parseColor(Constants.task_text_bg));
+                    textViewInfo.setPadding(15, 5, 15, 15);
                     textViewInfo.setMovementMethod(new ScrollingMovementMethod());
                     linearLayout.addView(textViewInfo);
-
-                    /*
-                    Button optionButton = new Button(getActivity());
-                    optionButton.setBackground(getResources().getDrawable(R.drawable.ic_more_vert_white_36dp));
-                    optionButton.setGravity(Gravity.END);
-                    linearLayout.addView(optionButton);
-                    */
 
                     Button deleteButton = new Button(getActivity());
                     deleteButton.setTag(task.getTaskID());
@@ -104,7 +117,7 @@ public class FragmentTodo extends Fragment {
                             Gson gson = new Gson();
                             TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
                             List<Task> filteredTasks = new ArrayList<Task>();
-                            for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
+                            for (Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext(); ) {
                                 Task filteredTask = i.next();
                                 if (!filteredTask.getTaskID().equals(v.getTag())) {
                                     filteredTasks.add(filteredTask);
@@ -138,22 +151,10 @@ public class FragmentTodo extends Fragment {
                     });
                     linearLayout.addView(upgradeStatusButton);
 
+                    layout.addView(titleLayout);
                     layout.addView(linearLayout);
                 }
             }
-
-            // Make the list
-            final List<String> list = new ArrayList<>();
-            list.add("Default");
-            list.add("Delete");
-            list.add("To In Process");
-            // Create the spinner
-            Spinner spinner = (Spinner) view.findViewById(R.id.spinner_todo);
-            //Spinner spinner = new Spinner(getActivity());
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner.setAdapter(dataAdapter);
-
         } else {
             TextView tv = (TextView) view.findViewById(R.id.title_todo);
             tv.setText(json);
