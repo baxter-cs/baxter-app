@@ -51,8 +51,6 @@ public class FragmentDone extends Fragment {
             TextView tv = (TextView) view.findViewById(R.id.title_done);
             if (prefs.getBoolean("isInitDone", false)) {
                 tv.setVisibility(View.GONE);
-            } else {
-                tv.setText("" + prefs.getBoolean("isInitDone", false));
             }
             // Here we iterate through all the Task objects in our list
             for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
