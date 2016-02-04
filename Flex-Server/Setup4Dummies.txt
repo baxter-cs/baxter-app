@@ -1,3 +1,6 @@
+Make sure you can use port 8000 or just change it in server.py
+Get a 192.168.0.13 static IP or change the url in the app
+
 First setup your virtual environment with python 3.4:
 
 $ pip install virtualenv

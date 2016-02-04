@@ -9,16 +9,40 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class AddTaskActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -84,8 +108,8 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void createTask(View view){
-        EditText mTitle, mDescription, mAssignee, mDueDate;
-        String title, description, assignee, dueDate;
+        final EditText mTitle, mDescription, mAssignee, mDueDate;
+        final String title, description, assignee, dueDate;
 
         Intent intent = new Intent(AddTaskActivity.this, FlexActivity.class);
 
@@ -116,6 +140,8 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         // This will be where we store our tasks
         editor.putString("tasks", gson.toJson(task_storage));
         editor.commit();
+
+        POSTHelper.postNewComment(this, title);
 
         startActivity(intent);
     }

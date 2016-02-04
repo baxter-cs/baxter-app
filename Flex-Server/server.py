@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -23,6 +23,13 @@ class Task(db.Model):
 
     def __repr__(self):
         return '<Task %r>' % self.mID
+
+
+@app.route('/newTask', methods=['POST'])
+def app_task():
+    mTask = request.form['mTask']
+    print(mTask)
+    return "meow"
 
 
 app.run(debug=True, host='0.0.0.0', port=8000)
