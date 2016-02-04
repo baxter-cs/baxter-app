@@ -16,8 +16,8 @@ public class Constants {
     public static String task_titleCol = "#515151";
     public static String task_textCol = "#4E4E4E";
 
-    public static String server_address_upgradeStatus = "http://192.168.0.13:8000/upgradeTask";
-    public static String server_address_newTask = "http://192.168.0.13:8000/newTask";
-    public static String server_address_getTasks = "http://192.168.0.13:8000/getTasks";
-    public static String server_address_deleteTask = "http://192.168.0.13:8000/deleteTask";
+    public static String server_address_upgradeStatus = "http://192.168.0.8:7999/upgradeTask";
+    public static String server_address_newTask = "http://192.168.0.8:7999/newTask";
+    public static String server_address_getTasks = "http://192.168.0.8:7999/getTasks";
+    public static String server_address_deleteTask = "http://192.168.0.8:7999/deleteTask";
 }

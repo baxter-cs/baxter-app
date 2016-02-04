@@ -8,11 +8,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -56,7 +59,6 @@ public class FragmentDoing extends Fragment {
                     LinearLayout layout = (LinearLayout) view.findViewById(R.id.todo_layout);
                     ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     ViewGroup.LayoutParams titleParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    ViewGroup.LayoutParams buttonParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
                     titleLayout = new LinearLayout(getActivity());
                     titleLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -86,31 +88,46 @@ public class FragmentDoing extends Fragment {
                     textViewInfo.setMovementMethod(new ScrollingMovementMethod());
                     linearLayout.addView(textViewInfo);
 
-                    Button deleteButton = new Button(getActivity());
-                    deleteButton.setTag(task.getTaskID());
-                    deleteButton.setText("Delete Task");
-                    deleteButton.setOnClickListener(new View.OnClickListener() {
-                        // This is run when the Button is pressed
+                    textViewInfo.setClickable(true);
+                    textViewInfo.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            POSTHelper.postDeleteTask(getContext(), task.getTaskID().toString());
-                            Intent intent = new Intent(getContext(), FlexActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-                    linearLayout.addView(deleteButton);
+                            PopupMenu popupMenu = new PopupMenu(getActivity(), v);
+                            // Inflate the popup menu with xml file
+                            popupMenu.getMenuInflater().inflate(R.menu.menu_doing, popupMenu.getMenu());
 
-                    Button upgradeStatusButton = new Button(getActivity());
-                    upgradeStatusButton.setText("Upgrade Status");
-                    upgradeStatusButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            POSTHelper.postUpgradeTask(getContext(), task.getTaskID().toString());
-                            Intent intent = new Intent(getContext(), FlexActivity.class);
-                            startActivity(intent);
+                            // Add popupMenu with onMenuItemClickListener
+                            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = prefs.edit();
+                                    Gson gson = new Gson();
+
+                                    switch (item.getItemId()) {
+                                        case R.id.move_to_done:
+                                            POSTHelper.postUpgradeTask(getContext(), task.getTaskID().toString());
+                                            Toast.makeText(getActivity(), "Task Moved to Done", Toast.LENGTH_SHORT).show();
+                                            Intent refreshMove = new Intent(getContext(), FlexActivity.class);
+                                            startActivity(refreshMove);
+                                            break;
+                                        case R.id.delete:
+                                            POSTHelper.postDeleteTask(getContext(), task.getTaskID().toString());
+                                            Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
+                                            Intent refreshDelete = new Intent(getContext(), FlexActivity.class);
+                                            startActivity(refreshDelete);
+                                            break;
+                                        default:
+                                            Toast.makeText(getActivity(), item.getTitle() + " Clicked", Toast.LENGTH_SHORT).show();
+                                    }
+                                    Intent intent = new Intent(getContext(), FlexActivity.class);
+                                    startActivity(intent);
+                                    return true;
+                                }
+                            });
+                            popupMenu.show();
                         }
                     });
-                    linearLayout.addView(upgradeStatusButton);
 
                     layout.addView(titleLayout);
                     layout.addView(linearLayout);

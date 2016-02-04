@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -90,6 +91,11 @@ public class FlexActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_settings:
+                return true;
+            case R.id.action_refresh:
+                Toast.makeText(this, "Refreshing..", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, FlexActivity.class);
+                startActivity(intent);
                 return true;
             case R.id.id_add:
                 Intent addTask = new Intent(FlexActivity.this, AddTaskActivity.class);

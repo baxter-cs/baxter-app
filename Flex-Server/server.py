@@ -62,7 +62,7 @@ def get_tasks():
         elif task.mTaskStatus == "In Process":
             isInitDoing = True
         elif task.mTaskStatus == "Done":
-            isInitDoing = True
+            isInitDone = True
         response = {'mTask': task.mTask,
                     'mDescription': task.mDescription,
                     'mAssignee': task.mAssignee,
@@ -89,4 +89,4 @@ def delete_task():
     return "Deleted Task"
 
 
-app.run(debug=True, host='0.0.0.0', port=8000)
+app.run(debug=True, host='0.0.0.0', port=7999)
