@@ -129,6 +129,7 @@ public class FragmentTodo extends Fragment {
                                         case R.id.move_to_doing:
                                             POSTHelper.postUpgradeTask(getContext(), task.getTaskID().toString());
                                             Toast.makeText(getActivity(), "Moved to In Process", Toast.LENGTH_SHORT).show();
+                                            // TODO: The Start Activities to Refresh into FlexActivity is not working here
                                             startActivity(intent);
                                             break;
                                         case R.id.delete:

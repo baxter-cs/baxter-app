@@ -100,11 +100,6 @@ public class FlexActivity extends AppCompatActivity {
         }
     }
 
-    public String getTaskJSON() {
-        SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
-        return prefs.getString("tasks", "error");
-    }
-
     public void refreshTaskList(Context context) {
         try {
             JsonObject jsonObject = GETHelper.getTasks(context);
