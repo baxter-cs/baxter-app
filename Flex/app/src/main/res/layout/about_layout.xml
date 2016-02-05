@@ -44,6 +44,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/app_version"
+        android:clickable="true"
+        android:linksClickable="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
@@ -67,8 +69,9 @@
         android:textColor="@color/colorAccent"
         android:text="|"
         android:layout_alignTop="@+id/app_name"
-        android:layout_toRightOf="@+id/text_built"
-        android:layout_toEndOf="@+id/text_built" />
+        android:layout_alignLeft="@+id/text_spacer_end"
+        android:layout_alignStart="@+id/text_spacer_end"
+        android:layout_marginTop="1dp" />
 
     <TextView
         android:id="@+id/text_underline_name"

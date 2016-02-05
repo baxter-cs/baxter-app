@@ -14,7 +14,7 @@
     <string name="about_coded">coded</string>
     <string name="about_contributor_by">by Baxter Academy</string>
     <string name="about_contributor_end">Students</string>
-    <string name="app_version">Version 1.0.0</string>
+    <string name="app_version">Version <a href="https://github.com/baxter-oop/baxter-app">1.0.0</a></string>
 
     <string name="title_todo">To Do</string>
     <string name="title_doing">In Process</string>
