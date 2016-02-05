@@ -9,5 +9,8 @@ A collaboration board towards team progress for projects.
 - In Process
 - [Done](https://github.com/baxter-oop/Baxter-App)
 
+## Release History 
++ [1.0.0](https://github.com/baxter-oop/baxter-app/releases/tag/1.0.0) - Initial Release 
+
 ## License 
 [![CC4](https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/4.0/) 
