@@ -1,9 +1,13 @@
+from datetime import datetime
 from flask import Flask, request, jsonify
 from flask.ext.sqlalchemy import SQLAlchemy
+import bcrypt, uuid
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
+
+# Tables
 
 
 class Task(db.Model):
@@ -23,6 +27,67 @@ class Task(db.Model):
 
     def __repr__(self):
         return '<Task %r>' % self.mID
+
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True, unique=True)
+    username = db.Column(db.String(), unique=True)
+    password = db.Column(db.String())
+    salt = db.Column(db.String())
+    session_id = db.Column(db.String())
+    session_time = db.Column(db.String())
+
+    def __init__(self, username, password, salt, session_id, session_time):
+        self.username = username
+        self.password = password
+        self.salt = salt
+        self.session_id = session_id
+        self.session_time = session_time
+
+    def __repr__(self):
+        return '<User %r>' % self.username
+
+
+# Methods
+
+
+def db_create_user(username, password):
+    session_id = str(uuid.uuid4())
+    current_time = str(datetime.utcnow())
+    salt = bcrypt.gensalt()
+    ciphered_password = bcrypt.hashpw(str.encode(password), salt)
+    db.session.add(User(username, ciphered_password, salt, session_id, current_time))
+    db.session.commit()
+    return "Successfully added a new user"
+
+
+def check_if_valid_session(session_id):
+    if session_id == "invalid":
+        return False
+    else:
+        try:
+            claimsTobe = User.query.filter(User.session_id == session_id).first()
+            if claimsTobe is not None:
+                return True
+        except:
+            return False
+
+
+def make_session(username, inputtedPassword):
+    try:
+        account = User.query.filter(User.username == username).first()
+        hashed_password = account.password
+        salt = account.salt
+        password = bcrypt.hashpw(str.encode(inputtedPassword, salt))
+        if hashed_password == password:
+            return account.session_id
+        else:
+            return False
+    except:
+        return False
+
+
+# Routes
 
 
 @app.route('/newTask', methods=['POST'])
