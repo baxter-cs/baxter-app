@@ -146,7 +146,9 @@ public class FlexActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_settings:
+            case R.id.id_about:
+                Intent aboutPage = new Intent(FlexActivity.this, AboutActivity.class);
+                startActivity(aboutPage);
                 return true;
             case R.id.id_add:
                 Intent addTask = new Intent(FlexActivity.this, AddTaskActivity.class);
