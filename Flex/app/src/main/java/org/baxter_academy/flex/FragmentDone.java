@@ -138,6 +138,13 @@ public class FragmentDone extends Fragment {
                         }
                     });
 
+                    TextView textViewBreak = new TextView(getActivity());
+                    textViewBreak.setLayoutParams(layoutParams);
+                    textViewBreak.setText(Constants.text_break);
+                    textViewBreak.setPadding(15, 4, 15, 4);
+                    textViewBreak.setMovementMethod(new ScrollingMovementMethod());
+                    linearLayout.addView(textViewBreak);
+
                     layout.addView(titleLayout);
                     layout.addView(linearLayout);
                 }
