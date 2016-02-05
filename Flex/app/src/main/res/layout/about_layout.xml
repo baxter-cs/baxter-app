@@ -157,7 +157,7 @@
         android:layout_marginBottom="9dp" />
 
     <TextView
-        android:id="@+id/text_students"
+        android:id="@+id/text_students_by"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -166,5 +166,65 @@
         android:layout_alignRight="@+id/text_creator"
         android:layout_alignEnd="@+id/text_creator"
         android:layout_marginBottom="7dp" />
+
+    <TextView
+        android:id="@+id/text_innovative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/text_innovative"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/text_description"
+        android:layout_toRightOf="@+id/app_name"
+        android:layout_toEndOf="@+id/app_name" />
+
+    <TextView
+        android:id="@+id/text_ethical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/text_ethical"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_alignTop="@+id/text_innovative"
+        android:layout_toRightOf="@+id/text_stem"
+        android:layout_toEndOf="@+id/text_stem"
+        android:layout_marginTop="3dp" />
+
+    <TextView
+        android:id="@+id/text_flex_friday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/text_flex_friday"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="11dp"
+        android:layout_below="@+id/text_ethical"
+        android:layout_toRightOf="@+id/text_about"
+        android:layout_toEndOf="@+id/text_about" />
+
+    <TextView
+        android:id="@+id/text_stem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/text_stem"
+        android:textColor="@color/colorPrimary"
+        android:layout_below="@+id/text_flex_friday"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/text_students"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/text_students"
+        android:textColor="@color/colorPrimary"
+        android:layout_above="@+id/text_stem"
+        android:layout_alignRight="@+id/text_ethical"
+        android:layout_alignEnd="@+id/text_ethical" />
 
 </RelativeLayout>

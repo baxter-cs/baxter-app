@@ -16,6 +16,12 @@
     <string name="about_contributor_end">Students</string>
     <string name="app_version">Version <a href="https://github.com/baxter-oop/baxter-app">1.0.0</a></string>
 
+    <string name="text_innovative">INNOVATIVE</string>
+    <string name="text_ethical">ETHICAL</string>
+    <string name="text_flex_friday">FLEX FRIDAY</string>
+    <string name="text_stem">STEM</string>
+    <string name="text_students">STUDENTS</string>
+
     <string name="title_todo">To Do</string>
     <string name="title_doing">In Process</string>
     <string name="title_done">Done</string>
