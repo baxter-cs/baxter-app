@@ -10,45 +10,161 @@
     tools:context="org.baxter_academy.flex.AboutActivity">
 
     <TextView
+        android:id="@+id/text_about"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/title_about"
+        android:textColor="@color/colorAccent"
+        android:layout_marginTop="20dp"
+        android:layout_alignTop="@+id/flex_icon"
+        android:layout_alignLeft="@+id/app_name"
+        android:layout_alignStart="@+id/app_name"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp" />
+
+    <TextView
+        android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/title_about"
+        android:text="@string/app_name"
         android:textSize="40dp"
         android:gravity="center"
-        android:id="@+id/textView"
-        android:layout_marginTop="24dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginLeft="22dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="7dp"
+        android:layout_below="@+id/text_about"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
+        android:id="@+id/text_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/app_version"
-        android:id="@+id/textView2"
+        android:clickable="true"
+        android:linksClickable="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
-    <TextView
+    <ImageView
+        android:id="@+id/flex_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/title_contributor"
-        android:textSize="50dp"
-        android:gravity="center"
-        android:id="@+id/textView3"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:src="@drawable/ic_flex_144dp"
+        android:layout_marginTop="17dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/text_creator"
+        android:layout_alignEnd="@+id/text_creator"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp" />
 
     <TextView
+        android:id="@+id/text_spacer_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="35dp"
+        android:textColor="@color/colorAccent"
+        android:text="|"
+        android:layout_alignTop="@+id/app_name"
+        android:layout_alignLeft="@+id/text_spacer_end"
+        android:layout_alignStart="@+id/text_spacer_end"
+        android:layout_marginTop="1dp" />
+
+    <TextView
+        android:id="@+id/text_underline_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="42dp"
+        android:textColor="@color/colorAccent"
+        android:text="_______"
+        android:layout_alignTop="@+id/app_name"
+        android:layout_alignLeft="@+id/app_name"
+        android:layout_alignStart="@+id/app_name"
+        android:layout_marginTop="21dp" />
+
+    <TextView
+        android:id="@+id/text_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/type_build"
-        android:id="@+id/textView4"
-        android:layout_marginBottom="58dp"
-        android:layout_above="@+id/textView2"
-        android:layout_alignRight="@+id/textView2"
-        android:layout_alignEnd="@+id/textView2" />
+        android:text="@string/about_description"
+        android:layout_marginTop="38dp"
+        android:layout_below="@+id/flex_icon"
+        android:layout_alignLeft="@+id/text_underline_name"
+        android:layout_alignStart="@+id/text_underline_name" />
+
+    <TextView
+        android:id="@+id/text_built"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/about_built"
+        android:layout_marginTop="17dp"
+        android:layout_alignTop="@+id/text_spacer_end"
+        android:layout_toLeftOf="@+id/text_spacer_end"
+        android:layout_toStartOf="@+id/text_spacer_end"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp" />
+
+    <TextView
+        android:id="@+id/text_designed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/about_designed"
+        android:layout_below="@+id/text_built"
+        android:layout_alignRight="@+id/text_built"
+        android:layout_alignEnd="@+id/text_built" />
+
+    <TextView
+        android:id="@+id/text_coded"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/about_coded"
+        android:layout_below="@+id/text_designed"
+        android:layout_alignRight="@+id/text_designed"
+        android:layout_alignEnd="@+id/text_designed" />
+
+    <TextView
+        android:id="@+id/text_spacer_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/colorAccent"
+        android:text="|"
+        android:textSize="88dp"
+        android:layout_marginBottom="26dp"
+        android:singleLine="false"
+        android:layout_above="@+id/text_version"
+        android:layout_toLeftOf="@+id/text_creator"
+        android:layout_toStartOf="@+id/text_creator" />
+
+    <TextView
+        android:id="@+id/text_creator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/about_contributor_by"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_alignBottom="@+id/text_designed"
+        android:layout_alignLeft="@+id/text_version"
+        android:layout_alignStart="@+id/text_version"
+        android:layout_marginBottom="9dp" />
+
+    <TextView
+        android:id="@+id/text_students"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/about_contributor_end"
+        android:layout_alignBottom="@+id/text_coded"
+        android:layout_alignRight="@+id/text_creator"
+        android:layout_alignEnd="@+id/text_creator"
+        android:layout_marginBottom="7dp" />
+
 </RelativeLayout>

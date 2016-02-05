@@ -8,9 +8,13 @@
     <string name="add_task">Add a Task</string>
     <string name="title_share">Share</string>
 
-    <string name="title_contributor">Made By \n Wil &amp; John</string>
-    <string name="type_build">Local Only</string>
-    <string name="app_version">Version 1.0.0</string>
+    <string name="about_description">A collaboration board towards team progress for projects</string>
+    <string name="about_built">built</string>
+    <string name="about_designed">designed</string>
+    <string name="about_coded">coded</string>
+    <string name="about_contributor_by">by Baxter Academy</string>
+    <string name="about_contributor_end">Students</string>
+    <string name="app_version">Version <a href="https://github.com/baxter-oop/baxter-app">1.0.0</a></string>
 
     <string name="title_todo">To Do</string>
     <string name="title_doing">In Process</string>
