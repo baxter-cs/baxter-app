@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="org.baxter_academy.flex.TutorialThree">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="In Flex, Tasks are visible to everyone in your Team. All tasks are stored on the cloud and can be accessed anywhere, unlike traditional scrum boards."
+            android:id="@+id/textView6"
+            android:textSize="19dp"
+            android:paddingBottom="20dp"
+            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="1dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="I'm a Task!"
+            android:gravity="center"
+            android:textColor="#515151"
+            android:background="#9FCEEB"
+            android:paddingTop="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="10dp"
+            android:id="@+id/doingTaskExample"
+            android:layout_below="@+id/textView6" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="I am currently an 'In Process' task!\nTap me and click\nMove to Done\nIn Order To Continue"
+            android:textColor="#4E4E4E"
+            android:background="#BDDDF4"
+            android:paddingTop="5dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="15dp"
+            android:gravity="center"
+            android:id="@+id/doingInfoTaskExample"
+            android:layout_below="@+id/doingTaskExample"
+            android:layout_alignParentLeft="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="You can add all sorts of information to a task to ensure that you can get information across not only effectively, but also efficiently."
+            android:id="@+id/textView7"
+            android:textSize="21dp"
+            android:paddingTop="20dp"
+            android:gravity="center"
+            android:layout_below="@+id/doingInfoTaskExample"
+            android:layout_alignParentLeft="true" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:progress="50"
+            android:max="100"
+            android:layout_below="@+id/textView7"/>
+
+    </LinearLayout>
+
+</ScrollView>

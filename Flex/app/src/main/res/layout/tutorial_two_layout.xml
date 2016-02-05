@@ -17,14 +17,21 @@
         android:gravity="center"
         android:textColor="#515151"
         android:background="#F8BBD0"
-        android:padding="15dp"
-        android:id="@+id/todoTaskExample"/>
+        android:paddingTop="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="10dp"
+        android:id="@+id/todoTaskExample"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="120dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18dp"
-        android:text="I am currently a 'To Do' task!\nTap me and click Move To\nIn Process\nTo Continue"
+        android:text="I am currently a 'To Do' task!\nTap me and click\nMove to In Process\nIn Order To Continue"
         android:textColor="#4E4E4E"
         android:background="#FAD2E0"
         android:paddingTop="5dp"
@@ -34,7 +41,7 @@
         android:gravity="center"
         android:id="@+id/todoInfoTaskExample"
         android:layout_below="@+id/todoTaskExample"
-        />
+        android:layout_alignParentLeft="true" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
