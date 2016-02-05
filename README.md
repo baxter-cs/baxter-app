@@ -6,11 +6,8 @@ A collaboration board towards team progress for projects.
 
 ## Tasks 
 - To Do
-- [In Progress](https://github.com/baxter-oop/Baxter-App)
-- Completed
+- In Process
+- [Done](https://github.com/baxter-oop/Baxter-App)
 
 ## License 
-[![CC4](https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/baxter-oop/baxter-app/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
+[![CC4](https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/4.0/) 
