@@ -66,11 +66,9 @@
         android:textSize="35dp"
         android:textColor="@color/colorAccent"
         android:text="|"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"
         android:layout_alignTop="@+id/app_name"
-        android:layout_toRightOf="@+id/app_name"
-        android:layout_toEndOf="@+id/app_name" />
+        android:layout_toRightOf="@+id/text_built"
+        android:layout_toEndOf="@+id/text_built" />
 
     <TextView
         android:id="@+id/text_underline_name"
@@ -102,11 +100,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/about_built"
         android:layout_marginTop="17dp"
-        android:layout_marginRight="9dp"
-        android:layout_marginEnd="9dp"
         android:layout_alignTop="@+id/text_spacer_end"
-        android:layout_alignRight="@+id/text_spacer_name"
-        android:layout_alignEnd="@+id/text_spacer_name" />
+        android:layout_toLeftOf="@+id/text_spacer_end"
+        android:layout_toStartOf="@+id/text_spacer_end"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp" />
 
     <TextView
         android:id="@+id/text_designed"
@@ -136,11 +134,11 @@
         android:textColor="@color/colorAccent"
         android:text="|"
         android:textSize="88dp"
-        android:layout_marginBottom="29dp"
+        android:layout_marginBottom="26dp"
         android:singleLine="false"
         android:layout_above="@+id/text_version"
-        android:layout_toRightOf="@+id/text_built"
-        android:layout_toEndOf="@+id/text_built" />
+        android:layout_toLeftOf="@+id/text_creator"
+        android:layout_toStartOf="@+id/text_creator" />
 
     <TextView
         android:id="@+id/text_creator"
@@ -148,12 +146,12 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/about_contributor_by"
-        android:layout_marginTop="10dp"
-        android:layout_alignTop="@+id/text_built"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_alignBottom="@+id/text_designed"
         android:layout_alignLeft="@+id/text_version"
         android:layout_alignStart="@+id/text_version"
-        android:layout_marginLeft="13dp"
-        android:layout_marginStart="13dp" />
+        android:layout_marginBottom="9dp" />
 
     <TextView
         android:id="@+id/text_students"
@@ -161,8 +159,9 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/about_contributor_end"
-        android:layout_below="@+id/text_creator"
+        android:layout_alignBottom="@+id/text_coded"
         android:layout_alignRight="@+id/text_creator"
-        android:layout_alignEnd="@+id/text_creator" />
+        android:layout_alignEnd="@+id/text_creator"
+        android:layout_marginBottom="7dp" />
 
 </RelativeLayout>
