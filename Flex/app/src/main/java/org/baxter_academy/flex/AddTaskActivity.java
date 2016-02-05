@@ -48,7 +48,7 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_settings:
+            case R.id.id_about:
                 return true;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);

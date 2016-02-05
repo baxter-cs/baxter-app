@@ -5,8 +5,8 @@
     tools:context=".FlexActivity">
 
     <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+        android:id="@+id/id_about"
+        android:title="@string/title_about"
         android:icon="@drawable/ic_settings_white_36dp"
         android:orderInCategory="100"
         app:showAsAction="never"
