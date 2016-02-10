@@ -4,13 +4,19 @@
 
 A collaboration board towards team progress for projects. 
 
+## Features 
+- Assign tasks to team members and yourself  
+- Goal tracker and personal todo list  
+- Mark and manange tasks in progress levels  
+- Work more, procrastinate less  
+
 ## Tasks 
 - To Do
 - In Process
 - [Done](https://github.com/baxter-oop/baxter-app)
 
 ## Release History 
-+ [1.0.0](https://github.com/baxter-oop/baxter-app/releases/tag/1.0.0) - 2016 Initial Release 
++ [1.0.0](https://github.com/baxter-oop/baxter-app/releases/tag/1.0.0) - Initial Release
 
 ## Team 
 [![wilstenholme](https://en.gravatar.com/avatar/85d1cce85ee7ac279e9051a6b932708b?s=128)](https://github.com/wilstenholme) | [![JCharante](https://avatars1.githubusercontent.com/u/13973198?v=3&s=128)](https://github.com/JCharante)
