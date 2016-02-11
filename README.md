@@ -4,6 +4,8 @@
 
 A collaboration board towards team progress for projects. 
 
+![Flex Demo](media/demo.gif)
+
 ## Features 
 - Assign tasks to team members and yourself  
 - Goal tracker and personal todo list  
