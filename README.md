@@ -21,10 +21,10 @@ A collaboration board towards team progress for projects. [:page_facing_up:](htt
 ## Release History :chart_with_upwards_trend: 
 + [1.0.0](https://github.com/baxter-oop/baxter-app/releases/tag/1.0.0) - Initial Release
 
-## Team :necktie: 
+## Team :briefcase: 
 [![wilstenholme](https://en.gravatar.com/avatar/85d1cce85ee7ac279e9051a6b932708b?s=128)](https://github.com/wilstenholme) | [![JCharante](https://avatars1.githubusercontent.com/u/13973198?v=3&s=128)](https://github.com/JCharante)
 ---|---
 [Wil W.L.](https://github.com/wilstenholme) | [John Z.](https://github.com/JCharante)
 
-## License :ledger: 
+## License :paperclip: 
 [![CC4](https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/4.0/) 
