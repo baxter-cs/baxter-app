@@ -7,6 +7,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
 
+
 # Tables
 
 
@@ -46,6 +47,19 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+
+class Team(db.Model):
+    id = db.Column(db.Integer, primary_key=True, unique=True)
+    name = db.Column(db.String(), unique=True)
+    owner = db.Column(db.String())
+
+    def __init__(self, name, owner):
+        self.name = name
+        self.owner = owner
+
+    def __repr__(self):
+        return '<Team %r>' % self.name
 
 
 # Methods
