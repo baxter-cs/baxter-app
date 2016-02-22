@@ -1,8 +1,6 @@
 package org.baxter_academy.flex;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -10,12 +8,6 @@ import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class TutorialThree extends AppCompatActivity {
 
@@ -48,8 +40,6 @@ public class TutorialThree extends AppCompatActivity {
                             default:
                                 Toast.makeText(v.getContext(), item.getTitle() + " Clicked", Toast.LENGTH_SHORT).show();
                         }
-                        //Intent intent = new Intent(v.getContext(), FlexActivity.class);
-                        //startActivity(intent);
                         return true;
                     }
                 });
