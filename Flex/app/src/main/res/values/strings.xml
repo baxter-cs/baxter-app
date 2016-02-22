@@ -5,13 +5,23 @@
 
     <string name="action_settings">About</string>
     <string name="action_refresh">Refresh</string>
+    <string name="title_about">About</string>
     <string name="title_search">Search</string>
     <string name="add_task">Add a Task</string>
     <string name="title_share">Share</string>
+    <string name="about_description">A collaboration board towards team progress for projects</string>
+    <string name="about_built">built</string>
+    <string name="about_designed">designed</string>
+    <string name="about_coded">coded</string>
+    <string name="about_contributor_by">by Baxter Academy</string>
+    <string name="about_contributor_end">Students</string>
+    <string name="app_version">Version <a href="https://github.com/baxter-oop/baxter-app">1.0.0</a></string>
 
-    <string name="made_by">Made By \n Wil &amp; John</string>
-    <string name="type_of_build">Online Only</string>
-    <string name="app_version_number">Version 0.9.0</string>
+    <string name="text_innovative">INNOVATIVE</string>
+    <string name="text_ethical">ETHICAL</string>
+    <string name="text_flex_friday">FLEX FRIDAY</string>
+    <string name="text_stem">STEM</string>
+    <string name="text_students">STUDENTS</string>
 
     <string name="title_todo">To Do</string>
     <string name="title_doing">In Process</string>

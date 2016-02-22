@@ -72,8 +72,8 @@ public class FragmentDoing extends Fragment {
                     textViewTitle.setLayoutParams(titleParams);
                     textViewTitle.setTextSize(20);
                     textViewTitle.setText(" " + task.getTaskTitle());
-                    textViewTitle.setTextColor(Color.parseColor(Constants.task_titleCol));
-                    textViewTitle.setBackgroundColor(Color.parseColor(Constants.task_title_bg));
+                    textViewTitle.setTextColor(Color.parseColor(Constants.task_textTitle));
+                    textViewTitle.setBackgroundColor(Color.parseColor(Constants.task_bgTitle_doing));
                     textViewTitle.setPadding(15, 15, 15, 10);
                     textViewTitle.setMovementMethod(new ScrollingMovementMethod());
                     titleLayout.addView(textViewTitle);
@@ -82,8 +82,8 @@ public class FragmentDoing extends Fragment {
                     textViewInfo.setLayoutParams(layoutParams);
                     textViewInfo.setTextSize(18);
                     textViewInfo.setText(task.getTaskInfo());
-                    textViewInfo.setTextColor(Color.parseColor(Constants.task_textCol));
-                    textViewInfo.setBackgroundColor(Color.parseColor(Constants.task_text_bg));
+                    textViewInfo.setTextColor(Color.parseColor(Constants.task_textBody));
+                    textViewInfo.setBackgroundColor(Color.parseColor(Constants.task_bgBody_doing));
                     textViewInfo.setPadding(15, 5, 15, 15);
                     textViewInfo.setMovementMethod(new ScrollingMovementMethod());
                     linearLayout.addView(textViewInfo);
@@ -128,6 +128,13 @@ public class FragmentDoing extends Fragment {
                             popupMenu.show();
                         }
                     });
+
+                    TextView textViewBreak = new TextView(getActivity());
+                    textViewBreak.setLayoutParams(layoutParams);
+                    textViewBreak.setText(Constants.text_break);
+                    textViewBreak.setPadding(15, 4, 15, 4);
+                    textViewBreak.setMovementMethod(new ScrollingMovementMethod());
+                    linearLayout.addView(textViewBreak);
 
                     layout.addView(titleLayout);
                     layout.addView(linearLayout);

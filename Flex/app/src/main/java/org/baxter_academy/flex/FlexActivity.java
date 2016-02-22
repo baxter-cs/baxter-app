@@ -21,10 +21,9 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Iterator;
 
 public class FlexActivity extends AppCompatActivity {
-
-    private boolean debugFirstRun = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +32,9 @@ public class FlexActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        // Checks if run is good after installation
+        // Checking installation run
         SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
-        int firstRun = prefs.getInt("firstRun", 0); //0 is the default value
+        int firstRun = prefs.getInt("firstRun", 0);
         SharedPreferences.Editor editor = prefs.edit();
         if (firstRun == 0) {
             // Run the tutorial or something
@@ -43,19 +42,19 @@ public class FlexActivity extends AppCompatActivity {
 
         refreshTaskList(getApplicationContext());
 
-        // Create the toolbar
+        // Creating the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(Constants.app_name);
 
-        // Expand the tablayout
+        // Expanding the tablayout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText(Constants.title_todo));
         tabLayout.addTab(tabLayout.newTab().setText(Constants.title_doing));
         tabLayout.addTab(tabLayout.newTab().setText(Constants.title_done));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        // Make the viewpager
+        // Making the viewpager
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final org.baxter_academy.flex.PagerAdapter adapter = new org.baxter_academy.flex.PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
@@ -90,9 +89,9 @@ public class FlexActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_settings:
-                Intent aboutActivity = new Intent(FlexActivity.this, AboutActivity.class);
-                startActivity(aboutActivity);
+            case R.id.id_about:
+                Intent aboutPage = new Intent(FlexActivity.this, AboutActivity.class);
+                startActivity(aboutPage);
                 return true;
             case R.id.action_refresh:
                 Toast.makeText(this, "Refreshing..", Toast.LENGTH_SHORT).show();

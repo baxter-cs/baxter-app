@@ -29,3 +29,11 @@ Thumbs.db
 run/
 .gradle/
 gradle/.launch/
+Flex-Server/.idea/.name
+Flex-Server/.idea/encodings.xml
+Flex-Server/.idea/modules.xml
+Flex-Server/.idea/misc.xml
+Flex-Server/.idea/workspace.xml
+Flex/.idea/encodings.xml
+Flex/.idea/gradle.xml
+Flex/.idea/misc.xml
