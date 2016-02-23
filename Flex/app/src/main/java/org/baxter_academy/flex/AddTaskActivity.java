@@ -18,6 +18,7 @@ import android.view.View;
 
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -106,6 +107,17 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
 
         POSTHelper.postNewTask(this, title, description, assignee, dueDate);
 
+        /*RESTClient client = new RESTClient(Constants.server_address_newTask);
+        client.addParam("mTask", title);
+        client.addParam("mDescription", description);
+        client.addParam("mAssignee", assignee);
+        client.addParam("mDueDate", dueDate);
+        client.addHeader("content-type", "application/json");
+
+        String response = client.executePost();
+
+        Toast.makeText(this, response, Toast.LENGTH_LONG).show();
+        */
         startActivity(intent);
     }
 }

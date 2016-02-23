@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
@@ -108,8 +109,14 @@ public class FlexActivity extends AppCompatActivity {
     }
 
     public void refreshTaskList(Context context) {
+        //JsonObject jsonObject = GETHelper.getTasks(context);
+        RESTClient client = new RESTClient(Constants.server_address_getTasks);
+        client.addHeader("content-type", "application/json");
+
+        JsonParser parser = new JsonParser();
         try {
-            JsonObject jsonObject = GETHelper.getTasks(context);
+            JsonObject jsonObject = parser.parse(client.executeGet()).getAsJsonObject();
+
             JsonObject meta = (JsonObject) jsonObject.get("meta");
 
             SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
@@ -142,11 +149,10 @@ public class FlexActivity extends AppCompatActivity {
             // This will be where we store our tasks
             editor.putString("tasks", gson.toJson(task_storage));
             editor.commit();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            refreshTaskList(context);
         }
+
     }
 
 }
