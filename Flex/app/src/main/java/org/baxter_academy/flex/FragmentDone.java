@@ -103,10 +103,11 @@ public class FragmentDone extends Fragment {
                                     SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = prefs.edit();
                                     Gson gson = new Gson();
+                                    ClientHelper client = new ClientHelper();
 
                                     switch (item.getItemId()) {
                                         case R.id.delete:
-                                            POSTHelper.postDeleteTask(getContext(), task.getTaskID().toString());
+                                            client.deleteTask(task.getTaskID().toString());
                                             Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
                                             Intent refreshDelete = new Intent(getContext(), FlexActivity.class);
                                             startActivity(refreshDelete);

@@ -103,10 +103,10 @@ public class FragmentDoing extends Fragment {
                                     SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = prefs.edit();
                                     Gson gson = new Gson();
+                                    ClientHelper client = new ClientHelper();
 
                                     switch (item.getItemId()) {
                                         case R.id.move_to_done:
-                                            ClientHelper client = new ClientHelper();
                                             client.upgradeTaskStatus(task.getTaskID().toString());
 
                                             Toast.makeText(getActivity(), "Task Moved to Done", Toast.LENGTH_SHORT).show();
@@ -114,7 +114,7 @@ public class FragmentDoing extends Fragment {
                                             startActivity(refreshMove);
                                             break;
                                         case R.id.delete:
-                                            POSTHelper.postDeleteTask(getContext(), task.getTaskID().toString());
+                                            client.deleteTask(task.getTaskID().toString());
                                             Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
                                             Intent refreshDelete = new Intent(getContext(), FlexActivity.class);
                                             startActivity(refreshDelete);

@@ -163,7 +163,8 @@ def get_tasks():
 
 @app.route('/deleteTask', methods=['POST'])
 def delete_task():
-    mID = request.form['mID']
+    data = request.json
+    mID = data.get('mID')
     print(mID)
     Task.query.filter(Task.mID == mID).delete()
     db.session.commit()

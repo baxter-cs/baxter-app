@@ -101,9 +101,11 @@ public class FragmentTodo extends Fragment {
                             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                                 @Override
                                 public boolean onMenuItemClick(MenuItem item) {
+
+                                    ClientHelper client = new ClientHelper();
+
                                     switch (item.getItemId()) {
                                         case R.id.move_to_doing:
-                                            ClientHelper client = new ClientHelper();
                                             client.upgradeTaskStatus(task.getTaskID().toString());
 
                                             Toast.makeText(getActivity(), "Moved to In Process", Toast.LENGTH_SHORT).show();
@@ -111,7 +113,8 @@ public class FragmentTodo extends Fragment {
                                             startActivity(refreshMove);
                                             break;
                                         case R.id.delete:
-                                            POSTHelper.postDeleteTask(getContext(), task.getTaskID().toString());
+                                            client.deleteTask(task.getTaskID().toString());
+
                                             Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
                                             Intent refreshDelete = new Intent(getContext(), FlexActivity.class);
                                             startActivity(refreshDelete);

@@ -30,7 +30,15 @@ public class ClientHelper {
         RESTClient client = new RESTClient(Constants.server_address_upgradeStatus);
         client.addHeader("content-type", "application/json");
         client.addParam("mID", mID);
-        
+
+        return client.executePost();
+    }
+
+    public String deleteTask(String mID) {
+        RESTClient client = new RESTClient(Constants.server_address_deleteTask);
+        client.addHeader("content-type", "application/json");
+        client.addParam("mID", mID);
+
         return client.executePost();
     }
 }
