@@ -106,7 +106,9 @@ public class FragmentDoing extends Fragment {
 
                                     switch (item.getItemId()) {
                                         case R.id.move_to_done:
-                                            POSTHelper.postUpgradeTask(getContext(), task.getTaskID().toString());
+                                            ClientHelper client = new ClientHelper();
+                                            client.upgradeTaskStatus(task.getTaskID().toString());
+
                                             Toast.makeText(getActivity(), "Task Moved to Done", Toast.LENGTH_SHORT).show();
                                             Intent refreshMove = new Intent(getContext(), FlexActivity.class);
                                             startActivity(refreshMove);

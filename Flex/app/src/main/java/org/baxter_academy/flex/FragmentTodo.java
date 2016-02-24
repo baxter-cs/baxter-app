@@ -103,7 +103,9 @@ public class FragmentTodo extends Fragment {
                                 public boolean onMenuItemClick(MenuItem item) {
                                     switch (item.getItemId()) {
                                         case R.id.move_to_doing:
-                                            POSTHelper.postUpgradeTask(getContext(), task.getTaskID().toString());
+                                            ClientHelper client = new ClientHelper();
+                                            client.upgradeTaskStatus(task.getTaskID().toString());
+
                                             Toast.makeText(getActivity(), "Moved to In Process", Toast.LENGTH_SHORT).show();
                                             Intent refreshMove = new Intent(getContext(), FlexActivity.class);
                                             startActivity(refreshMove);

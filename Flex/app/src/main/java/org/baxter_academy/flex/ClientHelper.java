@@ -25,4 +25,12 @@ public class ClientHelper {
         JsonParser parser = new JsonParser();
         return parser.parse(client.executeGet()).getAsJsonObject();
     }
+
+    public String upgradeTaskStatus(String mID) {
+        RESTClient client = new RESTClient(Constants.server_address_upgradeStatus);
+        client.addHeader("content-type", "application/json");
+        client.addParam("mID", mID);
+        
+        return client.executePost();
+    }
 }
