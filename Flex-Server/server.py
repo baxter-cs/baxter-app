@@ -106,10 +106,11 @@ def make_session(username, inputtedPassword):
 
 @app.route('/newTask', methods=['POST'])
 def app_task():
-    mTask = request.form['mTask']
-    mDescription = request.form['mDescription']
-    mAssignee = request.form['mAssignee']
-    mDueDate = request.form['mDueDate']
+    data = request.json
+    mTask = data.get('mTask')
+    mDescription = data.get('mDescription')
+    mAssignee = data.get('mAssignee')
+    mDueDate = data.get('mDueDate')
     print(mTask + " " + mDescription + " " + mAssignee + " " + mDueDate)
     db.session.add(Task(mTask, mDescription, mAssignee, mDueDate, "To Do"))
     db.session.commit()
@@ -166,6 +167,20 @@ def delete_task():
     Task.query.filter(Task.mID == mID).delete()
     db.session.commit()
     return "Deleted Task"
+
+
+@app.route('/test', methods=['POST'])
+def test():
+    app.logger.debug("JSON received...")
+    app.logger.debug(request.json)
+
+    if request.json:
+        data = request.json
+        print(data.get('mTask'))
+        return "Thanks. Your task is %s" % data.get("mTask")
+
+    else:
+        return "no json received"
 
 
 app.run(debug=True, host='0.0.0.0', port=8000)

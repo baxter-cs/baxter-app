@@ -109,13 +109,8 @@ public class FlexActivity extends AppCompatActivity {
     }
 
     public void refreshTaskList(Context context) {
-        //JsonObject jsonObject = GETHelper.getTasks(context);
-        RESTClient client = new RESTClient(Constants.server_address_getTasks);
-        client.addHeader("content-type", "application/json");
-
-        JsonParser parser = new JsonParser();
         try {
-            JsonObject jsonObject = parser.parse(client.executeGet()).getAsJsonObject();
+            JsonObject jsonObject = new ClientHelper().getTasks();
 
             JsonObject meta = (JsonObject) jsonObject.get("meta");
 

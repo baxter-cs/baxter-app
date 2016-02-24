@@ -16,11 +16,12 @@ public class Constants {
     public static String task_titleCol = "#515151";
     public static String task_textCol = "#4E4E4E";
 
-    public static String server_address = "http://192.168.0.13:8000";
+    public static String server_address = "http://172.101.35.168:8000";
     public static String server_address_upgradeStatus = server_address + "/upgradeTask";
     public static String server_address_newTask = server_address + "/newTask";
     public static String server_address_getTasks = server_address + "/getTasks";
     public static String server_address_deleteTask = server_address + "/deleteTask";
+    public static String server_address_test = server_address + "/test";
 
     public static String task_textTitle = "#515151";
     public static String task_textBody = "#4E4E4E";

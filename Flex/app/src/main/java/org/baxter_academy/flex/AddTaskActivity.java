@@ -93,7 +93,6 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
 
         Intent intent = new Intent(AddTaskActivity.this, FlexActivity.class);
 
-
         mTitle = (EditText) findViewById(R.id.bar_title);
         mDescription = (EditText) findViewById(R.id.bar_description);
         mAssignee = (EditText) findViewById(R.id.bar_assignee);
@@ -104,20 +103,11 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         assignee = mAssignee.getText().toString();
         dueDate = mDueDate.getText().toString();
 
-
-        POSTHelper.postNewTask(this, title, description, assignee, dueDate);
-
-        /*RESTClient client = new RESTClient(Constants.server_address_newTask);
-        client.addParam("mTask", title);
-        client.addParam("mDescription", description);
-        client.addParam("mAssignee", assignee);
-        client.addParam("mDueDate", dueDate);
-        client.addHeader("content-type", "application/json");
-
-        String response = client.executePost();
+        ClientHelper client = new ClientHelper();
+        String response = client.newTask(title, description, assignee, dueDate);
 
         Toast.makeText(this, response, Toast.LENGTH_LONG).show();
-        */
+
         startActivity(intent);
     }
 }
