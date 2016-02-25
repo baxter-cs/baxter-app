@@ -40,7 +40,7 @@ public class FlexActivity extends AppCompatActivity {
         if (firstRun == 0) {
             // Run the tutorial or something
         }
-
+        checkIfLoggedIn(getApplicationContext());
         refreshTaskList(getApplicationContext());
 
         // Creating the toolbar
@@ -108,14 +108,26 @@ public class FlexActivity extends AppCompatActivity {
         }
     }
 
+    public void checkIfLoggedIn(Context context) {
+        SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        String response = new ClientHelper().verifyLogin(prefs.getString("uuid", "invalid"));
+
+        if (response.equals("invalid uuid")) {
+            // switch to login activity
+            Toast.makeText(context, response, Toast.LENGTH_LONG);
+        }
+    }
+
     public void refreshTaskList(Context context) {
+        SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
         try {
             JsonObject jsonObject = new ClientHelper().getTasks();
 
             JsonObject meta = (JsonObject) jsonObject.get("meta");
-
-            SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
 
             editor.putBoolean("isInitTodo", meta.get("isInitTodo").getAsBoolean());
             editor.putBoolean("isInitDoing", meta.get("isInitDoing").getAsBoolean());

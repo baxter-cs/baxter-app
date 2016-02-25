@@ -185,4 +185,17 @@ def test():
         return "no json received"
 
 
+@app.route('/verifyLogin', methods=['POST'])
+def verifyLogin():
+    data = request.json
+    try:
+        uuid = data.get('uuid')
+        if check_if_valid_session(uuid):
+            return "valid uuid"
+        else:
+            return "invalid uuid"
+    except:
+        return "invalid uuid"
+
+
 app.run(debug=True, host='0.0.0.0', port=8000)

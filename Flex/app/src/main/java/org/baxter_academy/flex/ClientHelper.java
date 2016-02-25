@@ -3,6 +3,8 @@ package org.baxter_academy.flex;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * Created by John on 2/24/2016.
  */
@@ -40,5 +42,21 @@ public class ClientHelper {
         client.addParam("mID", mID);
 
         return client.executePost();
+    }
+
+    public String verifyLogin(String uuid) {
+        RESTClient client = new RESTClient(Constants.server_address_verifyLogin);
+        client.addHeader("content-type", "application/json");
+        client.addParam("uuid", uuid);
+
+        String response;
+
+        try {
+            response = client.executePost();
+        } catch (Exception e) {
+            response = "error";
+        }
+
+        return response;
     }
 }
