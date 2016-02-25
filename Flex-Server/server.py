@@ -87,18 +87,28 @@ def check_if_valid_session(session_id):
             return False
 
 
-def make_session(username, inputtedPassword):
+def make_session(iUsername, iPassword):
+    print("input: " + iUsername + " & " + iPassword)
     try:
-        account = User.query.filter(User.username == username).first()
-        hashed_password = account.password
-        salt = account.salt
-        password = bcrypt.hashpw(str.encode(inputtedPassword, salt))
-        if hashed_password == password:
-            return account.session_id
+        account = User.query.filter(User.username == iUsername).first()
+        if account is not None:
+            print("Username matched")
+            print("Salt: {}".format(account.salt))
+            stored_password = account.password
+            print("Stored password: {}".format(stored_password))
+            print("Hashed Password: " + bcrypt.hashpw(str.encode(iPassword), account.salt))
+            if bcrypt.hashpw(str.encode(iPassword), account.salt) == stored_password:
+                print("Stored Password and Hashed password Match")
+                return account.session_id
+            else:
+                print("Stored Password and Hashed password don't match")
+                return "invalid"
         else:
-            return False
+            print("Username not matched")
+            return "invalid"
     except:
-        return False
+        print("returning invalid")
+        return "invalid"
 
 
 # Routes
@@ -196,6 +206,23 @@ def verifyLogin():
             return "invalid uuid"
     except:
         return "invalid uuid"
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.json
+    try:
+        username = data.get('username')
+        password = data.get('password')
+        return make_session(username, password)
+    except:
+        return "invalid"
+
+
+@app.route('/debugUserCreate/<username>/<password>')
+def debugUserCreate(username, password):
+    db_create_user(username, password)
+    return "k"
 
 
 app.run(debug=True, host='0.0.0.0', port=8000)

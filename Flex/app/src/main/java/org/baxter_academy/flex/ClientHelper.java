@@ -59,4 +59,21 @@ public class ClientHelper {
 
         return response;
     }
+
+    public String login(String username, String password) {
+        RESTClient client = new RESTClient(Constants.server_address_login);
+        client.addHeader("content-type", "application/json");
+        client.addParam("username", username);
+        client.addParam("password", password);
+
+        String response;
+
+        try {
+            response = client.executePost();
+        } catch (Exception e) {
+            response = "invalid";
+        }
+
+        return response;
+    }
 }

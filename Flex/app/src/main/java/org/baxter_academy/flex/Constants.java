@@ -23,6 +23,7 @@ public class Constants {
     public static String server_address_deleteTask = server_address + "/deleteTask";
     public static String server_address_test = server_address + "/test";
     public static String server_address_verifyLogin = server_address + "/verifyLogin";
+    public static String server_address_login = server_address + "/login";
 
     public static String task_textTitle = "#515151";
     public static String task_textBody = "#4E4E4E";

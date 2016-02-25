@@ -116,7 +116,11 @@ public class FlexActivity extends AppCompatActivity {
 
         if (response.equals("invalid uuid")) {
             // switch to login activity
-            Toast.makeText(context, response, Toast.LENGTH_LONG);
+            Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+            Intent gotoLogin = new Intent(FlexActivity.this, LoginActivity.class);
+            startActivity(gotoLogin);
+        } else {
+            // Stay
         }
     }
 

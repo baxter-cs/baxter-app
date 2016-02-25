@@ -43,4 +43,11 @@
     <string name="move_to_doing">Move to In Process</string>
     <string name="move_to_done">Move to Done</string>
     <string name="delete">Delete</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
