@@ -76,4 +76,22 @@ public class ClientHelper {
 
         return response;
     }
+
+    public String signUp(String username, String password, String email) {
+        RESTClient client = new RESTClient(Constants.server_address_signUp);
+        client.addHeader("content-type", "application/json");
+        client.addParam("username", username);
+        client.addParam("password", password);
+        client.addParam("email", email);
+
+        String response;
+
+        try {
+            response = client.executePost();
+        } catch (Exception e) {
+            response = "exception error";
+        }
+
+        return response;
+    }
 }

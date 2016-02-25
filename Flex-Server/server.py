@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask import Flask, request, jsonify
 from flask.ext.sqlalchemy import SQLAlchemy
-import bcrypt, uuid
+import bcrypt, uuid, re
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -217,9 +217,35 @@ def login():
 
 
 @app.route('/debugUserCreate/<username>/<password>')
-def debugUserCreate(username, password):
+def debug_user_create(username, password):
     db_create_user(username, password)
     return "New Account Created!\n Username: {}\n Password: {}".format(username, password)
 
 
-app.run(debug=True, host='0.0.0.0', port=7999)
+@app.route('/signUp', methods=['POST'])
+def sign_up():
+    data = request.json
+    try:
+        username = data.get('username')
+        password = data.get('password')
+        email = data.get('email')
+    except:
+        return "error"
+
+    regex_pattern = re.compile("[^\w']")
+
+    if regex_pattern.sub(' ', username) != username or regex_pattern.sub(' ', password) != password:
+        return "invalid"
+
+    if username is None or password is None or email is None:
+        return "missing"
+
+    pre_existing_user = User.query.filter(User.username == username).first()
+    if pre_existing_user is not None:
+        return "usernameTaken"
+
+    db_create_user(username, password)
+    return "success"
+
+
+app.run(debug=True, host='0.0.0.0', port=8000)
