@@ -34,14 +34,12 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, unique=True)
     username = db.Column(db.String(), unique=True)
     password = db.Column(db.String())
-    salt = db.Column(db.String())
     session_id = db.Column(db.String())
     session_time = db.Column(db.String())
 
-    def __init__(self, username, password, salt, session_id, session_time):
+    def __init__(self, username, password, session_id, session_time):
         self.username = username
         self.password = password
-        self.salt = salt
         self.session_id = session_id
         self.session_time = session_time
 
@@ -70,7 +68,7 @@ def db_create_user(username, password):
     current_time = str(datetime.utcnow())
     salt = bcrypt.gensalt()
     ciphered_password = bcrypt.hashpw(str.encode(password), salt)
-    db.session.add(User(username, ciphered_password, salt, session_id, current_time))
+    db.session.add(User(username, ciphered_password, session_id, current_time))
     db.session.commit()
     return "Successfully added a new user"
 
@@ -93,20 +91,19 @@ def make_session(iUsername, iPassword):
         account = User.query.filter(User.username == iUsername).first()
         if account is not None:
             print("Username matched")
-            print("Salt: {}".format(account.salt))
             stored_password = account.password
             print("Stored password: {}".format(stored_password))
-            print("Hashed Password: " + bcrypt.hashpw(str.encode(iPassword), account.salt))
-            if bcrypt.hashpw(str.encode(iPassword), account.salt) == stored_password:
+            if bcrypt.hashpw(bytes(iPassword, 'utf-8'), stored_password) == stored_password:
                 print("Stored Password and Hashed password Match")
                 return account.session_id
             else:
                 print("Stored Password and Hashed password don't match")
-                return "invalid"
+                return "Invalid Password"
         else:
-            print("Username not matched")
-            return "invalid"
-    except:
+            print("Username Doesn't Exist")
+            return "Username Doesn't Exist"
+    except Exception:
+        print(Exception.__dict__)
         print("returning invalid")
         return "invalid"
 
@@ -205,7 +202,7 @@ def verifyLogin():
         else:
             return "invalid uuid"
     except:
-        return "invalid uuid"
+        return "invalid entered uuid"
 
 
 @app.route('/login', methods=['POST'])
@@ -222,7 +219,7 @@ def login():
 @app.route('/debugUserCreate/<username>/<password>')
 def debugUserCreate(username, password):
     db_create_user(username, password)
-    return "k"
+    return "New Account Created!\n Username: {}\n Password: {}".format(username, password)
 
 
-app.run(debug=True, host='0.0.0.0', port=8000)
+app.run(debug=True, host='0.0.0.0', port=7999)
