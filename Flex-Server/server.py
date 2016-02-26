@@ -248,7 +248,7 @@ def sign_up():
     return "success"
 
 
-@app.route('/refreshTask')
+@app.route('/refreshTask', methods=['POST'])
 def refresh_task():
     data = request.json
     response = {}
@@ -257,26 +257,24 @@ def refresh_task():
         mID = data.get('mID')
     except:
         response['status'] = "missing"
-        return response
+        return jsonify(**response)
 
     try:
-        tasks = []
-        for task in Task.query.filter(Task.mID == mID).all():
-            response = {'mTask': task.mTask,
-                        'mDescription': task.mDescription,
-                        'mAssignee': task.mAssignee,
-                        'mDueDate': task.mDueDate,
-                        'mID': task.mID,
-                        'mTaskStatus': task.mTaskStatus
-                        }
-            tasks.append(response)
+        task = Task.query.filter(Task.mID == mID).first()
+        tasks = {'mTask': task.mTask,
+                    'mDescription': task.mDescription,
+                    'mAssignee': task.mAssignee,
+                    'mDueDate': task.mDueDate,
+                    'mID': task.mID,
+                    'mTaskStatus': task.mTaskStatus
+                    }
         response['tasks'] = tasks
         response['status'] = "success"
     except:
         response['status'] = "error"
-        return response
+        return jsonify(**response)
 
-    return response
+    return jsonify(**response)
 
 
 @app.route('/updateTask')
@@ -306,4 +304,4 @@ def update_task():
     return "success"
 
 
-app.run(debug=True, host='0.0.0.0', port=8000)
+app.run(debug=True, host='0.0.0.0', port=7999)
