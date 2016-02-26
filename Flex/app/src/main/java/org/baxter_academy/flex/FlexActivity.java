@@ -3,6 +3,7 @@ package org.baxter_academy.flex;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.StrictMode;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,9 +12,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Iterator;
 
 public class FlexActivity extends AppCompatActivity {
@@ -22,82 +30,18 @@ public class FlexActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.flex_layout);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         // Checking installation run
         SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
         int firstRun = prefs.getInt("firstRun", 0);
         SharedPreferences.Editor editor = prefs.edit();
         if (firstRun == 0) {
-            // This runs when Flex starts at the first time
-            firstRun = 1;
-            editor.putInt("firstRun", firstRun);
-            editor.putBoolean("isInitTodo", false);
-            editor.putBoolean("isInitDoing", false);
-            editor.putBoolean("isInitDone", false);
-            editor.commit();
-
-            // Setting up default json files
-            TaskStorage task_storage = new TaskStorage();
-            // Creating initial Tasks
-            Task starterTask = new Task();
-            Task tutorialTask = new Task();
-            starterTask.addTask("Welcome to Flex", "First Task!", "Flex Team", "02-05-2016", task_storage.getNewTaskID());
-            tutorialTask.addTask("Learn to Use Flex", "Tap on this Task", "You", "02-05-2016", task_storage.getNewTaskID());
-
-            // Adding initial Tasks to TaskStorage object
-            task_storage.tasks.add(starterTask);
-            task_storage.tasks.add(tutorialTask);
-
-            // Creating a Gson object (Google's JSON Library)
-            Gson gson = new Gson();
-
-            // Saving encoded json string into shared preferences meta with key "tasks"
-            // This will be where Tasks are stored
-            editor.putString("tasks", gson.toJson(task_storage));
-            editor.commit();
-        } else if (false) {
-            // This is for debugging purposes
-            firstRun++;
-            editor.putInt("firstRun", firstRun);
-            editor.commit();
-            String json = prefs.getString("tasks", "error");
-
-            // Creating a Gson object
-            Gson gson = new Gson();
-            // Using Gson object to decode json string back into TaskStorage class
-            TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
-            // Creating a new task
-            Task starterTask = new Task();
-            starterTask.addTask("First Task", "This is the first task", "The Flex Team", "2-01-2016", task_storage.getNewTaskID());
-
-            // Adding initial Tasks to TaskStorage object
-            task_storage.tasks.add(starterTask);
-
-            // Saving encoded json string into shared preferences meta with key "tasks"
-            // This will be where tasks are stored
-            editor.putString("tasks", gson.toJson(task_storage));
-            editor.commit();
+            // Run the tutorial or something
         }
-
-        // Checking through all Tasks and updating initial states
-        String json = prefs.getString("tasks", "error");
-        Gson gson = new Gson();
-
-        TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
-        editor.putBoolean("isInitTodo", false);
-        editor.putBoolean("isInitDoing", false);
-        editor.putBoolean("isInitDone", false);
-        for(Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext();) {
-            final Task task = i.next();
-            if (task.getTaskStatus().equals(Constants.title_doing)) {
-                editor.putBoolean("isInitDoing", true);
-            } else if (task.getTaskStatus().equals(Constants.title_done)) {
-                editor.putBoolean("isInitDone", true);
-            } else if (task.getTaskStatus().equals(Constants.title_todo)) {
-                editor.putBoolean("isInitTodo", true);
-            }
-        }
-        editor.commit();
+        checkIfLoggedIn(getApplicationContext());
+        refreshTaskList(getApplicationContext());
 
         // Creating the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -150,6 +94,11 @@ public class FlexActivity extends AppCompatActivity {
                 Intent aboutPage = new Intent(FlexActivity.this, AboutActivity.class);
                 startActivity(aboutPage);
                 return true;
+            case R.id.action_refresh:
+                Toast.makeText(this, "Refreshing..", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, FlexActivity.class);
+                startActivity(intent);
+                return true;
             case R.id.id_add:
                 Intent addTask = new Intent(FlexActivity.this, AddTaskActivity.class);
                 startActivity(addTask);
@@ -159,9 +108,62 @@ public class FlexActivity extends AppCompatActivity {
         }
     }
 
-    public String getTaskJSON() {
+    public void checkIfLoggedIn(Context context) {
         SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
-        return prefs.getString("tasks", "error");
+        SharedPreferences.Editor editor = prefs.edit();
+
+        String response = new ClientHelper().verifyLogin(prefs.getString("uuid", "invalid"));
+
+        if (response.equals("invalid uuid")) {
+            // switch to login activity
+            Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+            Intent gotoLogin = new Intent(FlexActivity.this, LoginActivity.class);
+            startActivity(gotoLogin);
+        } else {
+            // Stay
+        }
+    }
+
+    public void refreshTaskList(Context context) {
+        SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        try {
+            JsonObject jsonObject = new ClientHelper().getTasks();
+
+            JsonObject meta = (JsonObject) jsonObject.get("meta");
+
+            editor.putBoolean("isInitTodo", meta.get("isInitTodo").getAsBoolean());
+            editor.putBoolean("isInitDoing", meta.get("isInitDoing").getAsBoolean());
+            editor.putBoolean("isInitDone", meta.get("isInitDone").getAsBoolean());
+            editor.commit();
+
+            Type listType = new TypeToken<List<JsonObject>>() {}.getType();
+            List<JsonObject> tasks = new Gson().fromJson(jsonObject.get("tasks"), listType);
+            TaskStorage task_storage = new TaskStorage();
+
+            for (JsonObject task : tasks) {
+                int mID = task.get("mID").getAsInt();
+                String mTask = task.get("mTask").getAsString();
+                String mDescription = task.get("mDescription").getAsString();
+                String mAssignee = task.get("mAssignee").getAsString();
+                String mDueDate = task.get("mDueDate").getAsString();
+                String mTaskStatus = task.get("mTaskStatus").getAsString();
+                Task newTask = new Task();
+                newTask.addTask(mTask, mDescription, mAssignee, mDueDate, mID, mTaskStatus);
+                task_storage.tasks.add(newTask);
+            }
+
+            // Creating a Gson object (Google's JSON Library)
+            Gson gson = new Gson();
+            // This saves our encoded json string into the shared pref. meta with the key "tasks"
+            // This will be where we store our tasks
+            editor.putString("tasks", gson.toJson(task_storage));
+            editor.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

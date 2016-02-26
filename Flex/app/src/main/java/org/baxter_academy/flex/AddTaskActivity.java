@@ -1,20 +1,24 @@
 package org.baxter_academy.flex;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
+
 import android.content.Intent;
-import android.content.SharedPreferences;
+
 import android.os.Bundle;
+
 import android.support.v4.app.NavUtils;
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
 import android.text.InputType;
+
 import android.view.MenuItem;
 import android.view.View;
+
 import android.widget.DatePicker;
 import android.widget.EditText;
-
-import com.google.gson.Gson;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -84,19 +88,10 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void createTask(View view){
-        EditText mTitle, mDescription, mAssignee, mDueDate;
-        String title, description, assignee, dueDate;
+        final EditText mTitle, mDescription, mAssignee, mDueDate;
+        final String title, description, assignee, dueDate;
 
         Intent intent = new Intent(AddTaskActivity.this, FlexActivity.class);
-
-        SharedPreferences prefs = this.getSharedPreferences("meta", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-
-        String json = prefs.getString("tasks", "error");
-        // Here we create our Gson object
-        Gson gson = new Gson();
-        // Here we use our Gson object to decode our json string back into our TaskStorage class
-        TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
 
         mTitle = (EditText) findViewById(R.id.bar_title);
         mDescription = (EditText) findViewById(R.id.bar_description);
@@ -108,14 +103,10 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         assignee = mAssignee.getText().toString();
         dueDate = mDueDate.getText().toString();
 
-        Task task = new Task();
-        task.addTask(title, description, assignee, dueDate, task_storage.getNewTaskID());
-        // Init. our TaskStorage class
-        task_storage.tasks.add(task);
-        // This saves our encoded json string into the shared pref. meta with the key "tasks"
-        // This will be where we store our tasks
-        editor.putString("tasks", gson.toJson(task_storage));
-        editor.commit();
+        ClientHelper client = new ClientHelper();
+        String response = client.newTask(title, description, assignee, dueDate);
+
+        Toast.makeText(this, response, Toast.LENGTH_LONG).show();
 
         startActivity(intent);
     }

@@ -1,0 +1,14 @@
+Make sure you can use port 8000 or just change it in server.py
+Get a 192.168.0.13 static IP or change the url in the app
+
+First setup your virtual environment with python 3.4.3:
+
+$ pip install virtualenv
+$ virtualenv tardigrade
+$ cd tardigrade
+
+Then set up your dependencies:
+
+$ Scripts\pip3.4.exe install flask
+$ Scripts\pip3.4.exe install Flask-SQLAlchemy
+$ Scripts\pip3.4.exe install bcrypt

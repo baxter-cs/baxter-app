@@ -19,9 +19,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class FragmentDoing extends Fragment {
 
@@ -105,33 +103,21 @@ public class FragmentDoing extends Fragment {
                                     SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = prefs.edit();
                                     Gson gson = new Gson();
+                                    ClientHelper client = new ClientHelper();
 
                                     switch (item.getItemId()) {
                                         case R.id.move_to_done:
+                                            client.upgradeTaskStatus(task.getTaskID().toString());
+
                                             Toast.makeText(getActivity(), "Task Moved to Done", Toast.LENGTH_SHORT).show();
-
-                                            task.upgradeStatus();
-                                            editor.putString("tasks", gson.toJson(task_storage));
-                                            editor.commit();
-
+                                            Intent refreshMove = new Intent(getContext(), FlexActivity.class);
+                                            startActivity(refreshMove);
                                             break;
                                         case R.id.delete:
-                                            Toast.makeText(getActivity(), "Task Deleted", Toast.LENGTH_SHORT).show();
-
-                                            String json = prefs.getString("tasks", "error");
-                                            TaskStorage task_storage = gson.fromJson(json, TaskStorage.class);
-                                            List<Task> filteredTasks = new ArrayList<Task>();
-                                            for (Iterator<Task> i = task_storage.tasks.iterator(); i.hasNext(); ) {
-                                                Task filteredTask = i.next();
-                                                if (!filteredTask.getTaskID().equals(task.getTaskID())) {
-                                                    filteredTasks.add(filteredTask);
-                                                }
-                                            }
-                                            task_storage.tasks = filteredTasks;
-                                            // Saves the updated Task Storage
-                                            editor.putString("tasks", gson.toJson(task_storage));
-                                            editor.commit();
-
+                                            client.deleteTask(task.getTaskID().toString());
+                                            Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
+                                            Intent refreshDelete = new Intent(getContext(), FlexActivity.class);
+                                            startActivity(refreshDelete);
                                             break;
                                         default:
                                             Toast.makeText(getActivity(), item.getTitle() + " Clicked", Toast.LENGTH_SHORT).show();
@@ -141,7 +127,6 @@ public class FragmentDoing extends Fragment {
                                     return true;
                                 }
                             });
-
                             popupMenu.show();
                         }
                     });

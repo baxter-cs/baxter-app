@@ -11,6 +11,21 @@ public class Constants {
     public static String title_doing = "In Process";
     public static String title_done = "Done";
 
+    public static String task_title_bg = "#F8BBD0";
+    public static String task_text_bg = "#FAD2E0";
+    public static String task_titleCol = "#515151";
+    public static String task_textCol = "#4E4E4E";
+
+    public static String server_address = "http://192.168.0.13:8000";
+    public static String server_address_upgradeStatus = server_address + "/upgradeTask";
+    public static String server_address_newTask = server_address + "/newTask";
+    public static String server_address_getTasks = server_address + "/getTasks";
+    public static String server_address_deleteTask = server_address + "/deleteTask";
+    public static String server_address_test = server_address + "/test";
+    public static String server_address_verifyLogin = server_address + "/verifyLogin";
+    public static String server_address_login = server_address + "/login";
+    public static String server_address_signUp = server_address + "/signUp";
+
     public static String task_textTitle = "#515151";
     public static String task_textBody = "#4E4E4E";
 

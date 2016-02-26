@@ -16,7 +16,9 @@ A collaboration board towards team progress for projects. [:page_facing_up:](htt
 - Assign `tasks` to team members and yourself  
 - Goal tracker and personal todo list  
 - Mark and manange tasks in `progress levels`  
-- Work more, procrastinate less  
+- Work more, procrastinate less by always knowing what to work on
+- Hold team members accountable for their work
+- Useful for discussing Equity & Intellectual Property
 
 ## Release History :chart_with_upwards_trend: 
 + [1.0.0](https://github.com/baxter-oop/baxter-app/releases/tag/1.0.0) - Initial Release
