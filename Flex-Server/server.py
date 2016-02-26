@@ -248,4 +248,62 @@ def sign_up():
     return "success"
 
 
+@app.route('/refreshTask')
+def refresh_task():
+    data = request.json
+    response = {}
+    try:
+        uuid = data.get('uuid')
+        mID = data.get('mID')
+    except:
+        response['status'] = "missing"
+        return response
+
+    try:
+        tasks = []
+        for task in Task.query.filter(Task.mID == mID).all():
+            response = {'mTask': task.mTask,
+                        'mDescription': task.mDescription,
+                        'mAssignee': task.mAssignee,
+                        'mDueDate': task.mDueDate,
+                        'mID': task.mID,
+                        'mTaskStatus': task.mTaskStatus
+                        }
+            tasks.append(response)
+        response['tasks'] = tasks
+        response['status'] = "success"
+    except:
+        response['status'] = "error"
+        return response
+
+    return response
+
+
+@app.route('/updateTask')
+def update_task():
+    data = request.json
+
+    try:
+        mId = data.get('mID')
+        mDescription = data.get('mDescription')
+        mTitle = data.get('mTask')
+        mAssignee = data.get('mAssignee')
+        uuid = data.get('uuid')
+        mDueDate = data.get('mDueDate')
+    except:
+        return "missing"
+
+    try:
+        task = Task.query.filter(Task.mID == mId).first()
+        task.mDescription = mDescription
+        task.mTask = mTitle
+        task.mAssignee = mAssignee
+        task.mDueDate = mDueDate
+        db.session.commit()
+    except:
+        return "error"
+
+    return "success"
+
+
 app.run(debug=True, host='0.0.0.0', port=8000)
