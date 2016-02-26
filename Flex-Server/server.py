@@ -277,7 +277,7 @@ def refresh_task():
     return jsonify(**response)
 
 
-@app.route('/updateTask')
+@app.route('/updateTask', methods=['POST'])
 def update_task():
     data = request.json
 
