@@ -32,6 +32,7 @@ function CH_verifyLogin() {
                 logcat(response["response"], "success");
                 logcat("It's an older uuid sir, but it checks out", "success");
                 valid_uuid = true;
+                getTasks();
             } else {
                 logcat(response["response"], "error");
                 valid_uuid = false;
@@ -72,9 +73,42 @@ function logIn() {
                 Cookies.set("uuid", response["data"]);
                 logcat("Successfully logged in", "success");
                 $('#modal_log_in').closeModal();
+                getTasks();
             } else if (response["response"] == "log in failed") {
                 logcat("Failed to log in", "error");
                 Cookies.set("uuid", response["data"]);
+            }
+        }
+    })
+}
+
+function getTasks() {
+    var uuid = Cookies.get("uuid");
+
+    var data = {};
+    data["uuid"] = uuid;
+    data = JSON.stringify(data);
+
+    $.ajax({
+        type: "GET",
+        url: server_address_getTasks,
+        data: data,
+        contentType: "application/json",
+        success: function(response) {
+            logcat("Got a reply from getTasks", "success");
+            tasks_array = response["tasks"];
+            for (var i = 0; i < tasks_array.length; i++) {
+                switch (tasks_array[i]["mTaskStatus"]) {
+                    case "To Do":
+                        addTodoTask(tasks_array[i]);
+                        break;
+                    case "In Process":
+                        addInProgressTask(tasks_array[i]);
+                        break;
+                    case "Done":
+                        addDoneTask(tasks_array[i]);
+                        break;
+                }
             }
         }
     })
