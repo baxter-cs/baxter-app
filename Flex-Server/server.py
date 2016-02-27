@@ -1,7 +1,10 @@
 from datetime import datetime
-from flask import Flask, request, jsonify
+
+import bcrypt
+import re
+import uuid
+from flask import Flask, request, jsonify, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
-import bcrypt, uuid, re
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -211,27 +214,36 @@ def test():
 
 
 @app.route('/verifyLogin', methods=['POST'])
-def verifyLogin():
+def verify_login():
     data = request.json
+    response = dict()
+    print(data)
     try:
         uuid = data.get('uuid')
         if check_if_valid_session(uuid):
-            return "valid uuid"
+            response["response"] = "valid uuid"
+            return jsonify(**response)
         else:
-            return "invalid uuid"
+            response["response"] = "invalid uuid"
+            return jsonify(**response)
     except:
-        return "invalid entered uuid"
+        response["response"] = "invalid entered uuid"
+        return jsonify(**response)
 
 
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
+    response = dict()
     try:
         username = data.get('username')
         password = data.get('password')
-        return make_session(username, password)
+        response["data"] = make_session(username, password)
+        response["response"] = "logged in"
     except:
-        return "invalid"
+        response["data"] = "invalid"
+        response["response"] = "log in failed"
+    return jsonify(**response)
 
 
 @app.route('/debugUserCreate/<username>/<password>')
@@ -341,6 +353,11 @@ def join_team():
     db_create_team_member(user.session_id, team.id)
 
     return "success"
+
+
+@app.route('/')
+def testing_website():
+    return render_template('index.html')
 
 
 app.run(debug=True, host='0.0.0.0', port=7999)

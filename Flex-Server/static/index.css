@@ -1,0 +1,19 @@
+.menu_div {
+    background: #3F51B5;
+}
+
+.menu_div div {
+    color: #FFFFFF;
+}
+
+.todo_div {
+    background: #FFFFFF;
+}
+
+.in_progress_div {
+    background: #FFFFFF;
+}
+
+.done_div {
+    background: #FFFFFF;
+}
