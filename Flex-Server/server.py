@@ -30,6 +30,19 @@ class Task(db.Model):
         return '<Task %r>' % self.mID
 
 
+class TeamMember(db.Model):
+    id = db.Column(db.Integer, primary_key=True, unique=True)
+    user = db.Column(db.String())
+    team = db.Column(db.String())
+
+    def __init__(self, user, team):
+        self.user = user
+        self.team = team
+
+    def __repr__(self):
+        return '<TeamMember %r>' % self.id
+
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, unique=True)
     username = db.Column(db.String(), unique=True)
@@ -71,6 +84,11 @@ def db_create_user(username, password):
     db.session.add(User(username, ciphered_password, session_id, current_time))
     db.session.commit()
     return "Successfully added a new user"
+
+
+def db_create_team_member(user, team):
+    db.session.add(TeamMember(user, team))
+    db.session.commit()
 
 
 def check_if_valid_session(session_id):
@@ -248,4 +266,81 @@ def sign_up():
     return "success"
 
 
-app.run(debug=True, host='0.0.0.0', port=8000)
+@app.route('/refreshTask', methods=['POST'])
+def refresh_task():
+    data = request.json
+    response = {}
+    try:
+        uuid = data.get('uuid')
+        mID = data.get('mID')
+    except:
+        response['status'] = "missing"
+        return jsonify(**response)
+
+    try:
+        task = Task.query.filter(Task.mID == mID).first()
+        tasks = {'mTask': task.mTask,
+                    'mDescription': task.mDescription,
+                    'mAssignee': task.mAssignee,
+                    'mDueDate': task.mDueDate,
+                    'mID': task.mID,
+                    'mTaskStatus': task.mTaskStatus
+                    }
+        response['tasks'] = tasks
+        response['status'] = "success"
+    except:
+        response['status'] = "error"
+        return jsonify(**response)
+
+    return jsonify(**response)
+
+
+@app.route('/updateTask', methods=['POST'])
+def update_task():
+    data = request.json
+
+    try:
+        mId = data.get('mID')
+        mDescription = data.get('mDescription')
+        mTitle = data.get('mTask')
+        mAssignee = data.get('mAssignee')
+        uuid = data.get('uuid')
+        mDueDate = data.get('mDueDate')
+    except:
+        return "missing"
+
+    try:
+        task = Task.query.filter(Task.mID == mId).first()
+        task.mDescription = mDescription
+        task.mTask = mTitle
+        task.mAssignee = mAssignee
+        task.mDueDate = mDueDate
+        db.session.commit()
+    except:
+        return "error"
+
+    return "success"
+
+
+@app.route('/joinTeam', methods=['POST'])
+def join_team():
+    data = request.json
+
+    try:
+        tID = data.get('tID')
+        uuid = data.get('uuid')
+    except:
+        return "missing"
+
+    try:
+        user = User.query.filter(User.session_id == uuid).first()
+        team = User.query.filter(Team.id == tID).first()
+    except:
+        return "error"
+
+    db_create_team_member(user.session_id, team.id)
+
+    return "success"
+
+
+app.run(debug=True, host='0.0.0.0', port=7999)
