@@ -97,6 +97,10 @@ def db_create_team_member(user, team):
     db.session.add(TeamMember(user, team))
     db.session.commit()
 
+def db_create_team(user_uuid, tName):
+    db.session.add(Team(tName, user_uuid, "false"))
+    db.session.commit()
+
 
 def check_if_valid_session(session_id):
     if session_id == "invalid":
@@ -382,6 +386,27 @@ def join_team():
         response["response"] = "Free Join for {} not enabled." \
                                " If you believe this is wrong" \
                                " you can contact the owner {}".format(team.name, team.owner)
+        return jsonify(**response)
+
+
+@app.route('/createTeam', methods=['POST'])
+def create_team():
+    data = request.json
+    response = {}
+
+    try:
+        uuid = data.get('uuid')
+        tName = data.get('tName')
+    except:
+        response["response"] = "missing"
+        return jsonify(**response)
+
+    try:
+        db_create_team(uuid, tName)
+        response["response"] = "success"
+        return jsonify(**response)
+    except:
+        response["response"] = "error"
         return jsonify(**response)
 
 
