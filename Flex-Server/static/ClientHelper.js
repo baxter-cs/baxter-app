@@ -196,3 +196,82 @@ function addTask() {
         }
     })
 }
+
+function refreshTask(task_id) {
+    var data = {};
+    data["mID"] = task_id;
+    data["uuid"] = Cookies.get("uuid");
+    data = JSON.stringify(data);
+
+    $.ajax({
+        type: "POST",
+        url: server_address_refreshTask,
+        data: data,
+        contentType: "application/json",
+        success: function(response) {
+            if (response["status"] == "success") {
+                logkitty("Successfully got task data from refreshTask", "success");
+                var mTask = response["tasks"]["mTask"];
+                var mDescription = response["tasks"]["mDescription"];
+                var mAssignee = response["tasks"]["mAssignee"];
+                var mDueDate = response["tasks"]["mDueDate"];
+                var mID = response["tasks"]["mID"];
+                var mTaskStatus = response["tasks"]["mTaskStatus"];
+
+                $('#' + task_id + 'Title').text(mTask);
+                $('#' + task_id + 'Info').text(mDescription + "<br/>" + mAssignee + "<br/>" + mDueDate)
+
+                $('#edit_task_title').val(mTask);
+                $('#edit_task_assignee').val(mAssignee);
+                $('#edit_task_due_date').val(mDueDate);
+                $('#edit_task_description').val(mDescription);
+
+                logkitty("Successfully changed the edit task modal values", "success");
+            } else {
+                logkitty("Got " + response["status"] + " from refreshTask", "error");
+            }
+        }
+    })
+}
+
+function editTask(task_id) {
+    task_being_modified = task_id;
+    refreshTask(task_id);
+    $('#modal_edit_task').openModal({
+        dismissible: false
+    })
+}
+
+function saveModifiedTask() {
+    var data = {};
+    data["mID"] = task_being_modified;
+    data["mTask"] = $('#edit_task_title').val();
+    data["mDescription"] = $('#edit_task_description').val();
+    data["mAssignee"] = $('#edit_task_assignee').val();
+    data["mDueDate"] = $('#edit_task_due_date').val();
+    data["uuid"] = Cookies.get("uuid");
+    data = JSON.stringify(data);
+
+    $('#edit_task_title').val("");
+    $('#edit_task_description').val("");
+    $('#edit_task_assignee').val("");
+    $('#edit_task_due_date').val("");
+
+    $.ajax({
+        type: "POST",
+        url: server_address_updateTask,
+        data: data,
+        contentType: "application/json",
+        success: function(response) {
+            if (response["response"] == "success") {
+                $('#modal_edit_task').closeModal();
+                logkitty("Successfully edited a task!", "success");
+                refreshTaskList();
+            } else {
+                logkitty("Failed at editing a task", "error");
+                logkitty("Just going to awkwardly close the modal now...", "error");
+                $('#modal_edit_task').closeModal();
+            }
+        }
+    })
+}

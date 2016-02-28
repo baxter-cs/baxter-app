@@ -325,7 +325,7 @@ def refresh_task():
 @app.route('/updateTask', methods=['POST'])
 def update_task():
     data = request.json
-
+    response = {}
     try:
         mId = data.get('mID')
         mDescription = data.get('mDescription')
@@ -334,7 +334,8 @@ def update_task():
         uuid = data.get('uuid')
         mDueDate = data.get('mDueDate')
     except:
-        return "missing"
+        response["response"] = "missing"
+        return jsonify(**response)
 
     try:
         task = Task.query.filter(Task.mID == mId).first()
@@ -343,10 +344,11 @@ def update_task():
         task.mAssignee = mAssignee
         task.mDueDate = mDueDate
         db.session.commit()
+        response["response"] = "success"
+        return jsonify(**response)
     except:
-        return "error"
-
-    return "success"
+        response["response"] = "error"
+        return jsonify(**response)
 
 
 @app.route('/joinTeam', methods=['POST'])
