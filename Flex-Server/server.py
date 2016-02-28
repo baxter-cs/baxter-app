@@ -1,7 +1,10 @@
 from datetime import datetime
-from flask import Flask, request, jsonify
+
+import bcrypt
+import re
+import uuid
+from flask import Flask, request, jsonify, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
-import bcrypt, uuid, re
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -132,28 +135,38 @@ def make_session(iUsername, iPassword):
 @app.route('/newTask', methods=['POST'])
 def app_task():
     data = request.json
-    mTask = data.get('mTask')
-    mDescription = data.get('mDescription')
-    mAssignee = data.get('mAssignee')
-    mDueDate = data.get('mDueDate')
-    print(mTask + " " + mDescription + " " + mAssignee + " " + mDueDate)
-    db.session.add(Task(mTask, mDescription, mAssignee, mDueDate, "To Do"))
-    db.session.commit()
-    return "Added The Task!"
+    response = {}
+    try:
+        mTask = data.get('mTask')
+        mDescription = data.get('mDescription')
+        mAssignee = data.get('mAssignee')
+        mDueDate = data.get('mDueDate')
+        print(mTask + " " + mDescription + " " + mAssignee + " " + mDueDate)
+        db.session.add(Task(mTask, mDescription, mAssignee, mDueDate, "To Do"))
+        db.session.commit()
+        response["response"] = "Added The Task!"
+    except:
+        response["response"] = "failed"
+    return jsonify(**response)
 
 
 @app.route('/upgradeTask', methods=['POST'])
 def upgrade_task():
     data = request.json
-    mID = data.get('mID')
-    print(mID)
-    task = Task.query.filter(Task.mID == mID).first()
-    if task.mTaskStatus == "To Do":
-        task.mTaskStatus = "In Process"
-    elif task.mTaskStatus == "In Process":
-        task.mTaskStatus = "Done"
-    db.session.commit()
-    return "Successfully upgraded task"
+    response = {}
+    try:
+        mID = data.get('mID')
+        print(mID)
+        task = Task.query.filter(Task.mID == mID).first()
+        if task.mTaskStatus == "To Do":
+            task.mTaskStatus = "In Process"
+        elif task.mTaskStatus == "In Process":
+            task.mTaskStatus = "Done"
+        db.session.commit()
+        response["response"] = "Successfully upgraded task"
+    except:
+        response["response"] = "failed to upgrade task"
+    return jsonify(**response)
 
 
 @app.route('/getTasks')
@@ -187,13 +200,18 @@ def get_tasks():
 
 
 @app.route('/deleteTask', methods=['POST'])
-def delete_task():
+def delete_tank():
     data = request.json
-    mID = data.get('mID')
-    print(mID)
-    Task.query.filter(Task.mID == mID).delete()
-    db.session.commit()
-    return "Deleted Task"
+    response = {}
+
+    try:
+        mID = data.get('mID')
+        Task.query.filter(Task.mID == mID).delete()
+        db.session.commit()
+        response["response"] = "deleted task"
+    except:
+        response["response"] = "failed at deleting task"
+    return jsonify(**response)
 
 
 @app.route('/test', methods=['POST'])
@@ -211,27 +229,36 @@ def test():
 
 
 @app.route('/verifyLogin', methods=['POST'])
-def verifyLogin():
+def verify_login():
     data = request.json
+    response = dict()
+    print(data)
     try:
         uuid = data.get('uuid')
         if check_if_valid_session(uuid):
-            return "valid uuid"
+            response["response"] = "valid uuid"
+            return jsonify(**response)
         else:
-            return "invalid uuid"
+            response["response"] = "invalid uuid"
+            return jsonify(**response)
     except:
-        return "invalid entered uuid"
+        response["response"] = "invalid entered uuid"
+        return jsonify(**response)
 
 
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
+    response = dict()
     try:
         username = data.get('username')
         password = data.get('password')
-        return make_session(username, password)
+        response["data"] = make_session(username, password)
+        response["response"] = "logged in"
     except:
-        return "invalid"
+        response["data"] = "invalid"
+        response["response"] = "log in failed"
+    return jsonify(**response)
 
 
 @app.route('/debugUserCreate/<username>/<password>')
@@ -298,7 +325,7 @@ def refresh_task():
 @app.route('/updateTask', methods=['POST'])
 def update_task():
     data = request.json
-
+    response = {}
     try:
         mId = data.get('mID')
         mDescription = data.get('mDescription')
@@ -307,7 +334,8 @@ def update_task():
         uuid = data.get('uuid')
         mDueDate = data.get('mDueDate')
     except:
-        return "missing"
+        response["response"] = "missing"
+        return jsonify(**response)
 
     try:
         task = Task.query.filter(Task.mID == mId).first()
@@ -316,10 +344,11 @@ def update_task():
         task.mAssignee = mAssignee
         task.mDueDate = mDueDate
         db.session.commit()
+        response["response"] = "success"
+        return jsonify(**response)
     except:
-        return "error"
-
-    return "success"
+        response["response"] = "error"
+        return jsonify(**response)
 
 
 @app.route('/joinTeam', methods=['POST'])
@@ -341,6 +370,11 @@ def join_team():
     db_create_team_member(user.session_id, team.id)
 
     return "success"
+
+
+@app.route('/')
+def testing_website():
+    return render_template('index.html')
 
 
 app.run(debug=True, host='0.0.0.0', port=7999)

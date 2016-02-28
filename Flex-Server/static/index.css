@@ -1,0 +1,59 @@
+.menu_div {
+    background: #3F51B5;
+}
+
+.menu_div div {
+    color: #FFFFFF;
+}
+
+.todo_div {
+    background: #FFFFFF;
+}
+
+.in_progress_div {
+    background: #FFFFFF;
+}
+
+.done_div {
+    background: #FFFFFF;
+}
+
+.task_bgTitle_todo {
+    background-color: #F8BBD0;
+}
+
+.task_bgBody_todo {
+    background-color: #FAD2E0;
+}
+
+.task_bgTitle_doing {
+    background-color: #9FCEEB;
+}
+
+.task_bgBody_doing {
+    background-color: #BDDDF4;
+}
+
+.task_bgTitle_done {
+    background-color: #B6BCDF;
+}
+
+.task_bgBody_done {
+    background-color: #CED4EB;
+}
+
+.task_title_div {
+    font-size: 20px;
+    color: #515151;
+    width: 100%;
+    margin: 0px;
+}
+
+.task_div {
+    padding: 15px 15px 15px 15px;
+}
+
+.task_body_div {
+    font-size: 18px;
+    margin: 0px;
+}

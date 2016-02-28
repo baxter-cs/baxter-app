@@ -3,12 +3,15 @@ package org.baxter_academy.flex;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 
 /**
  * Created by John on 2/24/2016.
  */
 public class ClientHelper {
+
     public String newTask(String mTask, String mDescription, String mAssignee, String mDueDate) {
         RESTClient client = new RESTClient(Constants.server_address_newTask);
         client.addParam("mTask", mTask);
@@ -17,7 +20,21 @@ public class ClientHelper {
         client.addParam("mDueDate", mDueDate);
         client.addHeader("content-type", "application/json");
 
-        return client.executePost();
+        String response;
+
+        try {
+            response = client.executePost();
+        } catch (Exception e) {
+            response = "error";
+        }
+
+        if (!response.equals("error")) {
+            JsonParser parser = new JsonParser();
+            JsonObject json = parser.parse(response).getAsJsonObject();
+            return json.get("response").getAsString();
+        } else {
+            return response;
+        }
     }
 
     public JsonObject getTasks() {
@@ -33,7 +50,21 @@ public class ClientHelper {
         client.addHeader("content-type", "application/json");
         client.addParam("mID", mID);
 
-        return client.executePost();
+        String response;
+
+        try {
+            response = client.executePost();
+        } catch (Exception e) {
+            response = "error";
+        }
+
+        if (!response.equals("error")) {
+            JsonParser parser = new JsonParser();
+            JsonObject json = parser.parse(response).getAsJsonObject();
+            return json.get("response").getAsString();
+        } else {
+            return response;
+        }
     }
 
     public String deleteTask(String mID) {
@@ -41,7 +72,21 @@ public class ClientHelper {
         client.addHeader("content-type", "application/json");
         client.addParam("mID", mID);
 
-        return client.executePost();
+        String response;
+
+        try {
+            response = client.executePost();
+        } catch (Exception e) {
+            response = "error";
+        }
+
+        if (!response.equals("error")) {
+            JsonParser parser = new JsonParser();
+            JsonObject json = parser.parse(response).getAsJsonObject();
+            return json.get("response").getAsString();
+        } else {
+            return response;
+        }
     }
 
     public String verifyLogin(String uuid) {
@@ -57,7 +102,11 @@ public class ClientHelper {
             response = "error";
         }
 
-        return response;
+        JsonParser parser = new JsonParser();
+
+        JsonObject json = parser.parse(response).getAsJsonObject();
+
+        return json.get("response").getAsString();
     }
 
     public String login(String username, String password) {
@@ -74,7 +123,10 @@ public class ClientHelper {
             response = "invalid";
         }
 
-        return response;
+        JsonParser parser = new JsonParser();
+        JsonObject json = parser.parse(response).getAsJsonObject();
+
+        return json.get("data").getAsString();
     }
 
     public String signUp(String username, String password, String email) {

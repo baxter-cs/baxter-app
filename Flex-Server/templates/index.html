@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flex</title>
+    <script src="static/jquery-2.2.1.min.js"></script>
+    <script src="static/jquery.cookies.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/materialize.min.css">
+    <script src="static/materialize.min.js"></script>
+    <script src="/static/ClientHelper.js"></script>
+    <script src="static/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/index.css">
+</head>
+<body class="pink lighten-4">
+    <div class="container">
+        <div class="row">
+            <div class="col s1 menu_div">
+                <input type="button" value="Add Task" id="addTaskButton">
+            </div>
+            <div class="col s4 todo_div">To Do</div>
+            <div class="col s4 in_progress_div">In Process</div>
+            <div class="col s3 done_div">Done</div>
+        </div>
+    </div>
+    <!-- Modal Structure -->
+    <div id="modal_log_in" class="modal bottom-sheet">
+        <div class="modal-content">
+            <h4>Log In.</h4>
+            <div class="row">
+                <div class="col s4 input-field">
+                    <input placeholder="Username" id="login_username" type="text" class="validate">
+                    <label for="login_username">Username</label>
+                </div>
+                <div class="col s4 input-field">
+                    <input placeholder="Password" id="login_password" type="text" class="validate">
+                    <label for="login_password">Password</label>
+                </div>
+                <div class="col s4">
+                    <a class="waves-effect waves-light btn-large" id="button_log_in" href="#">Log In</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal_add_task" class="modal bottom-sheet">
+        <div class="modal-content">
+            <h4>Add Task</h4>
+            <div class="row">
+                <div class="col s8 input-field">
+                    <input placeholder="Task Title" id="add_task_title" type="text" class="validate">
+                    <label for="add_task_title">Task Title</label>
+                </div>
+                <div class="col s2 input-field">
+                    <input placeholder="Task Assignee" id="add_task_assignee" type="text" class="validate">
+                    <label for="add_task_assignee">Task Assignee</label>
+                </div>
+                <div class="col s2 input-field">
+                    <input placeholder="Task Due Date" id="add_task_due_date" type="text" class="validate">
+                    <label for="add_task_due_date">Task Due Date</label>
+                </div>
+                <div class="col s10 input-field">
+                    <input placeholder="Task Description" id="add_task_description" type="text" class="validate">
+                    <label for="add_task_description">Task Description</label>
+                </div>
+                <div class="col s2">
+                    <a class="waves-effect waves-light btn-large" id="button_add_new_task" href="#">Add New Task</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal_edit_task" class="modal bottom-sheet">
+        <div class="modal-content">
+            <h4>Add Task</h4>
+            <div class="row">
+                <div class="col s8 input-field">
+                    <input placeholder="Task Title" id="edit_task_title" type="text" class="validate">
+                    <label for="add_task_title">Task Title</label>
+                </div>
+                <div class="col s2 input-field">
+                    <input placeholder="Task Assignee" id="edit_task_assignee" type="text" class="validate">
+                    <label for="add_task_assignee">Task Assignee</label>
+                </div>
+                <div class="col s2 input-field">
+                    <input placeholder="Task Due Date" id="edit_task_due_date" type="text" class="validate">
+                    <label for="add_task_due_date">Task Due Date</label>
+                </div>
+                <div class="col s10 input-field">
+                    <input placeholder="Task Description" id="edit_task_description" type="text" class="validate">
+                    <label for="add_task_description">Task Description</label>
+                </div>
+                <div class="col s2">
+                    <a class="waves-effect waves-light btn-large" id="button_save_edit_task" href="#">Save Edits</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
