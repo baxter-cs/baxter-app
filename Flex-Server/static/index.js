@@ -7,6 +7,7 @@ var server_address_login = server_address + "/login";
 var server_address_getTasks = server_address + "/getTasks";
 var server_address_deleteTask = server_address + "/deleteTask";
 var server_address_upgradeTask = server_address + "/upgradeTask";
+var server_address_newTask = server_address + "/newTask";
 
 
 // Dev Options
@@ -20,6 +21,16 @@ function main() {
     // Initialize Buttons
     $('#button_log_in').click(function() {
         logIn();
+    })
+
+    $('#addTaskButton').click(function() {
+        $('#modal_add_task').openModal({
+            dismissible: false
+        })
+    })
+
+    $('#button_add_new_task').click(function() {
+        addTask();
     })
 
     $('body').on('click', 'input.deleteTaskButton', function(event) {
@@ -66,8 +77,8 @@ function addTodoTask(task_object) {
     $('.todo_div').append('<div id="' + mID + '"class="task_div"></div>');
     $('#' + mID).append('<p class="task_bgTitle_todo task_title_div">' + mTask + '</p>');
     $('#' + mID).append('<p class="task_body_div task_bgBody_todo">' + mDescription + "<br/>" + mAssignee + "<br/>" + mDueDate + '</p>');
-    $('#' + mID).append('<input type="button" value="Delete Task" class="deleteTaskButton"></input>')
-    $('#' + mID).append('<input type="button" value="Move to In Process" class="upgradeTaskButton"></input>')
+    $('#' + mID).append('<input type="button" value="Delete Task" class="deleteTaskButton">')
+    $('#' + mID).append('<input type="button" value="Move to In Process" class="upgradeTaskButton">')
 }
 
 function addInProgressTask(task_object) {
@@ -81,8 +92,8 @@ function addInProgressTask(task_object) {
     $('.in_progress_div').append('<div id="' + mID + '"class="task_div"></div>');
     $('#' + mID).append('<p class="task_bgTitle_doing task_title_div">' + mTask + '</p>');
     $('#' + mID).append('<p class="task_body_div task_bgBody_doing">' + mDescription + "<br/>" + mAssignee + "<br/>" + mDueDate + '</p>');
-    $('#' + mID).append('<input type="button" value="Delete Task" class="deleteTaskButton"></input>')
-    $('#' + mID).append('<input type="button" value="Move to Done" class="upgradeTaskButton"></input>')
+    $('#' + mID).append('<input type="button" value="Delete Task" class="deleteTaskButton">')
+    $('#' + mID).append('<input type="button" value="Move to Done" class="upgradeTaskButton">')
 }
 
 function addDoneTask(task_object) {
@@ -96,5 +107,5 @@ function addDoneTask(task_object) {
     $('.done_div').append('<div id="' + mID + '"class="task_div"></div>');
     $('#' + mID).append('<p class="task_bgTitle_done task_title_div">' + mTask + '</p>');
     $('#' + mID).append('<p class="task_body_div task_bgBody_done">' + mDescription + "<br/>" + mAssignee + "<br/>" + mDueDate + '</p>');
-    $('#' + mID).append('<input type="button" value="Delete Task" class="deleteTaskButton"></input>')
+    $('#' + mID).append('<input type="button" value="Delete Task" class="deleteTaskButton">')
 }

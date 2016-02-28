@@ -166,3 +166,33 @@ function refreshTaskList() {
     $('.done_div').text("Done");
     getTasks();
 }
+
+function addTask() {
+    var data = {};
+    data["mTask"] = $('#add_task_title').val();
+    data["mDescription"] = $('#add_task_description').val();
+    data["mAssignee"] = $('#add_task_assignee').val();
+    data["mDueDate"] = $('#add_task_due_date').val();
+    data = JSON.stringify(data);
+
+    $('#add_task_title').val("");
+    $('#add_task_description').val("");
+    $('#add_task_assignee').val("");
+    $('#add_task_due_date').val("");
+
+    $.ajax({
+        type: "POST",
+        url: server_address_newTask,
+        data: data,
+        contentType: "application/json",
+        success: function(response) {
+            if (response["response"] == "Added The Task!") {
+                $('#modal_add_task').closeModal();
+                logkitty("Successfully added a new task", "success");
+                refreshTaskList();
+            } else {
+                logkitty("Failed at adding a new task", "error");
+            }
+        }
+    })
+}

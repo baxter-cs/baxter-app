@@ -135,14 +135,19 @@ def make_session(iUsername, iPassword):
 @app.route('/newTask', methods=['POST'])
 def app_task():
     data = request.json
-    mTask = data.get('mTask')
-    mDescription = data.get('mDescription')
-    mAssignee = data.get('mAssignee')
-    mDueDate = data.get('mDueDate')
-    print(mTask + " " + mDescription + " " + mAssignee + " " + mDueDate)
-    db.session.add(Task(mTask, mDescription, mAssignee, mDueDate, "To Do"))
-    db.session.commit()
-    return "Added The Task!"
+    response = {}
+    try:
+        mTask = data.get('mTask')
+        mDescription = data.get('mDescription')
+        mAssignee = data.get('mAssignee')
+        mDueDate = data.get('mDueDate')
+        print(mTask + " " + mDescription + " " + mAssignee + " " + mDueDate)
+        db.session.add(Task(mTask, mDescription, mAssignee, mDueDate, "To Do"))
+        db.session.commit()
+        response["response"] = "Added The Task!"
+    except:
+        response["response"] = "failed"
+    return jsonify(**response)
 
 
 @app.route('/upgradeTask', methods=['POST'])

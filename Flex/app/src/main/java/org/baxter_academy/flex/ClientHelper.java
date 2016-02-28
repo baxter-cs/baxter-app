@@ -11,6 +11,7 @@ import java.io.UnsupportedEncodingException;
  * Created by John on 2/24/2016.
  */
 public class ClientHelper {
+
     public String newTask(String mTask, String mDescription, String mAssignee, String mDueDate) {
         RESTClient client = new RESTClient(Constants.server_address_newTask);
         client.addParam("mTask", mTask);
@@ -19,7 +20,21 @@ public class ClientHelper {
         client.addParam("mDueDate", mDueDate);
         client.addHeader("content-type", "application/json");
 
-        return client.executePost();
+        String response;
+
+        try {
+            response = client.executePost();
+        } catch (Exception e) {
+            response = "error";
+        }
+
+        if (!response.equals("error")) {
+            JsonParser parser = new JsonParser();
+            JsonObject json = parser.parse(response).getAsJsonObject();
+            return json.get("response").getAsString();
+        } else {
+            return response;
+        }
     }
 
     public JsonObject getTasks() {
