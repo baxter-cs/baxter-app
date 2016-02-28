@@ -5,9 +5,10 @@ var server_address = "http://192.168.0.13:7999";
 var server_address_verifyLogin = server_address + "/verifyLogin";
 var server_address_login = server_address + "/login";
 var server_address_getTasks = server_address + "/getTasks";
+var server_address_deleteTask = server_address + "/deleteTask";
 
 // Dev Options
-var logcat_enabled = true;
+var logkitty_enabled = true;
 
 //
 var valid_uuid = false;
@@ -19,22 +20,28 @@ function main() {
         logIn();
     })
 
+    $('body').on('click', 'input.deleteTaskButton', function(event) {
+        taskID = $(this).parent().attr('id');
+        logkitty("Trying to delete task #" + taskID, "normal");
+        deleteTask(taskID);
+    })
+
     // Log In
     CH_verifyLogin();
 
 }
 
-function logcat(message, type) {
-    if (logcat_enabled) {
+function logkitty(message, type) {
+    if (logkitty_enabled) {
         switch (type) {
             case "error":
-                console.log("%cLogcat: " + message, "color: red;");
+                console.log("%clogkitty: " + message, "color: red;");
                 break;
             case "success":
-                console.log("%cLogcat: " + message, "color: green;");
+                console.log("%clogkitty: " + message, "color: green;");
                 break;
             default:
-                console.log("%cLogcat: " + message, "color: black;");
+                console.log("%clogkitty: " + message, "color: black;");
                 break;
         }
     }
@@ -51,6 +58,7 @@ function addTodoTask(task_object) {
     $('.todo_div').append('<div id="' + mID + '"class="task_div"></div>');
     $('#' + mID).append('<p class="task_bgTitle_todo task_title_div">' + mTask + '</p>');
     $('#' + mID).append('<p class="task_body_div task_bgBody_todo">' + mDescription + "<br/>" + mAssignee + "<br/>" + mDueDate + '</p>');
+    $('#' + mID).append('<input type="button" value="Delete Task" class="deleteTaskButton"></input>')
 }
 
 function addInProgressTask(task_object) {
@@ -64,6 +72,7 @@ function addInProgressTask(task_object) {
     $('.in_progress_div').append('<div id="' + mID + '"class="task_div"></div>');
     $('#' + mID).append('<p class="task_bgTitle_doing task_title_div">' + mTask + '</p>');
     $('#' + mID).append('<p class="task_body_div task_bgBody_doing">' + mDescription + "<br/>" + mAssignee + "<br/>" + mDueDate + '</p>');
+    $('#' + mID).append('<input type="button" value="Delete Task" class="deleteTaskButton"></input>')
 }
 
 function addDoneTask(task_object) {
@@ -77,4 +86,5 @@ function addDoneTask(task_object) {
     $('.done_div').append('<div id="' + mID + '"class="task_div"></div>');
     $('#' + mID).append('<p class="task_bgTitle_done task_title_div">' + mTask + '</p>');
     $('#' + mID).append('<p class="task_body_div task_bgBody_done">' + mDescription + "<br/>" + mAssignee + "<br/>" + mDueDate + '</p>');
+    $('#' + mID).append('<input type="button" value="Delete Task" class="deleteTaskButton"></input>')
 }

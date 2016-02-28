@@ -190,13 +190,18 @@ def get_tasks():
 
 
 @app.route('/deleteTask', methods=['POST'])
-def delete_task():
+def delete_tank():
     data = request.json
-    mID = data.get('mID')
-    print(mID)
-    Task.query.filter(Task.mID == mID).delete()
-    db.session.commit()
-    return "Deleted Task"
+    response = {}
+
+    try:
+        mID = data.get('mID')
+        Task.query.filter(Task.mID == mID).delete()
+        db.session.commit()
+        response["response"] = "deleted task"
+    except:
+        response["response"] = "failed at deleting task"
+    return jsonify(**response)
 
 
 @app.route('/test', methods=['POST'])

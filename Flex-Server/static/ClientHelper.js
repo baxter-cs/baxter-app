@@ -21,7 +21,6 @@ function CH_verifyLogin() {
     data["uuid"] = Cookies.get("uuid");
     data = JSON.stringify(data);
 
-
     $.ajax({
         type: "POST",
         url: server_address_verifyLogin,
@@ -29,12 +28,12 @@ function CH_verifyLogin() {
         contentType: "application/json",
         success: function(response) {
             if (response["response"] == "valid uuid") {
-                logcat(response["response"], "success");
-                logcat("It's an older uuid sir, but it checks out", "success");
+                logkitty(response["response"], "success");
+                logkitty("It's an older uuid sir, but it checks out", "success");
                 valid_uuid = true;
                 getTasks();
             } else {
-                logcat(response["response"], "error");
+                logkitty(response["response"], "error");
                 valid_uuid = false;
                 $('#modal_log_in').openModal({
                     dismissible: false
@@ -71,11 +70,11 @@ function logIn() {
         success: function(response) {
             if (response["response"] == "logged in") {
                 Cookies.set("uuid", response["data"]);
-                logcat("Successfully logged in", "success");
+                logkitty("Successfully logged in", "success");
                 $('#modal_log_in').closeModal();
                 getTasks();
             } else if (response["response"] == "log in failed") {
-                logcat("Failed to log in", "error");
+                logkitty("Failed to log in", "error");
                 Cookies.set("uuid", response["data"]);
             }
         }
@@ -95,7 +94,7 @@ function getTasks() {
         data: data,
         contentType: "application/json",
         success: function(response) {
-            logcat("Got a reply from getTasks", "success");
+            logkitty("Got a reply from getTasks", "success");
             tasks_array = response["tasks"];
             for (var i = 0; i < tasks_array.length; i++) {
                 switch (tasks_array[i]["mTaskStatus"]) {
@@ -109,6 +108,27 @@ function getTasks() {
                         addDoneTask(tasks_array[i]);
                         break;
                 }
+            }
+        }
+    })
+}
+
+function deleteTask(task_id) {
+    var data = {};
+    data["mID"] = task_id;
+    data = JSON.stringify(data);
+
+    $.ajax({
+        type: "POST",
+        url: server_address_deleteTask,
+        data: data,
+        contentType: "application/json",
+        success: function(response) {
+            if (response["response"] == "deleted task") {
+                logkitty("Successfully deleted task", "success");
+                $('#' + task_id).remove();
+            } else {
+                logkitty("Failed at deleted task", "error");
             }
         }
     })

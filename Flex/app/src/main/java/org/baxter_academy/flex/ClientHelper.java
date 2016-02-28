@@ -43,7 +43,23 @@ public class ClientHelper {
         client.addHeader("content-type", "application/json");
         client.addParam("mID", mID);
 
-        return client.executePost();
+        //return client.executePost();
+
+        String response;
+
+        try {
+            response = client.executePost();
+        } catch (Exception e) {
+            response = "error";
+        }
+
+        if (!response.equals("error")) {
+            JsonParser parser = new JsonParser();
+            JsonObject json = parser.parse(response).getAsJsonObject();
+            return json.get("response").getAsString();
+        } else {
+            return response;
+        }
     }
 
     public String verifyLogin(String uuid) {
