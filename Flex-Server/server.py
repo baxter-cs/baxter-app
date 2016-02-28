@@ -52,12 +52,14 @@ class User(db.Model):
     password = db.Column(db.String())
     session_id = db.Column(db.String())
     session_time = db.Column(db.String())
+    name = db.Column(db.String())
 
-    def __init__(self, username, password, session_id, session_time):
+    def __init__(self, username, password, session_id, session_time, name):
         self.username = username
         self.password = password
         self.session_id = session_id
         self.session_time = session_time
+        self.name = name
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -67,10 +69,12 @@ class Team(db.Model):
     id = db.Column(db.Integer, primary_key=True, unique=True)
     name = db.Column(db.String(), unique=True)
     owner = db.Column(db.String())
+    freeJoin = db.Column(db.String())
 
-    def __init__(self, name, owner):
+    def __init__(self, name, owner, freeJoin):
         self.name = name
         self.owner = owner
+        self.freeJoin = freeJoin
 
     def __repr__(self):
         return '<Team %r>' % self.name
@@ -84,7 +88,7 @@ def db_create_user(username, password):
     current_time = str(datetime.utcnow())
     salt = bcrypt.gensalt()
     ciphered_password = bcrypt.hashpw(str.encode(password), salt)
-    db.session.add(User(username, ciphered_password, session_id, current_time))
+    db.session.add(User(username, ciphered_password, session_id, current_time, username))
     db.session.commit()
     return "Successfully added a new user"
 
@@ -249,7 +253,7 @@ def verify_login():
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
-    response = dict()
+    response = {}
     try:
         username = data.get('username')
         password = data.get('password')
@@ -257,7 +261,7 @@ def login():
         response["response"] = "logged in"
     except:
         response["data"] = "invalid"
-        response["response"] = "log in failed"
+        response["response"] = "missing"
     return jsonify(**response)
 
 
@@ -354,22 +358,31 @@ def update_task():
 @app.route('/joinTeam', methods=['POST'])
 def join_team():
     data = request.json
+    response = {}
 
     try:
         tID = data.get('tID')
         uuid = data.get('uuid')
     except:
-        return "missing"
+        response["response"] = "missing"
+        return jsonify(**response)
 
     try:
         user = User.query.filter(User.session_id == uuid).first()
-        team = User.query.filter(Team.id == tID).first()
+        team = Team.query.filter(Team.id == tID).first()
     except:
-        return "error"
+        response["response"] = "error"
+        return jsonify(**response)
 
-    db_create_team_member(user.session_id, team.id)
-
-    return "success"
+    if team.freeJoin == "true":
+        db_create_team_member(user.session_id, team.id)
+        response["response"] = "Successfully joined {}".format(team.name)
+        return jsonify(**response)
+    else:
+        response["response"] = "Free Join for {} not enabled." \
+                               " If you believe this is wrong" \
+                               " you can contact the owner {}".format(team.name, team.owner)
+        return jsonify(**response)
 
 
 @app.route('/')
