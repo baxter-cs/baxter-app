@@ -6,6 +6,8 @@ var server_address_verifyLogin = server_address + "/verifyLogin";
 var server_address_login = server_address + "/login";
 var server_address_getTasks = server_address + "/getTasks";
 var server_address_deleteTask = server_address + "/deleteTask";
+var server_address_upgradeTask = server_address + "/upgradeTask";
+
 
 // Dev Options
 var logkitty_enabled = true;
@@ -24,6 +26,12 @@ function main() {
         taskID = $(this).parent().attr('id');
         logkitty("Trying to delete task #" + taskID, "normal");
         deleteTask(taskID);
+    })
+
+    $('body').on('click', 'input.upgradeTaskButton', function(event) {
+        taskID = $(this).parent().attr('id');
+        logkitty("Trying to upgrade the status of task #" + taskID, "normal");
+        upgradeTask(taskID);
     })
 
     // Log In
@@ -59,6 +67,7 @@ function addTodoTask(task_object) {
     $('#' + mID).append('<p class="task_bgTitle_todo task_title_div">' + mTask + '</p>');
     $('#' + mID).append('<p class="task_body_div task_bgBody_todo">' + mDescription + "<br/>" + mAssignee + "<br/>" + mDueDate + '</p>');
     $('#' + mID).append('<input type="button" value="Delete Task" class="deleteTaskButton"></input>')
+    $('#' + mID).append('<input type="button" value="Move to In Process" class="upgradeTaskButton"></input>')
 }
 
 function addInProgressTask(task_object) {
@@ -73,6 +82,7 @@ function addInProgressTask(task_object) {
     $('#' + mID).append('<p class="task_bgTitle_doing task_title_div">' + mTask + '</p>');
     $('#' + mID).append('<p class="task_body_div task_bgBody_doing">' + mDescription + "<br/>" + mAssignee + "<br/>" + mDueDate + '</p>');
     $('#' + mID).append('<input type="button" value="Delete Task" class="deleteTaskButton"></input>')
+    $('#' + mID).append('<input type="button" value="Move to Done" class="upgradeTaskButton"></input>')
 }
 
 function addDoneTask(task_object) {

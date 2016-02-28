@@ -148,15 +148,20 @@ def app_task():
 @app.route('/upgradeTask', methods=['POST'])
 def upgrade_task():
     data = request.json
-    mID = data.get('mID')
-    print(mID)
-    task = Task.query.filter(Task.mID == mID).first()
-    if task.mTaskStatus == "To Do":
-        task.mTaskStatus = "In Process"
-    elif task.mTaskStatus == "In Process":
-        task.mTaskStatus = "Done"
-    db.session.commit()
-    return "Successfully upgraded task"
+    response = {}
+    try:
+        mID = data.get('mID')
+        print(mID)
+        task = Task.query.filter(Task.mID == mID).first()
+        if task.mTaskStatus == "To Do":
+            task.mTaskStatus = "In Process"
+        elif task.mTaskStatus == "In Process":
+            task.mTaskStatus = "Done"
+        db.session.commit()
+        response["response"] = "Successfully upgraded task"
+    except:
+        response["response"] = "failed to upgrade task"
+    return jsonify(**response)
 
 
 @app.route('/getTasks')

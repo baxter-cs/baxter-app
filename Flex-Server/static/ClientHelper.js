@@ -133,3 +133,36 @@ function deleteTask(task_id) {
         }
     })
 }
+
+function upgradeTask(task_id) {
+    var data = {};
+    data["mID"] = task_id;
+    data = JSON.stringify(data);
+
+    $.ajax({
+        type: "POST",
+        url: server_address_upgradeTask,
+        data: data,
+        contentType: "application/json",
+        success: function(response) {
+            if (response["response"] == "Successfully upgraded task") {
+                logkitty("Successfully upgraded task", "success");
+                refreshTaskList();
+            } else {
+                logkitty("Failed at upgrading task", "error");
+            }
+        }
+    })
+}
+
+function refreshTaskList() {
+    logkitty("Refreshing tasks", "normal");
+
+    $('.todo_div').empty();
+    $('.todo_div').text("To Do");
+    $('.in_progress_div').empty();
+    $('.in_progress_div').text("To Do");
+    $('.done_div').empty();
+    $('.done_div').text("Done");
+    getTasks();
+}

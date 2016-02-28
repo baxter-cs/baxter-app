@@ -35,15 +35,27 @@ public class ClientHelper {
         client.addHeader("content-type", "application/json");
         client.addParam("mID", mID);
 
-        return client.executePost();
+        String response;
+
+        try {
+            response = client.executePost();
+        } catch (Exception e) {
+            response = "error";
+        }
+
+        if (!response.equals("error")) {
+            JsonParser parser = new JsonParser();
+            JsonObject json = parser.parse(response).getAsJsonObject();
+            return json.get("response").getAsString();
+        } else {
+            return response;
+        }
     }
 
     public String deleteTask(String mID) {
         RESTClient client = new RESTClient(Constants.server_address_deleteTask);
         client.addHeader("content-type", "application/json");
         client.addParam("mID", mID);
-
-        //return client.executePost();
 
         String response;
 
