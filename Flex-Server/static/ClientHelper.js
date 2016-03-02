@@ -86,10 +86,11 @@ function getTasks() {
 
     var data = {};
     data["uuid"] = uuid;
+    data["scope"] = "personal";
     data = JSON.stringify(data);
 
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: server_address_getTasks,
         data: data,
         contentType: "application/json",
@@ -116,6 +117,7 @@ function getTasks() {
 function deleteTask(task_id) {
     var data = {};
     data["mID"] = task_id;
+    data["uuid"] = Cookies.get("uuid");
     data = JSON.stringify(data);
 
     $.ajax({
@@ -137,6 +139,7 @@ function deleteTask(task_id) {
 function upgradeTask(task_id) {
     var data = {};
     data["mID"] = task_id;
+    data["uuid"] = Cookies.get('uuid');
     data = JSON.stringify(data);
 
     $.ajax({
@@ -173,6 +176,8 @@ function addTask() {
     data["mDescription"] = $('#add_task_description').val();
     data["mAssignee"] = $('#add_task_assignee').val();
     data["mDueDate"] = $('#add_task_due_date').val();
+    data["uuid"] = Cookies.get("uuid");
+    data["mOwner"] = "personal";
     data = JSON.stringify(data);
 
     $('#add_task_title').val("");
@@ -186,7 +191,7 @@ function addTask() {
         data: data,
         contentType: "application/json",
         success: function(response) {
-            if (response["response"] == "Added The Task!") {
+            if (response["status"] == "success") {
                 $('#modal_add_task').closeModal();
                 logkitty("Successfully added a new task", "success");
                 refreshTaskList();

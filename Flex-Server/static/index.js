@@ -1,7 +1,7 @@
 $(document).ready(main)
 
 // Server Addresses
-var server_address = "http://192.168.0.13:7999";
+var server_address = "http://192.168.0.8:7999";
 var server_address_verifyLogin = server_address + "/verifyLogin";
 var server_address_login = server_address + "/login";
 var server_address_getTasks = server_address + "/getTasks";
