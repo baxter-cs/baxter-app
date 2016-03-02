@@ -1,10 +1,11 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import bcrypt
 import re
 import uuid
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, make_response, current_app, Response
 from flask.ext.sqlalchemy import SQLAlchemy
+from functools import update_wrapper
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bauth.db'
@@ -79,7 +80,7 @@ def check_if_valid_session(session_id):
 # Routes
 
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST', 'OPTIONS'])
 def login():
     data = request.json
     response = {}
@@ -107,7 +108,10 @@ def login():
         response["data"] = "invalid"
         response["response"] = "log in failed"
         response["status"] = "error"
-    return jsonify(**response)
+    return_response = make_response(jsonify(**response))
+    return_response.headers['Access-Control-Allow-Origin'] = '*'
+    return_response.headers['Access-Control-Allow-Headers'] = "Content-Type, Access-Control-Allow-Origin"
+    return return_response
 
 
 @app.route('/verifyLogin', methods=['POST'])

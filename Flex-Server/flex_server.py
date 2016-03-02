@@ -63,7 +63,7 @@ class Team(db.Model):
 
 def db_create_user(username, password):
     # make a request to the BAuth server
-    r = requests.post("http://192.168.0.8:1754/signUp", json={"username": username, "password": password})
+    r = requests.post("http://192.168.0.13:1754/signUp", json={"username": username, "password": password})
     response = r.json()
     return response["response"]
 
@@ -74,7 +74,7 @@ def db_create_team_member(user, team):
 
 
 def check_if_valid_session(session_id):
-    r = requests.post("http://192.168.0.8:1754/verifyLogin", json={"uuid": session_id})
+    r = requests.post("http://192.168.0.13:1754/verifyLogin", json={"uuid": session_id})
     response = r.json()
     if response["response"] == "valid uuid":
         return True
@@ -83,7 +83,7 @@ def check_if_valid_session(session_id):
 
 
 def make_session(iUsername, iPassword):
-    r = requests.post("http://192.168.0.8:1754/login", json={"username": iUsername, "password": iPassword})
+    r = requests.post("http://192.168.0.13:1754/login", json={"username": iUsername, "password": iPassword})
     response = r.json()
     return response["data"]
 

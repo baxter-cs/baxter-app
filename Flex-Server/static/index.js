@@ -1,15 +1,18 @@
 $(document).ready(main)
 
 // Server Addresses
-var server_address = "http://192.168.0.8:7999";
-var server_address_verifyLogin = server_address + "/verifyLogin";
-var server_address_login = server_address + "/login";
-var server_address_getTasks = server_address + "/getTasks";
-var server_address_deleteTask = server_address + "/deleteTask";
-var server_address_upgradeTask = server_address + "/upgradeTask";
-var server_address_newTask = server_address + "/newTask";
-var server_address_refreshTask = server_address + "/refreshTask";
-var server_address_updateTask = server_address + "/updateTask";
+var flex_server_address = "http://192.168.0.13:7999";
+var BAuth_server_address = "http://192.168.0.13:1754";
+
+var server_address_login = BAuth_server_address + "/login";
+
+var server_address_verifyLogin = flex_server_address + "/verifyLogin";
+var server_address_getTasks = flex_server_address + "/getTasks";
+var server_address_deleteTask = flex_server_address + "/deleteTask";
+var server_address_upgradeTask = flex_server_address + "/upgradeTask";
+var server_address_newTask = flex_server_address + "/newTask";
+var server_address_refreshTask = flex_server_address + "/refreshTask";
+var server_address_updateTask = flex_server_address + "/updateTask";
 
 
 // Dev Options
