@@ -12,3 +12,4 @@ Then set up your dependencies:
 $ Scripts\pip3.4.exe install flask
 $ Scripts\pip3.4.exe install Flask-SQLAlchemy
 $ Scripts\pip3.4.exe install bcrypt
+$ Scripts\pip3.4.exe install requests

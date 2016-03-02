@@ -1,17 +1,9 @@
-from datetime import datetime
-
-import bcrypt
-import re
-import uuid
 from flask import Flask, request, jsonify, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
+import requests
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SQLALCHEMY_BINDS'] = {
-    'flex':        'sqlite:///database.db',
-    'bauth':      'sqlite:///bauth.db'
-}
 db = SQLAlchemy(app)
 
 
@@ -19,7 +11,6 @@ db = SQLAlchemy(app)
 
 
 class Task(db.Model):
-    __bind_key__ = 'flex'
     mID = db.Column(db.Integer, primary_key=True, unique=True)
     mTask = db.Column(db.String())
     mDescription = db.Column(db.String())
@@ -41,7 +32,6 @@ class Task(db.Model):
 
 
 class TeamMember(db.Model):
-    __bind_key__ = 'flex'
     id = db.Column(db.Integer, primary_key=True, unique=True)
     user = db.Column(db.String())
     team = db.Column(db.String())
@@ -52,24 +42,6 @@ class TeamMember(db.Model):
 
     def __repr__(self):
         return '<TeamMember %r>' % self.id
-
-
-class User(db.Model):
-    __bind_key__ = 'bauth'
-    id = db.Column(db.Integer, primary_key=True, unique=True)
-    username = db.Column(db.String(), unique=True)
-    password = db.Column(db.String())
-    session_id = db.Column(db.String())
-    session_time = db.Column(db.String())
-
-    def __init__(self, username, password, session_id, session_time):
-        self.username = username
-        self.password = password
-        self.session_id = session_id
-        self.session_time = session_time
-
-    def __repr__(self):
-        return '<User %r>' % self.username
 
 
 class Team(db.Model):
@@ -90,13 +62,10 @@ class Team(db.Model):
 
 
 def db_create_user(username, password):
-    session_id = str(uuid.uuid4())
-    current_time = str(datetime.utcnow())
-    salt = bcrypt.gensalt()
-    ciphered_password = bcrypt.hashpw(str.encode(password), salt)
-    db.session.add(User(username, ciphered_password, session_id, current_time))
-    db.session.commit()
-    return "Successfully added a new user"
+    # make a request to the BAuth server
+    r = requests.post("http://192.168.0.8:1754/signUp", json={"username": username, "password": password})
+    response = r.json()
+    return response["response"]
 
 
 def db_create_team_member(user, team):
@@ -105,39 +74,18 @@ def db_create_team_member(user, team):
 
 
 def check_if_valid_session(session_id):
-    if session_id == "invalid":
-        return False
+    r = requests.post("http://192.168.0.8:1754/verifyLogin", json={"uuid": session_id})
+    response = r.json()
+    if response["response"] == "valid uuid":
+        return True
     else:
-        try:
-            claimsTobe = User.query.filter(User.session_id == session_id).first()
-            if claimsTobe is not None:
-                return True
-        except:
-            return False
+        return False
 
 
 def make_session(iUsername, iPassword):
-    print("input: " + iUsername + " & " + iPassword)
-    try:
-        account = User.query.filter(User.username == iUsername).first()
-        if account is not None:
-            print("Username matched")
-            stored_password = account.password
-            print("Stored password: {}".format(stored_password))
-            if bcrypt.hashpw(bytes(iPassword, 'utf-8'), stored_password) == stored_password:
-                print("Stored Password and Hashed password Match")
-                return account.session_id
-            else:
-                print("Stored Password and Hashed password don't match")
-                return "Invalid Password"
-        else:
-            print("Username Doesn't Exist")
-            return "Username Doesn't Exist"
-    except Exception:
-        print(Exception.__dict__)
-        print("returning invalid")
-        return "invalid"
-
+    r = requests.post("http://192.168.0.8:1754/login", json={"username": iUsername, "password": iPassword})
+    response = r.json()
+    return response["data"]
 
 # Routes
 # The only route which should not require a valid uuid is login
@@ -339,18 +287,6 @@ def sign_up():
     except:
         return "error"
 
-    regex_pattern = re.compile("[^\w']")
-
-    if regex_pattern.sub(' ', username) != username or regex_pattern.sub(' ', password) != password:
-        return "invalid"
-
-    if username is None or password is None or email is None:
-        return "missing"
-
-    pre_existing_user = User.query.filter(User.username == username).first()
-    if pre_existing_user is not None:
-        return "usernameTaken"
-
     db_create_user(username, password)
     return "success"
 
@@ -419,7 +355,7 @@ def update_task():
 
     return jsonify(**response)
 
-
+"""
 @app.route('/joinTeam', methods=['POST'])
 def join_team():
     data = request.json
@@ -436,9 +372,10 @@ def join_team():
     except:
         return "error"
 
-    db_create_team_member(user.session_id, team.id)
+    db_create_team_member(uuid, team.id)
 
     return "success"
+"""
 
 
 @app.route('/')
