@@ -8,6 +8,10 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_BINDS'] = {
+    'flex':        'sqlite:///database.db',
+    'bauth':      'sqlite:///bauth.db'
+}
 db = SQLAlchemy(app)
 
 
@@ -15,6 +19,7 @@ db = SQLAlchemy(app)
 
 
 class Task(db.Model):
+    __bind_key__ = 'flex'
     mID = db.Column(db.Integer, primary_key=True, unique=True)
     mTask = db.Column(db.String())
     mDescription = db.Column(db.String())
@@ -36,6 +41,7 @@ class Task(db.Model):
 
 
 class TeamMember(db.Model):
+    __bind_key__ = 'flex'
     id = db.Column(db.Integer, primary_key=True, unique=True)
     user = db.Column(db.String())
     team = db.Column(db.String())
@@ -49,6 +55,7 @@ class TeamMember(db.Model):
 
 
 class User(db.Model):
+    __bind_key__ = 'bauth'
     id = db.Column(db.Integer, primary_key=True, unique=True)
     username = db.Column(db.String(), unique=True)
     password = db.Column(db.String())
@@ -66,6 +73,7 @@ class User(db.Model):
 
 
 class Team(db.Model):
+    __bind_key__ = 'flex'
     id = db.Column(db.Integer, primary_key=True, unique=True)
     name = db.Column(db.String(), unique=True)
     owner = db.Column(db.String())
@@ -132,6 +140,7 @@ def make_session(iUsername, iPassword):
 
 
 # Routes
+# The only route which should not require a valid uuid is login
 
 
 @app.route('/newTask', methods=['POST'])
@@ -177,7 +186,7 @@ def upgrade_task():
         mID = data.get('mID')
         uuid = data.get('uuid')
         task = Task.query.filter(Task.mID == mID).first()
-        if task.mOwner == uuid:
+        if check_if_valid_session(uuid) is not False and task.mOwner == uuid:
             if task.mTaskStatus == "To Do":
                 task.mTaskStatus = "In Process"
             elif task.mTaskStatus == "In Process":
@@ -188,7 +197,8 @@ def upgrade_task():
             response["status"] = "error"
             response["response"] = "You don't own this task!"
     except:
-        response["response"] = "failed to upgrade task"
+        response["response"] = "missing"
+
     return jsonify(**response)
 
 
@@ -204,10 +214,7 @@ def get_tasks():
         response["response"] = "missing"
         return jsonify(**response)
 
-    if check_if_valid_session(uuid) is False:
-        response["response"] = "invalid uuid"
-        return jsonify(**response)
-    else:
+    if check_if_valid_session(uuid) is not False:
         if scope == "personal":
             tasks = []
             for task in Task.query.filter(Task.mOwner == uuid).all():
@@ -222,9 +229,14 @@ def get_tasks():
             response['tasks'] = tasks
             response['meta'] = {}
             response["response"] = "success"
+            response["status"] = "success"
         else:
             response["response"] = "not implemented yet"
-        return jsonify(**response)
+            response["status"] = "error"
+    else:
+        response["response"] = "invalid uuid"
+
+    return jsonify(**response)
 
 
 @app.route('/deleteTask', methods=['POST'])
@@ -245,7 +257,7 @@ def delete_tank():
             response["response"] = "You don't own this task or this task does not exist!"
             response["status"] = "error"
     except:
-        response["response"] = "failed at deleting task"
+        response["response"] = "missing"
         response["status"] = "error"
     return jsonify(**response)
 
@@ -267,33 +279,47 @@ def test():
 @app.route('/verifyLogin', methods=['POST'])
 def verify_login():
     data = request.json
-    response = dict()
-    print(data)
+    response = {}
     try:
         uuid = data.get('uuid')
         if check_if_valid_session(uuid):
             response["response"] = "valid uuid"
-            return jsonify(**response)
         else:
             response["response"] = "invalid uuid"
-            return jsonify(**response)
     except:
-        response["response"] = "invalid entered uuid"
-        return jsonify(**response)
+        response["response"] = "missing"
+
+    return jsonify(**response)
 
 
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
-    response = dict()
+    response = {}
     try:
         username = data.get('username')
         password = data.get('password')
-        response["data"] = make_session(username, password)
-        response["response"] = "logged in"
+        uuid = make_session(username, password)
+        if uuid == "Invalid Password":
+            response["status"] = "error"
+            response["response"] = "invalid password"
+            response["data"] = "invalid"
+        elif uuid == "Username Doesn't Exist":
+            response["status"] = "error"
+            response["response"] = "username doesn't exist"
+            response["data"] = "invalid"
+        elif uuid == "invalid":
+            response["status"] = "error"
+            response["response"] = "missing"
+            response["data"] = "invalid"
+        else:
+            response["data"] = uuid
+            response["response"] = "logged in"
+            response["status"] = "success"
     except:
         response["data"] = "invalid"
         response["response"] = "log in failed"
+        response["status"] = "error"
     return jsonify(**response)
 
 

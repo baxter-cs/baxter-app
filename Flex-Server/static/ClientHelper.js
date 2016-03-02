@@ -68,12 +68,12 @@ function logIn() {
         data: data,
         contentType: "application/json",
         success: function(response) {
-            if (response["response"] == "logged in") {
+            if (response["status"] == "success") {
                 Cookies.set("uuid", response["data"]);
                 logkitty("Successfully logged in", "success");
                 $('#modal_log_in').closeModal();
                 getTasks();
-            } else if (response["response"] == "log in failed") {
+            } else if (response["status"] == "error") {
                 logkitty("Failed to log in", "error");
                 Cookies.set("uuid", response["data"]);
             }

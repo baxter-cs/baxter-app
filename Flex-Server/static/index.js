@@ -26,6 +26,11 @@ function main() {
         logIn();
     })
 
+    $('#logOutButton').click(function() {
+        Cookies.set("uuid", "invalid");
+        location.reload();
+    })
+
     $('#addTaskButton').click(function() {
         $('#modal_add_task').openModal({
             dismissible: false
