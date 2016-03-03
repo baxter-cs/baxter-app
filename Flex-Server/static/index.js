@@ -1,8 +1,8 @@
 $(document).ready(main)
 
 // Server Addresses
-var flex_server_address = "http://192.168.0.13:7999";
-var BAuth_server_address = "http://192.168.0.13:1754";
+var flex_server_address = "http://192.168.0.8:7999";
+var BAuth_server_address = "http://192.168.0.8:1754";
 
 var server_address_login = BAuth_server_address + "/login";
 

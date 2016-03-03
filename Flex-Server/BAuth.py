@@ -127,7 +127,10 @@ def r_verify_login():
     except:
         response["response"] = "missing"
 
-    return jsonify(**response)
+    return_response = make_response(jsonify(**response))
+    return_response.headers['Access-Control-Allow-Origin'] = '*'
+    return_response.headers['Access-Control-Allow-Headers'] = "Content-Type, Access-Control-Allow-Origin"
+    return return_response
 
 
 @app.route('/signUp', methods=['POST'])
@@ -138,24 +141,23 @@ def sign_up():
         username = data.get('username')
         password = data.get('password')
         email = data.get('email')
+        regex_pattern = re.compile("[^\w']")
+        if regex_pattern.sub(' ', username) == username and regex_pattern.sub(' ', password) == password:
+            pre_existing_user = User.query.filter(User.username == username).first()
+            if pre_existing_user is None:
+                db_create_user(username, password)
+                response["response"] = "success"
+            else:
+                response["response"] = "username taken"
+        else:
+            response["response"] = "invalid"
     except:
         response["response"] = "missing"
-        return jsonify(**response)
 
-    regex_pattern = re.compile("[^\w']")
-
-    if regex_pattern.sub(' ', username) != username or regex_pattern.sub(' ', password) != password:
-        response["response"] = "invalid"
-        return jsonify(**response)
-
-    pre_existing_user = User.query.filter(User.username == username).first()
-    if pre_existing_user is not None:
-        response["response"] = "username taken"
-        return jsonify(**response)
-
-    db_create_user(username, password)
-    response["response"] = "success"
-    return jsonify(**response)
+    return_response = make_response(jsonify(**response))
+    return_response.headers['Access-Control-Allow-Origin'] = '*'
+    return_response.headers['Access-Control-Allow-Headers'] = "Content-Type, Access-Control-Allow-Origin"
+    return return_response
 
 
 

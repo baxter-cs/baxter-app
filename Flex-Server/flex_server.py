@@ -6,6 +6,8 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
 
+computer_ip = "http://192.168.0.8"
+
 
 # Tables
 
@@ -66,7 +68,7 @@ def db_create_team_member(user, team):
 
 
 def check_if_valid_session(session_id):
-    r = requests.post("http://192.168.0.13:1754/verifyLogin", json={"uuid": session_id})
+    r = requests.post(computer_ip + ":1754/verifyLogin", json={"uuid": session_id})
     response = r.json()
     if response["response"] == "valid uuid":
         return True
@@ -238,26 +240,6 @@ def verify_login():
     return jsonify(**response)
 
 
-@app.route('/debugUserCreate/<username>/<password>')
-def debug_user_create(username, password):
-    db_create_user(username, password)
-    return "New Account Created!\n Username: {}\n Password: {}".format(username, password)
-
-
-@app.route('/signUp', methods=['POST'])
-def sign_up():
-    data = request.json
-    try:
-        username = data.get('username')
-        password = data.get('password')
-        email = data.get('email')
-    except:
-        return "error"
-
-    db_create_user(username, password)
-    return "success"
-
-
 @app.route('/refreshTask', methods=['POST'])
 def refresh_task():
     data = request.json
@@ -322,27 +304,27 @@ def update_task():
 
     return jsonify(**response)
 
-"""
+
 @app.route('/joinTeam', methods=['POST'])
 def join_team():
     data = request.json
+    response = {}
 
     try:
         tID = data.get('tID')
-        uuid = data.get('uuid')
+        user = data.get('uuid')
+        if check_if_valid_session(user):
+            team = Team.query.filter(Team.id == tID).first()
+            if team.freeJoin == "true":
+                db_create_team_member(user, team.id)
+            else:
+                response["response"] = "freeJoin is not enabled"
+        else:
+            response["response"] = "invalid uuid"
     except:
-        return "missing"
+        response["response"] = "missing"
 
-    try:
-        user = User.query.filter(User.session_id == uuid).first()
-        team = User.query.filter(Team.id == tID).first()
-    except:
-        return "error"
-
-    db_create_team_member(uuid, team.id)
-
-    return "success"
-"""
+    return jsonify(**response)
 
 
 @app.route('/')
