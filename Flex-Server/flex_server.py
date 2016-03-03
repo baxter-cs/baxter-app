@@ -60,14 +60,6 @@ class Team(db.Model):
 
 # Methods
 
-
-def db_create_user(username, password):
-    # make a request to the BAuth server
-    r = requests.post("http://192.168.0.13:1754/signUp", json={"username": username, "password": password})
-    response = r.json()
-    return response["response"]
-
-
 def db_create_team_member(user, team):
     db.session.add(TeamMember(user, team))
     db.session.commit()
@@ -80,12 +72,6 @@ def check_if_valid_session(session_id):
         return True
     else:
         return False
-
-
-def make_session(iUsername, iPassword):
-    r = requests.post("http://192.168.0.13:1754/login", json={"username": iUsername, "password": iPassword})
-    response = r.json()
-    return response["data"]
 
 # Routes
 # The only route which should not require a valid uuid is login
@@ -237,37 +223,6 @@ def verify_login():
     except:
         response["response"] = "missing"
 
-    return jsonify(**response)
-
-
-@app.route('/login', methods=['POST'])
-def login():
-    data = request.json
-    response = {}
-    try:
-        username = data.get('username')
-        password = data.get('password')
-        uuid = make_session(username, password)
-        if uuid == "Invalid Password":
-            response["status"] = "error"
-            response["response"] = "invalid password"
-            response["data"] = "invalid"
-        elif uuid == "Username Doesn't Exist":
-            response["status"] = "error"
-            response["response"] = "username doesn't exist"
-            response["data"] = "invalid"
-        elif uuid == "invalid":
-            response["status"] = "error"
-            response["response"] = "missing"
-            response["data"] = "invalid"
-        else:
-            response["data"] = uuid
-            response["response"] = "logged in"
-            response["status"] = "success"
-    except:
-        response["data"] = "invalid"
-        response["response"] = "log in failed"
-        response["status"] = "error"
     return jsonify(**response)
 
 
