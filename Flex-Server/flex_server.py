@@ -151,7 +151,16 @@ def get_tasks():
     if check_if_valid_session(uuid) is not False:
         if scope == "personal":
             tasks = []
+            isInitTodo = False
+            isInitDoing = False
+            isInitDone = False
             for task in Task.query.filter(Task.mOwner == uuid).all():
+                if task.mTaskStatus == "To Do":
+                    isInitTodo = True
+                elif task.mTaskStatus == "In Process":
+                    isInitDoing = True
+                elif task.mTaskStatus == "Done":
+                    isInitDone = True
                 taskInfo = {'mTask': task.mTask,
                             'mDescription': task.mDescription,
                             'mAssignee': task.mAssignee,
@@ -162,6 +171,9 @@ def get_tasks():
                 tasks.append(taskInfo)
             response['tasks'] = tasks
             response['meta'] = {}
+            response['meta']['isInitTodo'] = isInitTodo
+            response['meta']['isInitDoing'] = isInitDoing
+            response['meta']['isInitDone'] = isInitDone
             response["response"] = "success"
             response["status"] = "success"
         else:

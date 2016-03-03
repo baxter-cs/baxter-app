@@ -2,8 +2,10 @@ package org.baxter_academy.flex;
 
 import android.app.DatePickerDialog;
 
+import android.content.Context;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.support.v4.app.NavUtils;
@@ -92,6 +94,8 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         final String title, description, assignee, dueDate;
 
         Intent intent = new Intent(AddTaskActivity.this, FlexActivity.class);
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences("meta", Context.MODE_PRIVATE);
+        String uuid = prefs.getString("uuid", "invalid");
 
         mTitle = (EditText) findViewById(R.id.bar_title);
         mDescription = (EditText) findViewById(R.id.bar_description);
@@ -104,7 +108,7 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         dueDate = mDueDate.getText().toString();
 
         ClientHelper client = new ClientHelper();
-        String response = client.newTask(title, description, assignee, dueDate);
+        String response = client.newTask(title, description, assignee, dueDate, uuid);
 
         Toast.makeText(this, response, Toast.LENGTH_LONG).show();
 

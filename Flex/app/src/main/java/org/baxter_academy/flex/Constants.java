@@ -16,15 +16,16 @@ public class Constants {
     public static String task_titleCol = "#515151";
     public static String task_textCol = "#4E4E4E";
 
-    public static String server_address = "http://192.168.0.13:7999";
-    public static String server_address_upgradeStatus = server_address + "/upgradeTask";
-    public static String server_address_newTask = server_address + "/newTask";
-    public static String server_address_getTasks = server_address + "/getTasks";
-    public static String server_address_deleteTask = server_address + "/deleteTask";
-    public static String server_address_test = server_address + "/test";
-    public static String server_address_verifyLogin = server_address + "/verifyLogin";
-    public static String server_address_login = server_address + "/login";
-    public static String server_address_signUp = server_address + "/signUp";
+    public static String flex_server_address = "http://192.168.0.13:7999";
+    public static String BAuth_server_address = "http://192.168.0.13:1754";
+    public static String server_address_upgradeStatus = flex_server_address + "/upgradeTask";
+    public static String server_address_newTask = flex_server_address + "/newTask";
+    public static String server_address_getTasks = flex_server_address + "/getTasks";
+    public static String server_address_deleteTask = flex_server_address + "/deleteTask";
+    public static String server_address_test = flex_server_address + "/test";
+    public static String server_address_verifyLogin = flex_server_address + "/verifyLogin";
+    public static String server_address_login = BAuth_server_address + "/login";
+    public static String server_address_signUp = BAuth_server_address + "/signUp";
 
     public static String task_textTitle = "#515151";
     public static String task_textBody = "#4E4E4E";

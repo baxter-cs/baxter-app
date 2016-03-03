@@ -40,6 +40,7 @@ public class FragmentTodo extends Fragment {
 
         // Gets the json string - We're using getActivity instead of this because this doesn't work in this
         SharedPreferences prefs = getActivity().getSharedPreferences("meta", Context.MODE_PRIVATE);
+        final String uuid = prefs.getString("uuid", "invalid");
         String json = prefs.getString("tasks", "error");
 
         // Error will only happen if the Preference does not exist
@@ -106,14 +107,14 @@ public class FragmentTodo extends Fragment {
 
                                     switch (item.getItemId()) {
                                         case R.id.move_to_doing:
-                                            client.upgradeTaskStatus(task.getTaskID().toString());
+                                            client.upgradeTaskStatus(task.getTaskID().toString(), uuid);
 
                                             Toast.makeText(getActivity(), "Moved to In Process", Toast.LENGTH_SHORT).show();
                                             Intent refreshMove = new Intent(getContext(), FlexActivity.class);
                                             startActivity(refreshMove);
                                             break;
                                         case R.id.delete:
-                                            client.deleteTask(task.getTaskID().toString());
+                                            client.deleteTask(task.getTaskID().toString(), uuid);
 
                                             Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
                                             Intent refreshDelete = new Intent(getContext(), FlexActivity.class);

@@ -107,14 +107,14 @@ public class FragmentDoing extends Fragment {
 
                                     switch (item.getItemId()) {
                                         case R.id.move_to_done:
-                                            client.upgradeTaskStatus(task.getTaskID().toString());
+                                            client.upgradeTaskStatus(task.getTaskID().toString(), prefs.getString("uuid", "invalid"));
 
                                             Toast.makeText(getActivity(), "Task Moved to Done", Toast.LENGTH_SHORT).show();
                                             Intent refreshMove = new Intent(getContext(), FlexActivity.class);
                                             startActivity(refreshMove);
                                             break;
                                         case R.id.delete:
-                                            client.deleteTask(task.getTaskID().toString());
+                                            client.deleteTask(task.getTaskID().toString(), prefs.getString("uuid", "invalid"));
                                             Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
                                             Intent refreshDelete = new Intent(getContext(), FlexActivity.class);
                                             startActivity(refreshDelete);

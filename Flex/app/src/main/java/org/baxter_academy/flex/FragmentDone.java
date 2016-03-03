@@ -107,7 +107,7 @@ public class FragmentDone extends Fragment {
 
                                     switch (item.getItemId()) {
                                         case R.id.delete:
-                                            client.deleteTask(task.getTaskID().toString());
+                                            client.deleteTask(task.getTaskID().toString(), prefs.getString("uuid", "invalid"));
                                             Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
                                             Intent refreshDelete = new Intent(getContext(), FlexActivity.class);
                                             startActivity(refreshDelete);

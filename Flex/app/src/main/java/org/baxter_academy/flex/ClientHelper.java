@@ -12,12 +12,14 @@ import java.io.UnsupportedEncodingException;
  */
 public class ClientHelper {
 
-    public String newTask(String mTask, String mDescription, String mAssignee, String mDueDate) {
+    public String newTask(String mTask, String mDescription, String mAssignee, String mDueDate, String uuid) {
         RESTClient client = new RESTClient(Constants.server_address_newTask);
         client.addParam("mTask", mTask);
         client.addParam("mDescription", mDescription);
         client.addParam("mAssignee", mAssignee);
         client.addParam("mDueDate", mDueDate);
+        client.addParam("uuid", uuid);
+        client.addParam("mOwner", "personal");
         client.addHeader("content-type", "application/json");
 
         String response;
@@ -37,18 +39,21 @@ public class ClientHelper {
         }
     }
 
-    public JsonObject getTasks() {
+    public JsonObject getTasks(String uuid) {
         RESTClient client = new RESTClient(Constants.server_address_getTasks);
+        client.addParam("uuid", uuid);
+        client.addParam("scope", "personal");
         client.addHeader("content-type", "application/json");
 
         JsonParser parser = new JsonParser();
-        return parser.parse(client.executeGet()).getAsJsonObject();
+        return parser.parse(client.executePost()).getAsJsonObject();
     }
 
-    public String upgradeTaskStatus(String mID) {
+    public String upgradeTaskStatus(String mID, String uuid) {
         RESTClient client = new RESTClient(Constants.server_address_upgradeStatus);
         client.addHeader("content-type", "application/json");
         client.addParam("mID", mID);
+        client.addParam("uuid", uuid);
 
         String response;
 
@@ -67,10 +72,11 @@ public class ClientHelper {
         }
     }
 
-    public String deleteTask(String mID) {
+    public String deleteTask(String mID, String uuid) {
         RESTClient client = new RESTClient(Constants.server_address_deleteTask);
         client.addHeader("content-type", "application/json");
         client.addParam("mID", mID);
+        client.addParam("uuid", uuid);
 
         String response;
 

@@ -129,7 +129,7 @@ public class FlexActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
 
         try {
-            JsonObject jsonObject = new ClientHelper().getTasks();
+            JsonObject jsonObject = new ClientHelper().getTasks(prefs.getString("uuid", "invalid"));
 
             JsonObject meta = (JsonObject) jsonObject.get("meta");
 
